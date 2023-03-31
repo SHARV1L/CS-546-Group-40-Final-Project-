@@ -1,0 +1,26 @@
+{
+  "name": "final-project-stub",
+  "version": "1.0.0",
+  "description": "Vacational Rental Application ",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SHARV1L/CS-546-Group-40-Final-Project-.git"
+  },
+  "author": "CS 546 - Group 40",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SHARV1L/CS-546-Group-40-Final-Project-/issues"
+  },
+  "homepage": "https://github.com/SHARV1L/CS-546-Group-40-Final-Project-#readme",
+  "dependencies": {
+    "epress": "^0.0.1-security",
+    "express": "^4.18.2",
+    "mongod": "^2.0.0"
+  }
+}
