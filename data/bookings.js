@@ -1,13 +1,12 @@
 const exportedFunctions = () => {
 
 const create = async (
-    firstName,
-    lastName,
-    email,
-    password,
-    phoneNumber,
-    profilePicture,
-    accountType,
+    id,
+    property_id,
+    user_id,
+    checkInDate,
+    checkOutDate,
+    totalPrice
 ) => {}
 
 const getAll = async () => {}
@@ -17,14 +16,14 @@ const get = async () => {}
 const  remove = async () => {}
 
 const update = async (
+    booking_id,
+    guest_id,
     id,
-    firstName,
-    lastName,
-    email,
-    password,
-    phoneNumber,
-    profilePicture,
-    accountType,
+    property_id,
+    user_id,
+    checkInDate,
+    checkOutDate,
+    totalPrice
 ) => {}
 
 }
