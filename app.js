@@ -11,5 +11,5 @@ configRoutesFunction(app);
 
 app.listen(3000, () => {
     console.log("Server has started...")
-    console.log("Our routes will be running on https://localahost:3000")
+    console.log("Our routes will be running on http://localhost:3000")
 })

@@ -14,7 +14,8 @@ const getCollectionFn = (collection) => {
 };
 
 // Note: You will need to change the code below to have the collection required by the assignment!
-export const bands = getCollectionFn('bands');
-export const albums = getCollectionFn('albums');
-
-
+export const users = getCollectionFn('users');
+export const hosts = getCollectionFn('hosts');
+export const booking = getCollectionFn('bookoing');
+export const reviews = getCollectionFn('reviews');
+export const property = getCollectionFn('property');
