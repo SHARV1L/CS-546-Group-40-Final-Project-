@@ -35,7 +35,41 @@ const exportedMethods = {
     }
 
     return arr;
-  }
+  },
+
+  checkValidEmail(strEmail,variableName){
+
+    var validEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if(!validEmail.test(strEmail)) throw "It is not a valid email";
+  
+    return strEmail;
+  
+  },
+
+  checkValidPassword(strPassword,variableName){
+    if(strPassword.length<8) throw "password length should be 8 charcters";
+
+    const validPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    if(!validPass.test(strPassword)) throw "Password must contain at least one lowercase letter, one uppercase letter, and one digit";
+
+    return strPassword;
+  },
+  checkValidPhone(strPhone,variableName){
+    const validPhone = /^\d{10}$/;
+    if(validPhone.test(strPhone,variableName)) throw "You must provide valid phone number";
+    
+    return strPhone;
+  },
+  checkValidProfilePicture(file,variableName){
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) throw "Profile is not valid";
+
+    return file;
+      
+    }
+
 };
+
+
 
 export default exportedMethods;
