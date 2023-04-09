@@ -21,6 +21,7 @@
   "dependencies": {
     "epress": "^0.0.1-security",
     "express": "^4.18.2",
-    "mongod": "^2.0.0"
+    "mongod": "^2.0.0",
+    "mongodb": "^5.2.0"
   }
 }
