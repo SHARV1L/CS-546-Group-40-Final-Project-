@@ -1,25 +1,27 @@
 import { users } from "../config/mongoCollections.js";
-import ObjectId from 'mongodb';
+import {ObjectId} from 'mongodb';
 import validation from '../validation.js';
 
-const exportedFunctions = () => {
+let exportedFunctions = {
 
-    const createUser = async (
+    async createUser(
         firstName,
         lastName,
         email,
         password,
         phoneNumber,
-        //profilePicture,
         accountType,
-    ) => {
+    ){
      firstName=validation.checkString(firstName,'First Name');
      lastName=validation.checkString(lastName,'Last Name');
      email=validation.checkValidEmail(email,'Email Name');
-     password=validation.checkValidPassword(email,'Email password');
+     password=validation.checkValidPassword(password,'password1');
      phoneNumber=validation.checkValidPhone(phoneNumber,'Phone Number');
      //profilePicture=validation.checkValidProfilePicture(profilePicture,Profile1);
      accountType=validation.checkString(accountType,"Account Type");
+     //console.log(firstName);
+
+     
 
      let newUser={
        firstName:firstName,
@@ -28,30 +30,34 @@ const exportedFunctions = () => {
        password:password,
        phoneNumber:phoneNumber,
        //profilePicture:profilePicture,
-       accountType,accountType
+       accountType:accountType
      };
+    
+  
      const userCollection=await users();
      const newInsertInformation=await userCollection.insertOne(newUser);
      if(!newInsertInformation.insertedId) throw "Insert Failed";
-     return await this.get(newInsertInformation.insertedId.toString());
-
-    }
+     return await this.getUserById(newInsertInformation.insertedId.toString());
+    },
     
-    const getAllUsers = async () => {
+    async getAllUsers(){
         const userCollection=await users();
         const userList=await userCollection.find({}).toArray();
         return userList;
-    }
+    },
     
-    const getUserById = async (id) => {
+    async getUserById(id){
       id=validation.checkId(id);
+      console.log(id);
       const userCollection= await users();
-      const user=await userCollection.findOne({_id:ObjectId(id)});
+      console.log(userCollection);
+      const user=await userCollection.findOne({_id:new ObjectId(id)});
+      console.log(user);
       if(!user) throw "User Not Found error";
       return user;
-    }
+    },
     
-    const  removeUser = async (id) => {
+   async removeUser(id){
       id=validation.checkId(id);
       const userCollection=await users();
       const deletionInfo=await userCollection.findOneAndDelete({
@@ -60,13 +66,13 @@ const exportedFunctions = () => {
       if(deletionInfo.lastErrorObject.n===0) throw [404,`Error: could not delete user with ${id}`];
 
       return {...deletionInfo.value,deleted:true};
-    }
+    },
     
-    const updateUserPut = async (
+    async updateUserPut(
         id,
         firstName,
         lastName   
-    ) => {
+    ) {
       id=validation.checkId(id);
       firstName=validation.checkString(firstName,'first name');
       lastName=validation.checkString(lastName,'last name');
@@ -87,9 +93,9 @@ const exportedFunctions = () => {
       }
       return await updatedInfo.value;
 
-    }
+    },
 
-    const updateUserPatch=async(id,userInfo)=>{
+    async updateUserPatch(id,userInfo){
      id=validation.checkId(id);
      if(userInfo.firstName)
         userInfo.firstName=validation.checkString(userInfo.firstName,'first name');
