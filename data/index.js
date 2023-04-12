@@ -9,5 +9,5 @@ import reviewDataFunctions from './reviews.js';
 export const usersData = userDataFunctions;
 export const hostsData = hostDataFunctions;
 export const bookingsData = bookingDataFunctions;
-export const propertysData = propertyDataFunctions;
+export const propertyData = propertyDataFunctions;
 export const reviewsData = reviewDataFunctions;

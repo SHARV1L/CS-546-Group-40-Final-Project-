@@ -84,7 +84,7 @@ let exportedFunctions = {
 
       const userCollection=await users();
       const updatedInfo=await userCollection.findOneAndUpdate(
-        {_id:ObjectId(id)},
+        {_id:new ObjectId(id)},
         {$set:userUpdatedInfo},
         {returnDocument:'after'}
       );
@@ -105,7 +105,7 @@ let exportedFunctions = {
      
       const userCollection=await users();
       const updatedInfo=await userCollection.findOneAndUpdate(
-        {_id:ObjectId(id)},
+        {_id:new ObjectId(id)},
         {$set:userInfo},
         {returnDocument:'after'}
       );
