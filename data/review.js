@@ -81,12 +81,12 @@ const exportedFunctions = () => {
         reviewText,
         ratings,
     ) => {
-        id = helpers.checkId(id);
-        guest_id = helpers.checkId(guest_id);
-        property_id = helpers.checkId(property_id);
-        host_id = helpers.checkId(host_id);
-        reviewText = helpers.checkString(reviewText);
-        ratings = helpers.checkRating(ratings);
+        id = helpers.checkId(id, 'ID');
+        guest_id = helpers.checkId(guest_id, 'Guest ID');
+        property_id = helpers.checkId(property_id, 'Property ID');
+        host_id = helpers.checkId(host_id,'Host ID');
+        reviewText = helpers.checkString(reviewText, 'Review Text');
+        ratings = helpers.checkRating(ratings, 'Ratings');
         const reviewCollection = await reviews();
         const review = await reviewCollection.findOneAndUpdate(
             { _id: new ObjectId(id) },
