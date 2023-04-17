@@ -22,6 +22,7 @@
     "epress": "^0.0.1-security",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.4",
-    "mongod": "^2.0.0"
+    "mongod": "^2.0.0",
+    "mongodb": "^5.2.0"
   }
 }

@@ -2,12 +2,14 @@ const exportedFunctions = () => {
 
 const create = async (
     id,
-    property_id,
+    //property_id,
     user_id,
     checkInDate,
     checkOutDate,
     totalPrice
-) => {}
+) => {
+    
+}
 
 const getAll = async () => {}
 
