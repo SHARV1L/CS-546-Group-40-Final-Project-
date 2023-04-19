@@ -33,20 +33,23 @@ const exportedMethods = {
         }
         return strVal;
     },
-    checkNumbers(str) {
+    checkPhoneNumber(str, varName) {
         if (!str) {
-            throw new Error(`Error: You must supply a number!`);
+            throw new Error(`Error: You must supply a ${varName}!`);
         }
         if (typeof str !== 'string') {
-            throw new Error(`Error: Given value must be a string!`);
+            throw new Error(`Error: Given ${varName} must be a string!`);
+        }
+        str = str.trim();
+        if(str.length != 10){
+            throw new Error(`Error: Given ${varName} must be of 10 digits!`);
         }
         for (let i = 0; i < str.length; i++) {
-            if (str.charCodeAt(i) >= 48 && str.charCodeAt(i) <= 57) {
-            } else {
-                return false;
+            if (str.charCodeAt(i) < 48 || str.charCodeAt(i) > 57) {
+                throw new Error(`Error: You must supply a valid ${varName}!`);
             }
         }
-        return true;
+        return str;
     },
     checkStringArray(arr, varName) {
         if (!arr || !Array.isArray(arr)) {
@@ -77,6 +80,39 @@ const exportedMethods = {
                 }
             } else {
                 throw new Error(`Error: ${varName} is out of range`);
+            }
+        }
+        return ratingArr;
+    },
+    checkEmail(email, varName){
+        if (!email) {
+            throw new Error(`Error: You must provide an ${varName}`);
+        }
+        if(typeof email !== 'string'){
+            throw new Error(`Error: Given ${varName} must be a string!`);
+        }
+        email = email.trim();
+        if(email.length === 0){
+            throw new Error(`Error: ${varName} cannot be an empty string or string with just spaces`);
+        }
+        if (!isNaN(strVal)) {
+            throw new Error(`Error: ${strVal} is not a valid value for ${varName} as it only contains digits`);
+        }
+        if (email.indexOf(' ') >= 0) {
+            throw new Error(`Error: ${varName} must not contain spaces in between `);
+        }
+    },
+    checkNumber(number, varName){
+        if (!number){
+            throw new Error(`Error: You must provide an ${varName}`);
+        }
+        if(typeof number !== 'string'){
+            throw new Error(`Error: Given ${varName} must be a string!`);
+        }
+        number = number.trim;
+        for (let i = 0; i < number.length; i++) {
+            if (str.charCodeAt(i) < 48 || str.charCodeAt(i) > 57) {
+                throw new Error(`Error: You must supply a valid ${varName}!`);
             }
         }
     }
