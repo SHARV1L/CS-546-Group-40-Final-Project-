@@ -22,7 +22,7 @@ router.route('/search_rentals').get(async (req, res) => {
   });
 
 // http://localhost:3000/search_rentals/property_search_by_id
-router.route('./search_rentals/property{:id}').get(async (req, res) => {
+router.route('./search_rentals/property:id').get(async (req, res) => {
   try {
     res.render('components/property', {title: 'Your property'})
   } catch (error) {

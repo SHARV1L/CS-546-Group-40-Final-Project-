@@ -1,6 +1,8 @@
 import {Router} from 'express';
 
-const router = Router
+import validation from '../validation.js';
+
+const router = Router();
 
 // http://localhost:3000/
 router.route('/').post(async (req, res) => {
@@ -22,7 +24,7 @@ router.route('/login').post(async (req, res) => {
   }
 });
 
-// http://localhost:3000/user-pref
+// http://localhost:3000/login/user-pref
 router.route('/login/user-pref').post(async (req, res) => {
     //code here for GET
     try {

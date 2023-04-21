@@ -84,8 +84,8 @@ router
         'First Name'
       );
       userInfo.lastName = validation.checkString(
-        userInfo.lastName,
-        'Last Name'
+      userInfo.lastName,
+      'Last Name'
       );
     } catch (e) {
       return res.status(400).json({error: e});
@@ -93,9 +93,9 @@ router
 
     try {
       const updatedUser = await usersData.updateUserPut(
-        req.params.id,
-        userInfo.firstName,
-        userInfo.lastName
+      req.params.id,
+      userInfo.firstName,
+      userInfo.lastName
       );
       res.json(updatedUser);
     } catch (e) {
