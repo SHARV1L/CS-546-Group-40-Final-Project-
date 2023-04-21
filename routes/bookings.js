@@ -14,7 +14,7 @@ router.route('/bookings').post(async (req, res) => {
   }
 });
 i
-// http://localhost:3000/booking
+// http://localhost:3000/booking/confirmation
 router.route('/bookings/confirmation').get(async (req, res) => {
   //code here for GET
   try {
@@ -24,7 +24,7 @@ router.route('/bookings/confirmation').get(async (req, res) => {
   }
 });
 
-// http://localhost:3000/booking
+// http://localhost:3000/booking/booking-failed
 router.route('/bookings/bookingFailed').get(async (req, res) => {
   //code here for GET
   try {
