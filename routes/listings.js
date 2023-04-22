@@ -30,7 +30,7 @@ router.route('./search_rentals/:propertyId').get(async (req, res) => {
   }
 });
 
-// http://localhost:3000/bookings{:id} 
+// http://localhost:3000/bookings{:id}  
 router.route('/bookings').get(async (req, res) => {
   try {
     res.render('components/booking', {title: 'Your property'})

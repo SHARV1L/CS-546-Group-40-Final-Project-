@@ -35,6 +35,13 @@ const exportedMethods = {
     }
 
     return arr;
+  },
+
+  login(username, password) {
+    if (username.length > 0 && password.length > 0) {
+      return null;
+    }
+    else return validationErrors; // if login is successful
   }
 };
 
