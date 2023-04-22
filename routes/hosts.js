@@ -11,7 +11,7 @@ router
   .get(async (req, res) => {
     try {
       let hostList = await hostsData.getAllHosts();
-      res.json(hostList);
+      res.json(hostList).render('components/guestHomePage', {title: 'Guest Home Page'});
     } catch (e) {
       res.sendStatus(500);
     }
@@ -60,14 +60,15 @@ router
 router
   .route('/:id')
   .get(async (req, res) => {
+    // try {
+    //   req.params.id = validation.checkId(req.params.id, 'ID URL Param');
+    // } catch (e) {
+    //   return res.status(400).json({error: e});
+    // }
     try {
-      req.params.id = validation.checkId(req.params.id, 'ID URL Param');
-    } catch (e) {
-      return res.status(400).json({error: e});
-    }
-    try {
-      let host = await hostsData.getHostById(req.params.id);
-      res.json(host);
+      // let host = await hostsData.getHostById(req.params.id);
+      //res.json(host).render('components/hostHomepage');
+      res.render('components/hostHomepage', {title: 'Host Homepage'})
     } catch (e) {
       res.status(404).json({error: 'Host not found'});
     }

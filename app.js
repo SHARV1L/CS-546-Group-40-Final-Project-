@@ -1,15 +1,18 @@
 // This file should set up the express server as shown in the lecture code
 import express from 'express';
-import configRoutesFunction from './routes/index.js';
+import configRoutes from './routes/index.js';
 import exphbs from 'express-handlebars';
+import cookieParser from 'cookie-parser';
+
 
 import {fileURLToPath} from 'url';
 import {dirname} from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 //import path from 'path';
 
-//const staticDirMedia = express.static(__dirname + '/public');
+const staticDirMedia = express.static(__dirname + '/public');
 const staticDirStyles = express.static(__dirname + '/styles');
 //console.log(staticDir1);
 
@@ -23,7 +26,8 @@ const rewriteUnsupportedBrowerMethods = (req, res, next) => {
     next();
 };
 
-//app.use('/assets', staticDir1);
+app.use(cookieParser());
+app.use('/assets', staticDirMedia);
 app.use('/styles', staticDirStyles);
 app.use(express.json());
 
@@ -36,7 +40,7 @@ app.set('view engine', 'handlebars');
 
 //app.set('views', path.join(__dirname, 'views/'));
 
-configRoutesFunction(app);
+configRoutes(app);
 
 
 app.listen(3000, () => {

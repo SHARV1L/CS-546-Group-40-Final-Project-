@@ -80,25 +80,3 @@ label {
 	font-weight: bold;
 }
 
-.error-list li {
-	color: #ff0000;
-}
-
-.author-link,
-.author-link:link {
-	color: #228b22;
-}
-
-.author-link:visited {
-	font-style: italic;
-	color: saddlebrown;
-}
-
-.author-link:hover {
-	font-style: normal;
-	font-weight: 700;
-}
-
-.author-link:active {
-	color: #ff0000;
-}

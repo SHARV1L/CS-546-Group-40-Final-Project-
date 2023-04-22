@@ -8,7 +8,7 @@ import loginRoutes from './loginUser.js';
 // import loginUserRoutes from './loginUser.js';
 
 const constructorMethod = (app) => {
-  app.use('/', listingRoutes); // Homepage route
+  app.use('/', loginRoutes); // Landing Page route
   app.use('/user', userRoutes);
   app.use('/host', hostRoutes);
   app.use('/booking', bookingRoutes);

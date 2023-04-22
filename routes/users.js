@@ -58,14 +58,15 @@ router
 router
   .route('/:id')
   .get(async (req, res) => {
+    // try {
+    //   req.params.id = validation.checkId(req.params.id, 'ID URL Param');
+    // } catch (e) {
+    //   return res.status(400).json({error: e});
+    // }
     try {
-      req.params.id = validation.checkId(req.params.id, 'ID URL Param');
-    } catch (e) {
-      return res.status(400).json({error: e});
-    }
-    try {
-      let user = await usersData.getUserById(req.params.id);
-      res.json(user);
+      // let user = await usersData.getUserById(req.params.id);
+      //res.json(user).render('components/guestHomepage', {title: 'Guest Homepage'});
+      res.render('components/guestHomepage', {title: 'Guest Homepage'});
     } catch (e) {
       res.status(404).json({error: 'User not found'});
     }

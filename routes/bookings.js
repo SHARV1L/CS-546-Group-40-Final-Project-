@@ -79,15 +79,14 @@ router
     try { 
       const newBooking = await bookingsData.createBooking(
         bookingInfo.userId,
-    //property_id,
-    bookingInfo.checkInDate,
-    bookingInfo.checkOutDate,
-    bookingInfo.totalPrice
+        //property_id,
+        bookingInfo.checkInDate,
+        bookingInfo.checkOutDate,
+        bookingInfo.totalPrice
       );
       res.json(newBooking);
     } catch (e) {
       res.status(500).send("Error creating user");
-
     }
   });
 

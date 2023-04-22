@@ -1,0 +1,40 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	font-size: 14pt;
+}
+
+body {
+	background: #537d58;
+	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+main {
+	max-width: 75%;
+	margin: auto;
+}
+
+header {
+	border-bottom: 1px solid #505583;
+}
+
+.login-btn, .signup-btn {
+	display: inline-block;
+	padding: 8px 16px;
+	border: none;
+	border-radius: 4px;
+	background-color: #af744c;
+	color: white;
+	text-align: center;
+	font-size: 16px;
+	margin: 4px 2px;
+	transition-duration: 0.4s;
+	cursor: pointer;
+  }
+  
+  .login-btn:hover, .signup-btn:hover {
+	background-color: #8e3e87;
+  }

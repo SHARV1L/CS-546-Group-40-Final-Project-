@@ -2,15 +2,20 @@
   <html lang="en">
     <head>
         <title>User Preference</title>
-        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
     </head>
   <body>
     <header>
-    <h1>Properties Booking</h1>
+    <h1>User Preference</h1>
    
     </header>
     <main> 
-      <span><button id="guest"></button><botton id="host"></botton></span>
+      <span><p>To book or search a property, sign-in as a Guest: </p> <button id="guest" onclick="location.href='/user/:id'">Guest</button></span>
+      <br>
+      <br>
+      <br>
+      <br>
+      <span><p> To post a propertey, sign-in as a Host: </p> <button id="host" onclick="location.href='/host/:id'">Host</button></span>
     </main>
     
 

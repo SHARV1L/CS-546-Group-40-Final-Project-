@@ -2,17 +2,23 @@
   <html lang="en">
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
     </head>
   <body>
     <header>
     <h1>User Login</h1>
    
     </header>
-    <main> </main>
-    
-
-    <a href="/login" class="search-link">Make another search</a>
+    <main> 
+      <div class="login-form">
+        <form id="login-form">
+            <label for="login" aria-placeholder="login">Login Form</label><br><br>
+            <textarea type="username" placeholder="username" id="login-username" required></textarea><br>
+            <textarea type="password" placeholder="password" id="login-password" required></textarea><br>
+            <button type="submit" id="login-btn" onclick="location.href='/login/user-pref'">Login</button>
+        </form>
+      </div>
+    </main>
     </main>
   </body>
 </html>
