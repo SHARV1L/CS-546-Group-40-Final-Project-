@@ -56,7 +56,7 @@ router
   });
 
 router
-  .route('/:id')
+  .route('/:id') ////////// commented lines for checking the code, should be uncommented later
   .get(async (req, res) => {
     // try {
     //   req.params.id = validation.checkId(req.params.id, 'ID URL Param');
