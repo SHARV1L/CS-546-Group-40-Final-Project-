@@ -32,11 +32,6 @@ router
     // res.redirect('/login-user-pref');
 
     const { username, password } = req.body;
-
-    console.log(username);
-    console.log(password);
-    // validation for login
-
       // validating username and password
       const validationErrors = validation.login(username, password);
       if (validationErrors) {
@@ -86,9 +81,16 @@ router
 .post(async (req, res) => {
   //code here for GET
   try {
-    res.render('components/signUp', {title: 'Sign Up Page'});
+    const { username, password, email, phone } = req.body;
+    console.log(username);
+    const validationErrors = validation.signup(username, password, email, phone);
+      if (validationErrors) {
+        return res.render('components/signUp', { title: 'Sign Up Page', errors: validationErrors });
+      }
+      res.redirect('/login/user-pref');
+    //res.render('components/signUp', {title: 'Sign Up Page'});
   } catch (error) {
-    res.status(400).json({error: e});
+    res.status(400).json({error: 'Sign up error'});
   }
 });
 

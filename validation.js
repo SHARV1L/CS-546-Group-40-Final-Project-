@@ -41,8 +41,46 @@ const exportedMethods = {
     if (username.length > 0 && password.length > 0) {
       return null;
     }
+    
     else return validationErrors; // if login is successful
+  },
+
+  signup(username, password, email, phone) {
+    const errors = {};
+  
+    // Validate username
+    if (!username) {
+      errors.username = 'Username is required';
+    } else if (username.length < 3) {
+      errors.username = 'Username should be at least 3 characters long';
+    } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      errors.username = 'Username can only contain letters and numbers';
+    }
+  
+    // // Validate password
+    // if (!password) {
+    //   errors.password = 'Password is required';
+    // } else if (password.length < 8) {
+    //   errors.password = 'Password should be at least 8 characters long';
+    // }
+  
+    // // Validate email
+    // if (!email) {
+    //   errors.email = 'Email is required';
+    // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    //   errors.email = 'Invalid email format';
+    // }
+  
+    // // Validate phone number
+    // if (!phone) {
+    //   errors.phone = 'Phone number is required';
+    // } else if (!/^\d{10}$/.test(phone)) {
+    //   errors.phone = 'Invalid phone number format';
+    // }
+  
+    return errors;
   }
+
 };
 
 export default exportedMethods;

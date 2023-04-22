@@ -11,13 +11,13 @@
     </header>
     <main> 
       <div class="sign-up-form">
-        <form id="sign-up-form">
+        <form id="sign-up-form" action="/login" method="post">
             <label for="sign-up" aria-placeholder="sign-up">Sign-Up Here!</label><br><br>
-            <textarea type="username" placeholder="username" id="login-username" required></textarea><br>
-            <textarea type="password" placeholder="password" id="login-password" required></textarea><br>
-            <textarea type="phone-number" placeholder="phone-number" id="phone-number" required></textarea><br>
-            <textarea type="email" placeholder="email" id="email" required></textarea><br>
-            <button type="submit" id="signup-btn" onclick="location.href='/login'">Sign-Up</button>  
+            <textarea type="text" placeholder="username" id="username" name="username" required></textarea><br>
+            <textarea type="password" placeholder="password" id="password" name="password" required></textarea><br>
+            <textarea type="tel" placeholder="phone" id="phone" name="phone" required></textarea><br>
+            <textarea type="email" placeholder="email" id="email" name="email" required></textarea><br>
+            <button type="submit" id="signup-btn" >Sign-Up</button>  
         </form>
       </div>
     </main>
