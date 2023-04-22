@@ -3,7 +3,6 @@ import {ObjectId} from 'mongodb';
 import validation from '../validation.js';
 import { booking } from "../config/mongoCollections.js";
 
-<<<<<<< HEAD:data/bookings.js
 const exportedFunctions = {
 
  async createBooking(
@@ -16,18 +15,6 @@ const exportedFunctions = {
     userId=validation.checkId(userId);
     const userCollection=await users();
     const userList=await userCollection.find({}).toArray();
-=======
-const create = async (
-    id,
-    //property_id,
-    user_id,
-    checkInDate,
-    checkOutDate,
-    totalPrice
-) => {
-    
-}
->>>>>>> 3eef7bd3443e82cb4e66995ad9dfad0b42072be4:data/booking.js
 
     if(userList.some(obj => obj._id === userId)) throw "userid is not present for the property";
 
