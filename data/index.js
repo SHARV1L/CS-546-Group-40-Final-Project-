@@ -5,7 +5,6 @@ import propertyDataFunctions from './properties.js';
 import reviewDataFunctions from './reviews.js';
 
 
-
 export const usersData = userDataFunctions;
 export const hostsData = hostDataFunctions;
 export const bookingsData = bookingDataFunctions;
