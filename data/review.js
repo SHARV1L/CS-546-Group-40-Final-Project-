@@ -1,32 +1,33 @@
 import { ObjectId } from 'mongodb';
 import exportedFunctions from './review.js';
-import { reviews } from '../config/mongoCollections.js';
+import { reviewsData } from '../config/mongoCollections.js';
+import exportedFunctions from './user.js';
 import helpers from '..helper.js';
 
 const exportedFunctions = () => {
     const create = async (
         id,
-        guest_id,
+        user_id,
         property_id,
         host_id,
         reviewText,
         ratings,
     ) => {
         id = helpers.checkId(id, 'ID');
-        guest_id = helpers.checkId(guest_id, 'Guest ID');
+        user_id = helpers.checkId(user_id, 'User ID');
         property_id = helpers.checkId(property_id, 'Property ID');
         host_id = helpers.checkId(host_id, 'Host ID');
         reviewText = helpers.checkString(reviewText, 'Review text');
         ratings = helpers.checkRating(ratings, 'Rating');
         const review = {
             _id: new ObjectId(),
-            guestId: guest_id,
-            propertyId: property_id,
-            hostId: host_id,
+            used_Id: user_id,
+            property_Id: property_id,
+            host_Id: host_id,
             reviewText: reviewText,
             ratings: ratings
         }
-        const reviewCollection = await reviews();
+        const reviewCollection = await reviewsData();
         const insertInfo = await reviewCollection.insertOne(review);
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw new Error('Could not add review');
@@ -36,7 +37,7 @@ const exportedFunctions = () => {
     }
 
     const getAll = async () => {
-        const reviewCollection = await reviews();
+        const reviewCollection = await reviewsData();
         let reviewList = await reviewCollection.find({}).toArray();
         if (!reviewList) {
             throw new Error('Could not get all bands');
@@ -51,7 +52,7 @@ const exportedFunctions = () => {
 
     const get = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const reviewCollection = await reviews();
+        const reviewCollection = await reviewsData();
         const review = await reviewCollection.findOne({ _id: new ObjectId(id) });
         if (review === null) {
             throw new Error('No review with that id');
@@ -63,31 +64,31 @@ const exportedFunctions = () => {
 
     const remove = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const reviewCollection = await reviews();
+        const reviewCollection = await reviewsData();
         const deletionInfo = await reviewCollection.findOneAndDelete({
             _id: new ObjectId(id)
         });
         if (deletionInfo.lastErrorObject.n === 0 || deletionInfo.deletedCount === 0) {
             throw new Error(`Could not delete review with id of ${id}`);
         }
-        return `${deletionInfo.value.guestId} has been successfully deleted!`;
+        return `${deletionInfo.value.usedId} has been successfully deleted!`;
     }
 
     const update = async (
         id,
-        guest_id,
+        user_id,
         property_id,
         host_id,
         reviewText,
         ratings,
     ) => {
         id = helpers.checkId(id, 'ID');
-        guest_id = helpers.checkId(guest_id, 'Guest ID');
+        user_id = helpers.checkId(user_id, 'Guest ID');
         property_id = helpers.checkId(property_id, 'Property ID');
         host_id = helpers.checkId(host_id,'Host ID');
         reviewText = helpers.checkString(reviewText, 'Review Text');
         ratings = helpers.checkRating(ratings, 'Ratings');
-        const reviewCollection = await reviews();
+        const reviewCollection = await reviewsData();
         const review = await reviewCollection.findOneAndUpdate(
             { _id: new ObjectId(id) },
             { $set: { guest_id, property_id, host_id, reviewText, ratings } },

@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import exportedFunctions from './review.js';
-import { property } from '../config/mongoCollections.js';
+import { propertysData } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
 
 
@@ -8,7 +8,7 @@ const exportedFunctions = () => {
 
     const create = async (
         id,
-        userId,
+        user_Id,
         propertyName,
         description,
         numberOfRooms,
@@ -21,7 +21,7 @@ const exportedFunctions = () => {
         availability
     ) => {
         id = helpers.checkId(id, "ID");
-        userId = helpers.checkId(userId, "User ID");
+        user_Id = helpers.checkId(user_Id, "User ID");
         propertyName = helpers.checkString(propertyName, "Property Name");
         description = helpers.checkString(description, "Description");
         numberOfRooms = helpers.checkNumber(numberOfRooms, "number of rooms");
@@ -34,7 +34,7 @@ const exportedFunctions = () => {
         availability = helpers.checkString(availability, "Availability");
         const property = {
             _id: new ObjectId(),
-            userId: userId,
+            user_Id: user_Id,
             propertyName: propertyName,
             description: description,
             numberOfRooms: numberOfRooms,
@@ -46,7 +46,7 @@ const exportedFunctions = () => {
             pricePerNight: pricePerNight,
             availability: availability
         }
-        const propertyCollection = await property();
+        const propertyCollection = await propertysData();
         const insertInfo = await propertyCollection.insertOne(property);
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw new Error('Could not add property');
@@ -56,7 +56,7 @@ const exportedFunctions = () => {
     }
 
     const getAll = async () => {
-        const propertyCollection = await property();
+        const propertyCollection = await propertysData();
         let propertyList = await propertyCollection.find({}).toArray();
         if (!propertyList) {
             throw new Error('Could not get all properties');
@@ -71,7 +71,7 @@ const exportedFunctions = () => {
 
     const get = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const propertyCollection = await property();
+        const propertyCollection = await propertysData();
         const property = await propertyCollection.findOne({ _id: new ObjectId(id) });
         if (property === null) {
             throw new Error('No review with that id');
@@ -83,8 +83,8 @@ const exportedFunctions = () => {
 
     const remove = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const reviewCollection = await reviews();
-        const deletionInfo = await reviewCollection.findOneAndDelete({
+        const propertyCollection = await propertysData();
+        const deletionInfo = await propertyCollection.findOneAndDelete({
             _id: new ObjectId(id)
         });
         if (deletionInfo.lastErrorObject.n === 0 || deletionInfo.deletedCount === 0) {
@@ -95,8 +95,7 @@ const exportedFunctions = () => {
 
     const update = async (
         property_id,
-        id,
-        userId,
+        user_Id,
         propertyName,
         description,
         numberOfRooms,
@@ -109,8 +108,7 @@ const exportedFunctions = () => {
         availability
     ) => { 
         property_id = helpers.checkId(property_id, "Property ID");
-        id = helpers.checkId(id, "ID");
-        userId = helpers.checkId(userId, "User ID");
+        user_Id = helpers.checkId(user_Id, "User ID");
         propertyName = helpers.checkString(propertyName, "Property Name");
         description = helpers.checkString(description, "Description");
         numberOfRooms = helpers.checkNumber(numberOfRooms, "number of rooms");
@@ -121,7 +119,7 @@ const exportedFunctions = () => {
         longitude = helpers.checkString(longitude, "Longitude");
         pricePerNight = helpers.checkNumber(pricePerNight, "Price per night");
         availability = helpers.checkString(availability, "Availability");
-        const propertyCollection = await property();
+        const propertyCollection = await propertysData();
         const property = await propertyCollection.findOneAndUpdate(
             { _id: new ObjectId(property_id) },
             { $set: { propertyName, description, numberOfRooms, numberofBathrooms, amenities, address, latitude, longitude, pricePerNight, availability } },

@@ -15,7 +15,7 @@ const constructorMethod = (app) => {
   app.use('/search_rentals', listingRoutes);  // Property Listing Page route
 
   app.use('*', (req, res) => {
-    res.status(404).json({error : 'Not Found'}); //render('error',  {class: 'Not Found', message: "No matching values"});
+    res.status(404).json({ error: 'Not Found' }); //render('error',  {class: 'Not Found', message: "No matching values"});
   });
 };
 
