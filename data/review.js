@@ -1,19 +1,16 @@
 import { ObjectId } from 'mongodb';
 import exportedFunctions from './review.js';
 import { reviewsData } from '../config/mongoCollections.js';
-import exportedFunctions from './user.js';
 import helpers from '..helper.js';
 
 const exportedFunctions = () => {
     const create = async (
-        id,
         user_id,
         property_id,
         host_id,
         reviewText,
         ratings,
     ) => {
-        id = helpers.checkId(id, 'ID');
         user_id = helpers.checkId(user_id, 'User ID');
         property_id = helpers.checkId(property_id, 'Property ID');
         host_id = helpers.checkId(host_id, 'Host ID');
@@ -40,7 +37,7 @@ const exportedFunctions = () => {
         const reviewCollection = await reviewsData();
         let reviewList = await reviewCollection.find({}).toArray();
         if (!reviewList) {
-            throw new Error('Could not get all bands');
+            throw new Error('Could not get all reviews');
         }
         reviewList = reviewList.map((element) => {
             element._id = element._id.toString();
@@ -83,7 +80,7 @@ const exportedFunctions = () => {
         ratings,
     ) => {
         id = helpers.checkId(id, 'ID');
-        user_id = helpers.checkId(user_id, 'Guest ID');
+        user_id = helpers.checkId(user_id, 'User ID');
         property_id = helpers.checkId(property_id, 'Property ID');
         host_id = helpers.checkId(host_id,'Host ID');
         reviewText = helpers.checkString(reviewText, 'Review Text');
@@ -91,14 +88,14 @@ const exportedFunctions = () => {
         const reviewCollection = await reviewsData();
         const review = await reviewCollection.findOneAndUpdate(
             { _id: new ObjectId(id) },
-            { $set: { guest_id, property_id, host_id, reviewText, ratings } },
+            { $set: { user_id, property_id, host_id, reviewText, ratings } },
             { returnOriginal: false }
         );
         if (!review.value || review.modifiedCount === 0) {
             throw new Error('Could not update review - review may not exist');
         }
-        if (review.value.guest_id === guest_id) {
-            throw new Error(`The new name "${review.value.guest_id}" is the same as the current name in the database`);
+        if (review.value.user_id === user_id) {
+            throw new Error(`The new name "${review.value.used_id}" is the same as the current name in the database`);
         }
         const renamedBand = await this.get(id);
         const result = JSON.parse(JSON.stringify(renamedBand));

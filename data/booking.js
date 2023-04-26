@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import exportedFunctions from './review.js';
-import { reviews } from '../config/mongoCollections.js';
+import { bookingsData } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
 import { bookingsData } from './index.js';
 

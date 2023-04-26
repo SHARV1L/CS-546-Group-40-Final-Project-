@@ -3,11 +3,9 @@ import exportedFunctions from './review.js';
 import { propertysData } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
 
-
 const exportedFunctions = () => {
 
     const create = async (
-        id,
         user_Id,
         propertyName,
         description,
@@ -20,7 +18,6 @@ const exportedFunctions = () => {
         pricePerNight,
         availability
     ) => {
-        id = helpers.checkId(id, "ID");
         user_Id = helpers.checkId(user_Id, "User ID");
         propertyName = helpers.checkString(propertyName, "Property Name");
         description = helpers.checkString(description, "Description");
@@ -74,7 +71,7 @@ const exportedFunctions = () => {
         const propertyCollection = await propertysData();
         const property = await propertyCollection.findOne({ _id: new ObjectId(id) });
         if (property === null) {
-            throw new Error('No review with that id');
+            throw new Error('No property with that id');
         }
         property._id = property._id.toString();
         const result = JSON.parse(JSON.stringify(property));
@@ -95,7 +92,7 @@ const exportedFunctions = () => {
 
     const update = async (
         property_id,
-        user_Id,
+        user_id,
         propertyName,
         description,
         numberOfRooms,
@@ -108,7 +105,7 @@ const exportedFunctions = () => {
         availability
     ) => { 
         property_id = helpers.checkId(property_id, "Property ID");
-        user_Id = helpers.checkId(user_Id, "User ID");
+        user_id = helpers.checkId(user_id, "User ID");
         propertyName = helpers.checkString(propertyName, "Property Name");
         description = helpers.checkString(description, "Description");
         numberOfRooms = helpers.checkNumber(numberOfRooms, "number of rooms");
@@ -122,7 +119,7 @@ const exportedFunctions = () => {
         const propertyCollection = await propertysData();
         const property = await propertyCollection.findOneAndUpdate(
             { _id: new ObjectId(property_id) },
-            { $set: { propertyName, description, numberOfRooms, numberofBathrooms, amenities, address, latitude, longitude, pricePerNight, availability } },
+            { $set: { user_id, propertyName, description, numberOfRooms, numberofBathrooms, amenities, address, latitude, longitude, pricePerNight, availability } },
             { returnOriginal: false }
         );
         if (!property.value || property.modifiedCount === 0) {

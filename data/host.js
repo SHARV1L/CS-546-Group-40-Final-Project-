@@ -2,7 +2,6 @@ import { ObjectId } from 'mongodb';
 import exportedFunctions from './review.js';
 import { hostsData } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
-import { propertysData } from './index.js';
 
 const exportedFunctions = () => {
 
