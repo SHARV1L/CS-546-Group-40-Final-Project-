@@ -14,6 +14,8 @@ let exportedFunctions = {
     accountType,
     ) {
 
+      // needs to be uncommented later ************** /
+
     // firstName = validation.checkString(firstName,'First Name');
     // lastName = validation.checkString(lastName,'Last Name');
     // email = validation.checkValidEmail(email,'Email Address');

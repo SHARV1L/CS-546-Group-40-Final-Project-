@@ -52,6 +52,38 @@ signUpForm.addEventListener('submit', async (event) => {
   }
 });
 
+//user-prefer button submit
+const userpref = document.getElementById('user-pref');
+
+userpref.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  var buttonVal = event.submitter.value;
+
+  const response = await fetch('user-pref', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ buttonVal })
+  });
+
+  if (response.ok) {
+    // Successful sign up, redirect to the login page
+    window.location.href = '/user-pref';
+  } else {
+    alert('error');
+  }
+
+  // var buttonVal = event.submitter.value;
+  // switch(buttonVal) {
+  //   case "user": res.render('/components/guestHomepage', {title : 'Guest Homepage'}); break;
+  //   case "host": res.render('/components/hostHomepage', {title: 'Host Homepage'}); break;
+  //   case "": res.render('components/error');
+  //   break;
+  // }
+})
+
 const search_rentals = document.getElementById('search_rentals');
 
 search_rentals.addEventListener('submit', async (event) => {

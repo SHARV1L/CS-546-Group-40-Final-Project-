@@ -53,30 +53,29 @@ const mwf = {
   }
   },
   
-  // Middleware 4
-    checkProtectedRoute (req, res, next)  {
-    if (isAuthenticated(req.session)) {
-      next();
-    }
-    res.redirect('/users');
-  },
+  // // Middleware 4
+  //   checkProtectedRoute (req, res, next)  {
+  //   if (isAuthenticated(req.session)) {
+  //     next();
+  //   }
+  //   res.redirect('/users');
+  // },
   
-  // Middleware 5
-    checkAdminRoute (req, res, next) {
-    if (isAuthenticated(req.session)) {
-      if (req.session.user.role === 'host') {
-        req.method = "GET"
-        next(); 
-      }
-       else {
-        res.status(403).render('error', {
-          message: 'You do not have permission to view this page'
-        });
-     }
-    }
-    else res.redirect('/login');
-
-  },
+  // // Middleware 5
+  //   checkAdminRoute (req, res, next) {
+  //   if (isAuthenticated(req.session)) {
+  //     if (req.session.user.role === 'host') {
+  //       req.method = "GET"
+  //       next(); 
+  //     }
+  //      else {
+  //       res.status(403).render('error', {
+  //         message: 'You do not have permission to view this page'
+  //       });
+  //    }
+  //   }
+  //   else res.redirect('/login');
+  // },
   
   // Middleware 6
     checkLogoutAccess (req, res, next)  {

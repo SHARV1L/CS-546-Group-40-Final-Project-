@@ -57,7 +57,7 @@ router
 
 // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
 router
-.route('/login/user-pref')
+.route('/user-pref')
   .get(async (req, res) => {
       //code here for GET
       try {
@@ -68,10 +68,13 @@ router
     })
   .post(async (req, res) => {
     try {
-      if(user-pref === guest) {
+      const buttonVal = req.body.button;
+
+      console.log(buttonVal);
+      if(buttonVal === "user") {
         res.render('components/guestHomepage', {title: 'Guest Homepage'});
       }
-      else if (user-pref === hosts) {
+      else if (buttonVal === "host") {
         res.render('components/hostHomepage', {title: 'Host Homepage'});
       }
     } catch (error) {
@@ -148,6 +151,20 @@ router
       res.status(400).json({error: 'Sign up error'});
     }
 }); 
+
+router
+  .route('/error')
+  .get(async (req, res) => {
+    //code here for GET
+    res.render('error', { title: 'Error' });
+});
+
+router
+  .route('/logout')
+  .get(async (req, res) => {
+  req.session.destroy();
+  res.send('Logged out');
+});
 
 export default router;
 

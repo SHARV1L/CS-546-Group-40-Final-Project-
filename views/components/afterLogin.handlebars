@@ -10,13 +10,17 @@
    
     </header>
     <main> 
-      <span><p>To book or search a property, sign-in as a Guest: </p> <button id="guest" onclick="location.href='/user/:id'">Guest</button></span>
-      <br>
-      <br>
-      <span><p> To post a propertey, sign-in as a Host: </p> <button id="host" onclick="location.href='/host/:id'">Host</button></span>
+      <div class="user-pref">
+        <form id="user-pref" action="/user-pref" method="post"></form>
+          <span><p>To book or search a property, sign-in as a Guest: </p> <button id="guest" type="submit" value="user">Guest</button></span>
+          <br>
+          <br>
+          <span><p> To post a propertey, sign-in as a Host: </p> <button id="host" type="submit" value="host">Host</button></span>
+        </form>
+      </div>  
     </main>
     
-
+     <a href="/logout">Logout</a>
     {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
     </main>
   </body>

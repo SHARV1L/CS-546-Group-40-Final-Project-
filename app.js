@@ -52,7 +52,7 @@ app.set('view engine', 'handlebars');
 //app.use('/hosts', mwf.checkAdminRoute);
 app.use('/login', mwf.checkLoginAccess); 
 app.use('/sign-up', mwf.checkRegisterAccess);
-//app.use('/', mwf.checkRegisterAccess);
+app.use('/logout', mwf.checkLogoutAccess);
 app.use('/', mwf.loggingMiddleware);
 
 configRoutes(app);
