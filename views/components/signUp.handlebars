@@ -2,7 +2,7 @@
   <html lang="en">
     <head>
         <title>Sign-Up</title>
-        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+        <link rel="stylesheet" href="/styles/components-styles/UserLogin.css">
     </head>
   <body>
     <header>
@@ -11,12 +11,13 @@
     </header>
     <main> 
       <div class="sign-up-form">
-        <form id="sign-up-form" action="/login" method="post">
+        <form id="sign-up-form" action="/signup" method="post">
             <label for="sign-up" aria-placeholder="sign-up">Sign-Up Here!</label><br><br>
-            <textarea type="text" placeholder="username" id="username" name="username" required></textarea><br>
-            <textarea type="password" placeholder="password" id="password" name="password" required></textarea><br>
-            <textarea type="tel" placeholder="phone" id="phone" name="phone" required></textarea><br>
+            <textarea type="text" placeholder="firstName" id="firstName" name="firstName" required></textarea><br>
+            <textarea type="text" placeholder="lastName" id="lastName" name="lastName" required></textarea><br>
             <textarea type="email" placeholder="email" id="email" name="email" required></textarea><br>
+            <textarea type="password" placeholder="password" id="password" name="password" required></textarea><br>
+            <textarea type="tel" placeholder="phone" id="phoneNumber" name="phoneNumber" required></textarea><br>
             <button type="submit" id="signup-btn" >Sign-Up</button>  
         </form>
       </div>
