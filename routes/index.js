@@ -19,6 +19,7 @@ const constructorMethod = (app) => {
   app.use('/login', loginUserRoutes);
   app.use('/sign-up', loginRoutes);
   app.use('/sign-up', loginUserRoutes);
+  app.use('/user-pref', loginRoutes);
   // app.use('/', loginRoutes);
   // app.use('./sign-up'. loginUser);
 

@@ -33,7 +33,9 @@ let exportedFunctions = {
       const existingUser = await userCollection.findOne({email: email.trim()});
    
       if (existingUser) {
-        throw 'User already exists';
+        //throw 'User already exists';
+        const user = await this.getUserById(existingUser.id);
+        return res.render('/login', {user});
       }
       else {
         // Hash the password before storing it in the database

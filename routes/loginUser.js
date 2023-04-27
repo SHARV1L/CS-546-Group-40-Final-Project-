@@ -111,8 +111,8 @@ router
           phoneNumber,
           accountType
         )
-        console.log("user:", user);
-        if(user) {
+        console.log("user is:", user);
+        if(!user) {
           res.redirect('/login');
         } else res.redirect('/user-pref');
       }

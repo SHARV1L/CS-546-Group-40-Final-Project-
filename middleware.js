@@ -58,7 +58,7 @@ const mwf = {
     if (isAuthenticated(req.session)) {
       next();
     }
-    res.redirect('/login');
+    res.redirect('/users');
   },
   
   // Middleware 5
