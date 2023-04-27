@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb';
-import exportedFunctions from './review.js';
-import { usersData } from '../config/mongoCollections.js';
+import { users } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
 
 const exportedFunctions = () => {
@@ -30,7 +29,7 @@ const exportedFunctions = () => {
             profilePicture: profilePicture,
             accountType: accountType
         }
-        const userCollection = await usersData();
+        const userCollection = await users();
         const insertInfo = await userCollection.insertOne(user);
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw new Error('Could not add user');
@@ -40,7 +39,7 @@ const exportedFunctions = () => {
     }
 
     const getAll = async () => {
-        const userCollection = await usersData();
+        const userCollection = await users();
         let userList = await userCollection.find({}).toArray();
         if (!userList) {
             throw new Error('Could not get all users');
@@ -55,7 +54,7 @@ const exportedFunctions = () => {
 
     const get = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const userCollection = await usersData();
+        const userCollection = await users();
         const user = await userCollection.findOne({ _id: new ObjectId(id) });
         if (user === null) {
             throw new Error('No user with that id');
@@ -67,7 +66,7 @@ const exportedFunctions = () => {
 
     const remove = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const userCollection = await usersData();
+        const userCollection = await users();
         const deletionInfo = await userCollection.findOneAndDelete({
             _id: new ObjectId(id)
         });
@@ -95,7 +94,7 @@ const exportedFunctions = () => {
         phoneNumber = helpers.checkPhoneNumber(phoneNumber, "Phone number");
         // profilePicture = helpers.
         accountType = helpers.checkString(accountType, "Account type");
-        const userCollection = await usersData();
+        const userCollection = await users();
         const user = await userCollection.findOneAndUpdate(
             { _id: new ObjectId(id) },
             { $set: { firstName, lastName, email, password, phoneNumber, profilePicture, accountType } },

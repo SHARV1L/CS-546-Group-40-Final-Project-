@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb';
-import exportedFunctions from './review.js';
-import { hostsData } from '../config/mongoCollections.js';
+import { hosts } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
 
 const exportedFunctions = () => {
@@ -13,7 +12,7 @@ const exportedFunctions = () => {
             _id: new ObjectId(),
             propertyIds: propertyIds
         }
-        const hostCollection = await hostsData();
+        const hostCollection = await hosts();
         const insertInfo = await hostCollection.insertOne(host);
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw new Error('Could not add host');
@@ -23,7 +22,7 @@ const exportedFunctions = () => {
     }
 
     const getAll = async () => {
-        const hostCollection = await hostsData();
+        const hostCollection = await hosts();
         let hostList = await hostCollection.find({}).toArray();
         if (!hostList) {
             throw new Error('Could not get all properties');
@@ -38,7 +37,7 @@ const exportedFunctions = () => {
 
     const get = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const hostCollection = await hostsData();
+        const hostCollection = await hosts();
         const host = await hostCollection.findOne({ _id: new ObjectId(id) });
         if (host === null) {
             throw new Error('No host with that id');
@@ -50,7 +49,7 @@ const exportedFunctions = () => {
 
     const remove = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const hostCollection = await hostsData();
+        const hostCollection = await hosts();
         const deletionInfo = await hostCollection.findOneAndDelete({
             _id: new ObjectId(id)
         });
@@ -66,7 +65,7 @@ const exportedFunctions = () => {
     ) => {
         host_id = helpers.checkId(host_id, "Host ID");
         propertyIds = helpers.checkStringArray(propertyIds, `Property ID's`);
-        const hostCollection = await hostsData();
+        const hostCollection = await hosts();
         const host = await hostCollection.findOneAndUpdate(
             { _id: new ObjectId(host_id) },
             { $set: { propertyIds } },

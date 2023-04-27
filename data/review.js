@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb';
-import exportedFunctions from './review.js';
-import { reviewsData } from '../config/mongoCollections.js';
+import { reviews } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
 
 const exportedFunctions = () => {
@@ -24,7 +23,7 @@ const exportedFunctions = () => {
             reviewText: reviewText,
             ratings: ratings
         }
-        const reviewCollection = await reviewsData();
+        const reviewCollection = await reviews();
         const insertInfo = await reviewCollection.insertOne(review);
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw new Error('Could not add review');
@@ -34,7 +33,7 @@ const exportedFunctions = () => {
     }
 
     const getAll = async () => {
-        const reviewCollection = await reviewsData();
+        const reviewCollection = await reviews();
         let reviewList = await reviewCollection.find({}).toArray();
         if (!reviewList) {
             throw new Error('Could not get all reviews');
@@ -49,7 +48,7 @@ const exportedFunctions = () => {
 
     const get = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const reviewCollection = await reviewsData();
+        const reviewCollection = await reviews();
         const review = await reviewCollection.findOne({ _id: new ObjectId(id) });
         if (review === null) {
             throw new Error('No review with that id');
@@ -61,7 +60,7 @@ const exportedFunctions = () => {
 
     const remove = async (id) => {
         id = helpers.checkId(id, 'ID');
-        const reviewCollection = await reviewsData();
+        const reviewCollection = await reviews();
         const deletionInfo = await reviewCollection.findOneAndDelete({
             _id: new ObjectId(id)
         });
@@ -85,7 +84,7 @@ const exportedFunctions = () => {
         host_id = helpers.checkId(host_id,'Host ID');
         reviewText = helpers.checkString(reviewText, 'Review Text');
         ratings = helpers.checkRating(ratings, 'Ratings');
-        const reviewCollection = await reviewsData();
+        const reviewCollection = await reviews();
         const review = await reviewCollection.findOneAndUpdate(
             { _id: new ObjectId(id) },
             { $set: { user_id, property_id, host_id, reviewText, ratings } },

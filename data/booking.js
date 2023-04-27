@@ -1,8 +1,6 @@
 import { ObjectId } from 'mongodb';
-import exportedFunctions from './review.js';
-import { bookingsData } from '../config/mongoCollections.js';
+import { booking } from '../config/mongoCollections.js';
 import helpers from '..helper.js';
-import { bookingsData } from './index.js';
 
 const exportedFunctions = () => {
 
@@ -26,7 +24,7 @@ const exportedFunctions = () => {
             checkOutDate: checkOutDate,
             totalPrice: totalPrice
         }
-        const bookingCollection = await bookingsData();
+        const bookingCollection = await booking();
         const insertInfo = await bookingCollection.insertOne(booking);
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw new Error('Could not add booking');
@@ -36,7 +34,7 @@ const exportedFunctions = () => {
     }
 
     const getAll = async () => {
-        const bookingCollection = await bookingsData();
+        const bookingCollection = await booking();
         let bookingList = await bookingCollection.find({}).toArray();
         if (!bookingList) {
             throw new Error('Could not get all bookings');
@@ -51,7 +49,7 @@ const exportedFunctions = () => {
 
     const get = async (id) => { 
         id = helpers.checkId(id, 'ID');
-        const bookingCollection = await bookingsData();
+        const bookingCollection = await booking();
         const booking = await bookingCollection.findOne({ _id: new ObjectId(id) });
         if (booking === null) {
             throw new Error('No booking with that id');
@@ -63,7 +61,7 @@ const exportedFunctions = () => {
 
     const remove = async (id) => { 
         id = helpers.checkId(id, 'ID');
-        const bookingCollection = await bookingsData();
+        const bookingCollection = await booking();
         const deletionInfo = await bookingCollection.findOneAndDelete({
             _id: new ObjectId(id)
         });
@@ -87,7 +85,7 @@ const exportedFunctions = () => {
         checkInDate = helpers.checkDate(checkInDate, "Check-in Date");
         checkOutDate = helpers.checkDate(checkOutDate, "Check-out Date");
         totalPrice = helpers.checkNumber(totalPrice, "Total Price");   
-        const bookingCollection = await bookingsData();
+        const bookingCollection = await booking();
         const booking = await bookingCollection.findOneAndUpdate(
             { _id: new ObjectId(booking_id) },
             { $set: { property_id, user_id, checkInDate, checkOutDate, totalPrice } },

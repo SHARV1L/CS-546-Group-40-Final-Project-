@@ -95,12 +95,14 @@ const exportedMethods = {
         if (email.length === 0) {
             throw new Error(`${varName} cannot be an empty string or string with just spaces`);
         }
+        email = email.toLowerCase();
         if (!isNaN(strVal)) {
             throw new Error(`${strVal} is not a valid value for ${varName} as it only contains digits`);
         }
         if (email.indexOf(' ') >= 0) {
             throw new Error(`${varName} must not contain spaces in between `);
         }
+        return email;
     },
     checkNumber(number, varName) {
         if (!number) {
@@ -115,14 +117,16 @@ const exportedMethods = {
                 throw new Error(`You must supply a valid ${varName}!`);
             }
         }
+        return number;
     },
     checkImageFile(file, varName) {
         if (!file) {
             throw new Error(`You must supply a valid ${varName}!`);
         }
         const reader = new FileReader();
-        reader.readAsDataURL(file);
-        return new Promise((resolve, reject) => {
+        file = reader.readAsDataURL(file);
+        if(!(  
+            new Promise((resolve, reject) => {
             reader.onload = () => {
                 const image = new Image();
                 image.src = reader.result;
@@ -136,7 +140,10 @@ const exportedMethods = {
                     reject(false);
                 };
             };
-        });
+        }))){
+            throw new Error(`${varName} is invalid`);
+        };
+        return file;
     },
     checkDate(date, varName) {
         if (!date) {
