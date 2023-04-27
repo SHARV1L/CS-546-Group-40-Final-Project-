@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { reviews } from '../config/mongoCollections.js';
-import helpers from '..helper.js';
+import helpers from '../helper.js';
 
 const exportedFunctions = () => {
     const create = async (

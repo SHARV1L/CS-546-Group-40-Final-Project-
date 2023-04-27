@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { users } from '../config/mongoCollections.js';
-import helpers from '..helper.js';
+import helpers from '../helper.js';
 
 const exportedFunctions = () => {
     const create = async (

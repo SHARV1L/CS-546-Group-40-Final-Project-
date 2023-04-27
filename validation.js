@@ -1,4 +1,4 @@
-import {ObjectId} from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 const exportedMethods = {
   checkId(id, varName) {
@@ -35,7 +35,29 @@ const exportedMethods = {
     }
 
     return arr;
+  },
+  login(username, password) {
+    if (username.length > 0 && password.length > 0) {
+      return null;
+    }
+
+    else return validationErrors; // if login is successful
+  },
+
+  signup(username, password, email, phone) {
+    const errors = {};
+
+    // Validate username
+    if (!username) {
+      errors.username = 'Username is required';
+    } else if (username.length < 3) {
+      errors.username = 'Username should be at least 3 characters long';
+    } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      errors.username = 'Username can only contain letters and numbers';
+    }
+    return errors;
   }
+
 };
 
 export default exportedMethods;

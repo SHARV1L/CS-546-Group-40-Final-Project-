@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { booking } from '../config/mongoCollections.js';
-import helpers from '..helper.js';
+import helpers from '../helper.js';
 
 const exportedFunctions = () => {
 
@@ -45,9 +45,9 @@ const exportedFunctions = () => {
         });
         const result = JSON.parse(JSON.stringify(bookingList));
         return result;
-     }
+    }
 
-    const get = async (id) => { 
+    const get = async (id) => {
         id = helpers.checkId(id, 'ID');
         const bookingCollection = await booking();
         const booking = await bookingCollection.findOne({ _id: new ObjectId(id) });
@@ -59,7 +59,7 @@ const exportedFunctions = () => {
         return result;
     }
 
-    const remove = async (id) => { 
+    const remove = async (id) => {
         id = helpers.checkId(id, 'ID');
         const bookingCollection = await booking();
         const deletionInfo = await bookingCollection.findOneAndDelete({
@@ -73,22 +73,20 @@ const exportedFunctions = () => {
 
     const update = async (
         booking_id,
-        property_id,
         user_id,
         checkInDate,
         checkOutDate,
         totalPrice
-    ) => { 
+    ) => {
         booking_id = helpers.checkId(booking_id, "Booking ID");
-        property_id = helpers.checkId(property_id, "Property ID");
         user_id = helpers.checkId(user_id, "User ID");
         checkInDate = helpers.checkDate(checkInDate, "Check-in Date");
         checkOutDate = helpers.checkDate(checkOutDate, "Check-out Date");
-        totalPrice = helpers.checkNumber(totalPrice, "Total Price");   
+        totalPrice = helpers.checkNumber(totalPrice, "Total Price");
         const bookingCollection = await booking();
         const booking = await bookingCollection.findOneAndUpdate(
             { _id: new ObjectId(booking_id) },
-            { $set: { property_id, user_id, checkInDate, checkOutDate, totalPrice } },
+            { $set: { user_id, checkInDate, checkOutDate, totalPrice } },
             { returnOriginal: false }
         );
         if (!booking.value || booking.modifiedCount === 0) {
@@ -100,6 +98,53 @@ const exportedFunctions = () => {
         const renamedBand = await this.get(booking_id);
         const result = JSON.parse(JSON.stringify(renamedBand));
         return result;
+    }
+
+    const updatePut = async (
+        bookingId,
+        userId,
+        checkInDate,
+        checkOutDate,
+        totalPrice
+    ) => {
+        bookingId = validation.checkId(bookingId);
+        userId = validation.checkId(userId);
+        checkInDate = helpers.checkDate(checkInDate, "Check-in Date");
+        checkOutDate = helpers.checkDate(checkOutDate, "Check-out Date");
+        const updatedBookingInfo = {
+            checkInDate,
+            checkOutDate,
+            totalPrice
+        };
+        const bookingCollection = await booking();
+        const updatedInfo = await bookingCollection.findOneAndUpdate(
+            { bookingId: ObjectId(bookingId) },
+            { userId: bookingCollection.userId },
+            { $set: updatedBookingInfo },
+            { returnDocument: 'after' }
+        );
+        if (updatedInfo.lastErrorObject.n === 0) {
+            throw [404, `Error: Updation failed could not find user with that specific id`];
+        }
+        return await updatedInfo.value;
+    }
+
+    const updatePatch = async (id, userInfo) => {
+        id = validation.checkId(id);
+        userInfo = helpers.checkString(userInfo, "User info");
+        //validation functions here
+
+        const bookingCollection = await booking();
+        const updatedInfo = await bookingCollection.findOneAndUpdate(
+            { _id: new ObjectId(id) },
+            { $set: userInfo },
+            { returnDocument: 'after' }
+        );
+        if (updatedInfo.lastErrorObject.n === 0) {
+            throw [404, `Error: update failed could not find user with this ${id}`];
+        }
+
+        return await updatedInfo.value;
     }
 
 }
