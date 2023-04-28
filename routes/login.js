@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import validation from '../validation.js';
 
-// http://localhost:3000/
+// http://localhost:3000/login/
 router.route('/').get(async (req, res) => {
     //code here for GET
     try {
