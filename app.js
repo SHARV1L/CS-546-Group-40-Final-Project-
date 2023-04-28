@@ -2,6 +2,9 @@ import express from 'express';
 import configRoutes from './routes/index.js';
 import exphbs from 'express-handlebars';
 import cookieParser from 'cookie-parser';
+import session from 'express-session'
+import mwf from './middleware.js'
+
 
 
 import { fileURLToPath } from 'url';
@@ -9,7 +12,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import path from 'path';
+//import path from 'path';
 
 const staticDirMedia = express.static(__dirname + '/public');
 const staticDirStyles = express.static(__dirname + '/styles');
@@ -25,6 +28,14 @@ const rewriteUnsupportedBrowerMethods = (req, res, next) => {
     next();
 };
 
+// Setup session middleware
+app.use(session({
+    name: 'sessions',
+    secret: 'I have three german shephards and a labrador back home',
+    resave: false,
+    saveUninitialized: true
+  }));
+  
 app.use(cookieParser());
 app.use('/assets', staticDirMedia);
 app.use('/styles', staticDirStyles);
@@ -37,10 +48,14 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 // app.engine('handlebars', exphbs);
 app.set('view engine', 'handlebars');
 
-// app.set('view engine', path.join(__dirname, 'views/'));
+// Middleware function:
+//app.use('/hosts', mwf.checkAdminRoute);
+app.use('/login', mwf.checkLoginAccess); 
+app.use('/sign-up', mwf.checkRegisterAccess);
+//app.use('/', mwf.checkRegisterAccess);
+app.use('/', mwf.loggingMiddleware);
 
 configRoutes(app);
-
 
 app.listen(3000, () => {
     console.log("Server has started...");

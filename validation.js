@@ -36,10 +36,15 @@ const exportedMethods = {
 
     return arr;
   },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 96dd4e2b91e5db7efe86ff9e515bfae748fc0aa8
   login(username, password) {
     if (username.length > 0 && password.length > 0) {
       return null;
     }
+<<<<<<< HEAD
 
     else return validationErrors; // if login is successful
   },
@@ -56,6 +61,58 @@ const exportedMethods = {
       errors.username = 'Username can only contain letters and numbers';
     }
     return errors;
+=======
+    
+    else return validationErrors; // if login is successful
+  },
+
+  signup(firstName, lastName, email, password, phoneNumber) {
+    const errors = {};
+  
+    // Validate username
+    if (!firstName) {
+      errors.firstname = 'Last Name is required';
+    if (!lastName) {
+      errors.lastname = 'Last Name is required';
+    }  
+    } else if (firstName.length < 3 ) {
+      errors.firstName = 'First Name should be at least 3 characters long';
+    } else if (lastName.length < 2) {
+      errors.lastName = 'Last Name should be at least 2 characters long';
+    } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+      errors.firstName = 'Username can only contain letters and numbers';
+    } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+        errors.lastName = 'Username can only contain letters and numbers';
+      }
+    },    
+  
+    // Validate password
+    checkValidPassword(password) {
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (password.length < 8) {
+      errors.password = 'Password should be at least 8 characters long';
+    } else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(password)) {
+      throw "Invalid Password should be 4 characters long, 1 Uppercase, 1 Lower case, 1 special charcter and 1 number";
+    }
+  },
+  
+    // Validate email
+    checkValidEmail(email) {
+    if (!email) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Invalid email format';
+    }
+  },
+    // Validate phone number
+    checkValidPhone(phoneNumber) {
+    if (!phoneNumber) {
+      errors.phone = 'Phone number is required';
+    } else if (!/^\d{10}$/.test(phoneNumber)) {
+      errors.phone = 'Invalid phone number format';
+    }
+>>>>>>> 96dd4e2b91e5db7efe86ff9e515bfae748fc0aa8
   }
 
 };
