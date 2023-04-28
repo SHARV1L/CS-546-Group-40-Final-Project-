@@ -75,13 +75,6 @@ userpref.addEventListener("submit", async (event) => {
     alert('error');
   }
 
-  // var buttonVal = event.submitter.value;
-  // switch(buttonVal) {
-  //   case "user": res.render('/components/guestHomepage', {title : 'Guest Homepage'}); break;
-  //   case "host": res.render('/components/hostHomepage', {title: 'Host Homepage'}); break;
-  //   case "": res.render('components/error');
-  //   break;
-  // }
 })
 
 const search_rentals = document.getElementById('search_rentals');
