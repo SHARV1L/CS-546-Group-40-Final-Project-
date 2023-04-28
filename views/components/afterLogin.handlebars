@@ -7,15 +7,14 @@
   <body>
     <header>
     <h1>User Preference</h1>
-   
     </header>
     <main> 
       <div class="user-pref">
-        <form id="user-pref" action="/user-pref" method="post"></form>
-          <span><p>To book or search a property, sign-in as a Guest: </p> <button id="guest" type="submit" value="user">Guest</button></span>
+        <form id="user-pref" method="post" action="/user-pref"></form>
+          <span><p>To book or search a property, sign-in as a Guest: </p> <button id="guest" type="submit" value="guest">Guest</button></span>
           <br>
           <br>
-          <span><p> To post a propertey, sign-in as a Host: </p> <button id="host" type="submit" value="host">Host</button></span>
+          <span><p> To post a propertey, sign-in as a Host: </p> <button id="host" value="host">Host</button></span>
         </form>
       </div>  
     </main>

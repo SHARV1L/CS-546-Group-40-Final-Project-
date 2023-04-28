@@ -49,11 +49,12 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 // Middleware function:
-//app.use('/hosts', mwf.checkAdminRoute);
+app.use('/admin', mwf.checkAdminRoute);
 app.use('/login', mwf.checkLoginAccess); 
 app.use('/sign-up', mwf.checkRegisterAccess);
 app.use('/logout', mwf.checkLogoutAccess);
 app.use('/', mwf.loggingMiddleware);
+//app.use('/user-pref', mwf.checkUserRole);
 
 configRoutes(app);
 

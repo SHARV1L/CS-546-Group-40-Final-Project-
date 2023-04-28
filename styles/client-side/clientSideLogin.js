@@ -30,8 +30,9 @@ signUpForm.addEventListener('submit', async (event) => {
   const password = document.getElementById('password').value;
   const phoneNumber = document.getElementById('phoneNumber').value;
   const accountType = document.getElementById('accountType').value;
+  const role = document.getElementById('role').value;
 
-  if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType) {
+  if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType || !role) {
     throw 'Please fill in all required fields';
   }
   // Send the sign up request to the server
@@ -40,7 +41,7 @@ signUpForm.addEventListener('submit', async (event) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ firstName, lastName, email, password, phoneNumber, accountType })
+    body: JSON.stringify({ firstName, lastName, email, password, phoneNumber, accountType, role })
   });
 
   if (response.ok) {
@@ -55,24 +56,27 @@ signUpForm.addEventListener('submit', async (event) => {
 //user-prefer button submit
 const userpref = document.getElementById('user-pref');
 
+console.log(userpref);
+
 userpref.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   var buttonVal = event.submitter.value;
 
-  const response = await fetch('user-pref', {
+  console.log(buttonVal, "Line 64");
+  const response = await fetch('/user-pref', {
     method: 'POST',
-    headers: {
+    body: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ buttonVal })
+    body: JSON.stringify( buttonVal )
   });
 
   if (response.ok) {
     // Successful sign up, redirect to the login page
     window.location.href = '/user-pref';
   } else {
-    alert('error');
+    alert(response.message);
   }
 
 })
@@ -86,7 +90,7 @@ search_rentals.addEventListener('submit', async (event) => {
   const price = document.getElementById('price').value;
   const availability = document.getElementById('availability').value;
   const amenities = document.getElementById('amenities').value;
-  //const role = document.getElementById('role').value;
+  const role = document.getElementById('role').value;
 
   if ( !location || !price || !available || !amenities ) {
     throw 'Please fill in all required fields';
@@ -129,3 +133,5 @@ search_rentals.addEventListener('submit', async (event) => {
   });
 
 });
+
+

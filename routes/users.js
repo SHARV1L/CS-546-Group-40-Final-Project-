@@ -170,4 +170,6 @@ router.route('/user-id').get(async (req, res) => {
   }
 });
 
+router.route('/user')
+
 export default router;

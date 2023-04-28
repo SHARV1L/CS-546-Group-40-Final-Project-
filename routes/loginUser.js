@@ -35,16 +35,17 @@ router
       // validating username and password
       const user = await userMethods.checkUser(username, password);
       const validationErrors = validation.login(username, password);
-     
+      
+      console.log("Inside login route")
       if (!validationErrors) {
         if(!user) {
-          res.redirect('/sign-up');
+          res.render('components/error', {title: 'login credentials cannot be validated, enter again'});
         }
         else {
           console.log("response inside else");
-          req.session.user = {firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email}; //// change username to firstName
-          if(user.role === "host") res.redirect('/host');
-          else if(user.role === "user") res.redirect('/user');
+          req.session.user = {firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
+          if(user.role === "admin") res.redirect('/admin');
+          else if(user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
         }
       } else res.render('components/login', { title: 'Login Page', errors: validationErrors });
@@ -70,15 +71,18 @@ router
     try {
       const buttonVal = req.body.button;
 
-      console.log(buttonVal);
-      if(buttonVal === "user") {
+      console.log("User Type: ", buttonVal);
+
+      if(buttonVal === 'guest') {
+        console.log("inside if user", buttonVal);
         res.render('components/guestHomepage', {title: 'Guest Homepage'});
-      }
-      else if (buttonVal === "host") {
+      } else if (buttonVal === 'host') {
         res.render('components/hostHomepage', {title: 'Host Homepage'});
+      } else {
+        res.status(400).json({ error: 'Invalid button value' });
       }
     } catch (error) {
-      res.status(400).json({error: e});
+      res.status(400).json({error: error});
     }
 });
 
@@ -96,13 +100,10 @@ router
   .post(async (req, res) => {
     //code here for GET
     try {
-      const { firstName, lastName, email, password, phoneNumber, accountType } = req.body;
+      const { firstName, lastName, email, password, phoneNumber, accountType, role } = req.body;
       // console.log(req.body);
-      const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType);
+      const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType, role);
 
-      console.log("validation:", validationErrors);
-
-      console.log("outside if:", req.body);
       if (!validationErrors) {    
         console.log("inside if:", req.body);
         //creating new user 
@@ -112,51 +113,22 @@ router
           email,
           password,
           phoneNumber,
-          accountType
+          accountType,
+          role
         )
-        console.log("user is:", user);
-        if(!user) {
-          res.redirect('/login');
-        } else res.redirect('/user-pref');
       }
-      else res.redirect('/sign-up');
     } 
     catch(error) {
+        console.log(error, "line 147 loginUser");
         res.status(400).json(error);
       }
   });
     
 router
-.route('/user-pref')
-  .get(async (req, res) => {
-    //code here for GET
-    try {
-      res.render('components/afterLogin', {title: 'User Preference Page'});
-    } catch (error) {
-      res.status(400).json({error: e});
-    }
-  })
-  .post(async (req, res) => {
-    //code here for GET
-    try {
-      const { email, password } = req.body;
-      console.log(username);
-      const validationErrors = validation.signup(email, password);
-        if (validationErrors) {
-          return res.render('components/signUp', { title: 'Sign Up Page', errors: validationErrors });
-        }
-        res.redirect('/login');
-      //res.render('components/signUp', {title: 'Sign Up Page'});
-    } catch (error) {
-      res.status(400).json({error: 'Sign up error'});
-    }
-}); 
-
-router
   .route('/error')
   .get(async (req, res) => {
     //code here for GET
-    res.render('error', { title: 'Error' });
+    res.render('error', { error: 'Error Page' });
 });
 
 router

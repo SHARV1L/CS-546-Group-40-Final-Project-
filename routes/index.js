@@ -4,7 +4,7 @@ import bookingRoutes from './bookings.js';
 import propertyRoutes from './properties.js';
 import reviewRoutes from './reviews.js';
 import listingRoutes from './listings.js';
-import loginRoutes from './loginUser.js';
+//import loginRoutes from './loginUser.js';
 import loginUserRoutes from './loginUser.js';
 
 const constructorMethod = (app) => {
@@ -15,11 +15,11 @@ const constructorMethod = (app) => {
   app.use('/property', propertyRoutes);
   app.use('/review', reviewRoutes);
   app.use('/search_rentals', listingRoutes);  // Property Listing Page route
-  app.use('/login', loginRoutes);
-  app.use('/login', loginUserRoutes);
-  app.use('/sign-up', loginRoutes);
-  app.use('/sign-up', loginUserRoutes);
-  app.use('/user-pref', loginRoutes);
+  // app.use('/login', loginRoutes);
+  // app.use('/login', loginUserRoutes);
+  // app.use('/sign-up', loginRoutes);
+  // app.use('/sign-up', loginUserRoutes);
+  // app.use('/user-pref', loginRoutes);
   // app.use('/', loginRoutes);
   // app.use('./sign-up'. loginUser);
 

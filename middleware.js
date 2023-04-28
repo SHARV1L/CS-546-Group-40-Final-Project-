@@ -2,10 +2,10 @@ const mwf = {
     // Middleware 1
     checkUserRole (req, res, next)  {
     if (isAuthenticated(req.session)) {
-      if (req.session.user.accountType === 'host') {
-        return res.redirect('/host');
-      } else if (req.session.user.accountType === 'user') {
-        return res.redirect('/user');
+      if (req.session.user.role === 'admin') {
+        return res.redirect('/admin');
+      } else if (req.session.user.role === 'user') {
+        return res.redirect('/user-pref');
       }
     }
   },
@@ -14,10 +14,10 @@ const mwf = {
     checkLoginAccess(req, res, next) {
       let postProcess = false;
     if (isAuthenticated(req.session)) {
-      if (req.session.user.accountType === 'host') {
-        return res.redirect('/host');
-      } else if (req.session.user.accountType === 'user') {
-        return res.redirect('/user');
+      if (req.session.user.role === 'admin') {
+        return res.redirect('/admin');
+      } else if (req.session.user.role === 'user') {
+        return res.redirect('/user-pref');
       } //else return res.redirect('/login');
     }
     else{
@@ -37,20 +37,38 @@ const mwf = {
   // Middleware 3
     checkRegisterAccess(req, res, next)  {
     if (isAuthenticated(req.session)) {
-      if (req.session.user.accountType === 'host') {
-        return res.redirect('/host');
-      } else if (req.session.user.accountType === 'user') {
-        return res.redirect('/user');
+      if (req.session.user.role === 'admin') {
+        return res.redirect('/admin');
+      } else if (req.session.user.role === 'user') {
+        return res.redirect('/user-pref');
       }
     }
-    else {  
-      if(Object.keys(req.body).length > 0){
-        console.log("Inside MWF register");
-        req.method = "POST";
+      else {  
+        if(Object.keys(req.body).length > 0){
+          console.log("Inside MWF register");
+          req.method = "POST";
+      }
+      else req.method = 'GET';
+      next();
     }
-    else req.method = 'GET';
-    next();
-  }
+  },
+
+  // Middleware #
+  checkUserRole(req, res, next) {
+    if(isAuthenticated(req.session)) {
+      if (req.session.user.accountType === 'user') {
+        return res.redirect('/guestHomepage');
+      } else if (req.session.user.accountType === 'host') {
+        return res.redirect('/hostHomepage')
+      }
+    }
+    else {
+      if(Object.keys(req.body).length > 0){
+        req.method = "POST";
+      }
+      else req.method = 'GET';
+      next();
+    }
   },
   
   // // Middleware 4
@@ -61,21 +79,21 @@ const mwf = {
   //   res.redirect('/users');
   // },
   
-  // // Middleware 5
-  //   checkAdminRoute (req, res, next) {
-  //   if (isAuthenticated(req.session)) {
-  //     if (req.session.user.role === 'host') {
-  //       req.method = "GET"
-  //       next(); 
-  //     }
-  //      else {
-  //       res.status(403).render('error', {
-  //         message: 'You do not have permission to view this page'
-  //       });
-  //    }
-  //   }
-  //   else res.redirect('/login');
-  // },
+  // Middleware 5
+    checkAdminRoute (req, res, next) {
+    if (isAuthenticated(req.session)) {
+      if (req.session.user.role === 'admin') {
+        req.method = "GET"
+        next(); 
+      }
+       else {
+        res.status(403).render('error', {
+          message: 'You do not have permission to view this page'
+        });
+     }
+    }
+    else res.redirect('/login');
+  },
   
   // Middleware 6
     checkLogoutAccess (req, res, next)  {

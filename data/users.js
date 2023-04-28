@@ -12,8 +12,8 @@ let exportedFunctions = {
     password,
     phoneNumber,
     accountType,
+    role,
     ) {
-
       // needs to be uncommented later ************** /
 
     // firstName = validation.checkString(firstName,'First Name');
@@ -27,43 +27,40 @@ let exportedFunctions = {
     //accountType = validation.checkString(accountType, "Account Type");
     //console.log(firstName);
 
-    console.log("This is inside createUser data function: ", firstName, lastName, email, password, phoneNumber)   /// printed from here
+    if (role.trim() !== 'admin' && role.trim() !== 'user') {
+      throw " Enter a valid user or admin "
+    } 
 
-    try {
+    console.log("This is inside createUser data function: ", firstName, lastName, email, password, phoneNumber, accountType, role)   /// printed from here
+
       const userCollection = await users();
   
+      console.log(email);
       const existingUser = await userCollection.findOne({email: email.trim()});
    
       if (existingUser) {
-        //throw 'User already exists';
-        const user = await this.getUserById(existingUser.id);
-        return res.render('/login', {user});
+        throw 'User already exists';
       }
       else {
         // Hash the password before storing it in the database
         const hashedPassword = await bcrypt.encryption(password);
   
-        let newUser = {
-  
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
-          email: email.trim(),
-          //password: password.trim(),
-          password: hashedPassword,
-          phoneNumber: phoneNumber.trim(),
-          //profilePicture:profilePicture,
-          accountType: accountType
-        };
+      let newUser = {
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        password: hashedPassword,
+        phoneNumber: phoneNumber.trim(),
+        //profilePicture:profilePicture,
+        accountType: accountType.trim(),
+        role: role.trim(),
+      };
         
         //const userCollection = await users();
         const newInsertInformation = await userCollection.insertOne(newUser);
         if(!newInsertInformation.insertedId) throw "Insertion Failed";
         return await this.getUserById(newInsertInformation.insertedId.toString());  
       }
-    } catch (error) {
-      console.log(error);
-    }
-
   },
     
   async getAllUsers() {
@@ -169,7 +166,8 @@ let exportedFunctions = {
         firstName: user.firstName,
         lastName: user.lastName,
         emailAddress: user.emailAddress,
-        phoneNumber: user.phonenumber
+        phoneNumber: user.phonenumber,
+        role: user.role
       };
     }
   }
