@@ -23,7 +23,7 @@ const constructorMethod = (app) => {
   // app.use('./sign-up'. loginUser);
 
   app.use('*', (req, res) => {
-    res.status(404).json({error : 'Not Found'}); //render('error',  {class: 'Not Found', message: "No matching values"});
+    res.status(404).json({ error: 'Not Found' }); //render('error',  {class: 'Not Found', message: "No matching values"});
   });
 };
 

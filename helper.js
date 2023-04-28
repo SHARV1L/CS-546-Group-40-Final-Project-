@@ -125,22 +125,22 @@ const exportedMethods = {
         }
         const reader = new FileReader();
         file = reader.readAsDataURL(file);
-        if(!(  
+        if (!(
             new Promise((resolve, reject) => {
-            reader.onload = () => {
-                const image = new Image();
-                image.src = reader.result;
-                image.onload = () => {
-                    const width = image.width;
-                    const height = image.height;
-                    const isValid = (typeof width === 'number' && width > 0 && typeof height === 'number' && height > 0);
-                    resolve(isValid);
+                reader.onload = () => {
+                    const image = new Image();
+                    image.src = reader.result;
+                    image.onload = () => {
+                        const width = image.width;
+                        const height = image.height;
+                        const isValid = (typeof width === 'number' && width > 0 && typeof height === 'number' && height > 0);
+                        resolve(isValid);
+                    };
+                    image.onerror = () => {
+                        reject(false);
+                    };
                 };
-                image.onerror = () => {
-                    reject(false);
-                };
-            };
-        }))){
+            }))) {
             throw new Error(`${varName} is invalid`);
         };
         return file;
@@ -156,7 +156,7 @@ const exportedMethods = {
         if (date.length === 0) {
             throw new Error(`${varName} cannot be an empty string or string with just spaces`);
         }
-        let parts = date.split('-');    
+        let parts = date.split('-');
         let month = parseInt(parts[0], 10);
         let day = parseInt(parts[1], 10);
         let year = parseInt(parts[2], 10);

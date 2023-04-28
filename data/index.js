@@ -1,8 +1,8 @@
-import userDataFunctions from './user.js';
-import hostDataFunctions from './host.js';
-import bookingDataFunctions from './booking.js';
-import propertyDataFunctions from './property.js';
-import reviewDataFunctions from './review.js';
+import userDataFunctions from './users.js';
+import hostDataFunctions from './hosts.js';
+import bookingDataFunctions from './bookings.js';
+import propertyDataFunctions from './properties.js';
+import reviewDataFunctions from './reviews.js';
 
 
 export const usersData = userDataFunctions;
