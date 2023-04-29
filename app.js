@@ -1,15 +1,20 @@
 // This file should set up the express server as shown in the lecture code
 import express from 'express';
-import configRoutesFunction from './routes/index.js';
+import configRoutes from './routes/index.js';
 import exphbs from 'express-handlebars';
+import cookieParser from 'cookie-parser';
+import session from 'express-session'
+import mwf from './middleware.js'
+
 
 import {fileURLToPath} from 'url';
 import {dirname} from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 //import path from 'path';
 
-//const staticDirMedia = express.static(__dirname + '/public');
+const staticDirMedia = express.static(__dirname + '/public');
 const staticDirStyles = express.static(__dirname + '/styles');
 //console.log(staticDir1);
 
@@ -23,7 +28,16 @@ const rewriteUnsupportedBrowerMethods = (req, res, next) => {
     next();
 };
 
-//app.use('/assets', staticDir1);
+// Setup session middleware
+app.use(session({
+    name: 'sessions',
+    secret: 'I have three german shephards and a labrador back home',
+    resave: false,
+    saveUninitialized: true
+  }));
+  
+app.use(cookieParser());
+app.use('/assets', staticDirMedia);
 app.use('/styles', staticDirStyles);
 app.use(express.json());
 
@@ -34,10 +48,15 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 //app.engine('handlebars', exphbs);
 app.set('view engine', 'handlebars');
 
-//app.set('views', path.join(__dirname, 'views/'));
+// Middleware function:
+app.use('/admin', mwf.checkAdminRoute);
+app.use('/login', mwf.checkLoginAccess); 
+app.use('/sign-up', mwf.checkRegisterAccess);
+app.use('/logout', mwf.checkLogoutAccess);
+app.use('/', mwf.loggingMiddleware);
+//app.use('/user-pref', mwf.checkUserRole);
 
-configRoutesFunction(app);
-
+configRoutes(app);
 
 app.listen(3000, () => {
     console.log("Server has started...")

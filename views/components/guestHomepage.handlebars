@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <title>Guest Login</title>
+        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+    </head>
+  <body>
+    <header>
+    <h1>Hello, how are you? We missed you here</h1>
+   
+    </header>
+    <main> 
+      <form id="guestHomapage" method="post" action="/user-pref">
+        <span> <Button id="personal-details" type="submit" value="user_personal"> Personal </Button> <Button id="past_booking" type="submit" value="past_booking"> Past Bookings </Button> <Button id="upcoming_booking" type="submit" value="upcoming_booking"> Upcoming Bookings </Button> </span>
+        <br>
+        <br>
+        <br>
+        <Button id="search-property" type="submit" value="search"> Search Property </Button>
+      </form>
+    </main>
+    
+     <a href="/logout">Logout</a>
+    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+    </main>
+  </body>
+</html>

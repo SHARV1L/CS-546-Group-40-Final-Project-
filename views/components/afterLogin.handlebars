@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <title>User Preference</title>
+        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+    </head>
+  <body>
+    <header>
+    <h1>User Preference</h1>
+    </header>
+    <main> 
+      <div class="user-pref">
+        <form id="user-pref" method="post" action="/user-pref"></form>
+          <span><p>To book or search a property, sign-in as a Guest: </p> <button id="guest" type="submit" value="guest">Guest</button></span>
+          <br>
+          <br>
+          <span><p> To post a propertey, sign-in as a Host: </p> <button id="host" value="host">Host</button></span>
+        </form>
+      </div>  
+    </main>
+    
+     <a href="/logout">Logout</a>
+    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+    </main>
+  </body>
+</html>
