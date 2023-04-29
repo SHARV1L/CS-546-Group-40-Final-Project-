@@ -56,6 +56,7 @@ router
     }
 });
 
+
 // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
 router
 .route('/user-pref')
@@ -66,25 +67,69 @@ router
       } catch (error) {
         res.status(400).json({error: e});
       }
-    })
-  .post(async (req, res) => {
-    try {
-      const buttonVal = req.body.button;
+    });
+//   .post(async (req, res) => {
+//     try {
+//       const buttonVal = req.body.button;
 
-      console.log("User Type: ", buttonVal);
+//       console.log("User Type: ", buttonVal);
 
-      if(buttonVal === 'guest') {
-        console.log("inside if user", buttonVal);
-        res.render('components/guestHomepage', {title: 'Guest Homepage'});
-      } else if (buttonVal === 'host') {
-        res.render('components/hostHomepage', {title: 'Host Homepage'});
-      } else {
-        res.status(400).json({ error: 'Invalid button value' });
-      }
-    } catch (error) {
-      res.status(400).json({error: error});
-    }
+//       if(buttonVal === 'guest') {
+//         console.log("inside if user", buttonVal);
+//         res.render('components/guestHomepage', {title: 'Guest Homepage'});
+//       } else if (buttonVal === 'host') {
+//         res.render('components/hostHomepage', {title: 'Host Homepage'});
+//       } else {
+//         res.status(400).json({ error: 'Invalid button value' });
+//       }
+//     } catch (error) {
+//       res.status(400).json({error: error});
+//     }
+// });
+
+
+// changes here 
+
+
+
+
+// router.post('/user-pref', async (req, res) => {
+//   try {
+//     const buttonVal = req.body.button;
+
+//     if (buttonVal === 'guest') {
+//       // redirect to guestHomepage
+//       res.redirect('/guestHomepage');
+//     } else if (buttonVal === 'host') {
+//       // redirect to hostHomepage
+//       res.redirect('/hostHomepage');
+//     } else {
+//       // invalid button value
+//       res.status(400).json({ error: 'Invalid button value' });
+//     }
+//   } catch (error) {
+//     // handle error
+//     res.status(400).json({ error: error });
+//   }
+// });
+
+
+router.get('/guestHomepage', (req, res) => {
+  res.render('components/guestHomepage', { title: 'Guest Homepage' });
 });
+router.get('/hostHomepage', (req, res) => {
+  res.render('components/hostHomepage', { title: 'Host Homepage' });
+});
+
+router.post("/guestHomepageRedirect",async(req,res)=>{
+  res.redirect('/guestHomepage');
+});
+
+router.post("/hostHomepageRedirect",async(req,res)=>{
+  res.redirect('/hostHomepage');
+});
+
+
 
 // http://localhost:3000/sign-up
 router
