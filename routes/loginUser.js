@@ -12,7 +12,7 @@ router
   .get(async (req, res) => {
       //code here for GET
       try {
-        //res.render('components/landingPage', {title: 'Landing Page'});
+        res.render('components/landingPage', {title: 'Landing Page'});
       } catch (error) {
         res.status(400).json({error: e});
       }
