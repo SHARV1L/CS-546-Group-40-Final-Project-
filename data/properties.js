@@ -8,7 +8,7 @@ import userData from "./users.js";
 let exportedFunctions={
 
     async createProperty(
-        userId,
+        //userId,
         propertyName,
         description,
         numberOfRooms,
@@ -20,11 +20,11 @@ let exportedFunctions={
         pricePerNight,
         availability
     ){
-        userId=validation.checkId(userId);
-        const userCollection=await users();
-        const userList=await userCollection.find({}).toArray();
+        //userId=validation.checkId(userId);
+        //const userCollection=await users();
+        //const userList=await userCollection.find({}).toArray();
 
-        if(userList.some(obj => obj._id === userId)) throw "userid is not present for the property";
+        //if(userList.some(obj => obj._id === userId)) throw "userid is not present for the property";
         
         propertyName=validation.checkString(propertyName);
         description=validation.checkString(description);
@@ -32,7 +32,7 @@ let exportedFunctions={
         //have to write some other validation functions
 
         let newProperty={
-            userId:userId,
+            //userId:userId,
             propertyName:propertyName,
             description:description,
             numberOfRooms:numberOfRooms,

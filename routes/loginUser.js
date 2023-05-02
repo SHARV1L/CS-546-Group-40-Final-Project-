@@ -1,6 +1,8 @@
 import {Router} from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
+import { property } from "../config/mongoCollections.js";
+import { propertyData } from '../data/index.js';
 
 const router = Router();
 
@@ -127,6 +129,56 @@ router.post("/guestHomepageRedirect",async(req,res)=>{
 
 router.post("/hostHomepageRedirect",async(req,res)=>{
   res.redirect('/hostHomepage');
+});
+
+router.get('/postProperty', (req, res) => {
+  res.render('components/postProperty', { title: 'postProperty' });
+});
+
+// router.post('/host/add-property', async(req, res) => {
+//   const propertyInfo=req.body;
+//   const propertyCollection= await property();
+//   propertyCollection.insertOne(propertyInfo, (err, result) => {
+//     if (err) {
+//       console.log(err);
+//       res.sendStatus(500);
+//     } else {
+//       console.log("error no getting");
+//       console.log(result);
+//       res.redirect("/thank-you");
+//     }
+//   });
+// });
+
+// POST request to add a new property to the database
+router.post('/add-property', async (req, res) => {
+  console.log(req.body);
+  try {
+    const newProperty = await propertyData.createProperty(
+      //req.body.userId,
+      req.body.propertyName,
+      req.body.description,
+      req.body.numberOfRooms,
+      req.body.numberOfBathrooms,
+      req.body.amenities,
+      req.body.address,
+      req.body.latitude,
+      req.body.longitude,
+      req.body.pricePerNight,
+      req.body.availability
+    );
+    res.redirect('/thankyou');
+  } catch (e) {
+    console.log(e);
+    res.render('error', { error: 'Error adding property' });
+  }
+});
+
+
+
+
+router.get('/thankYou', (req, res) => {
+  res.render('components/thankYou', { title: 'Thank You' });
 });
 
 
