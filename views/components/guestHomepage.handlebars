@@ -6,16 +6,23 @@
     </head>
   <body>
     <header>
-    <h1>Hello, how are you? We missed you here</h1>
+    <h1>{{{title}}}</h1>
+    <h2>Hello, how are you? We missed you here!</h2>
    
     </header>
     <main> 
-      <form id="guestHomapage" method="post" action="/user-pref">
-        <span> <Button id="personal-details" type="submit" value="user_personal"> Personal </Button> <Button id="past_booking" type="submit" value="past_booking"> Past Bookings </Button> <Button id="upcoming_booking" type="submit" value="upcoming_booking"> Upcoming Bookings </Button> </span>
+      <h2>Hi, {{{user.firstName}}}! how have you been? </h2>
+      <h3>  </h3>
+      <form id="guestHomepage" method="post" action="/guest/dashboard">
+        <span> 
+          <Button id="personal-details" type="submit" name="selected_option" value="user_personal"> Personal </Button> 
+          <Button id="past_booking" type="submit" name="selected_option" value="past_bookings"> Past Bookings </Button> 
+          <Button id="upcoming_booking" type="submit" name="selected_option" value="upcoming_bookings"> Upcoming Bookings </Button> 
+        </span>
         <br>
         <br>
         <br>
-        <Button id="search-property" type="submit" value="search"> Search Property </Button>
+        <Button id="search-property" type="submit" name="selected_option" value="search"> Search Property </Button>
       </form>
     </main>
     

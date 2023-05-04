@@ -9,16 +9,16 @@
     <h1>Properties Found</h1>
     <h2>Look we found some properties for you {{searchRentalTerm}} </h2>
     </header>
+    
     <main>
     <ol>
-        {{!-- {{#each venues}}
-            <li>venue: <a href="/search_rentals/{{id}}">{{name}}</a></li>
-            
-        {{/each}} --}}
-        <li><a href="/listings/{{:id}}">Propertiy Listings</a></li>
+        {{#each venues}}
+            <li>venue: <a href="/listing/{{id}}">{{name}}</a></li>
+        {{/each}}
     </ol>
 
-    <a href="/search_rentals" class="search-link">Make another search</a>
+
+    <a href="/search-rentals" class="search-link">Make another search</a>
     </main>
   </body>
 </html>

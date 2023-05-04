@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Property Details</title>
+    <link rel="stylesheet" href="/public/css/main-styles.css">
+  </head>
+  <body>
+      <script>
+         function openMap(){
+             //pass lat long values to gmap for the selected property
+             alert('open map!');
+         }
+      </script>
+    <header>
+      <h1>Property Details</h1>
+    </header>
+    <main>
+      <div class="venue-details">
+        <h2>{{venueData.name}}</h2>
+        <img alt={{venueData.name}} src={{venueData.picture_url}}>
+        <a href={{venueData.listing_url}} target="_blank">Venue Information</a>
+        <address>
+          Address:<br>
+          {{venueData.address}}<br>
+          {{venueData.city}}, {{venueData.state}} {{venueData.postalCode}}
+        </address>
+        <address>
+          Phone:<br>
+          {{venueData.phone}}
+        </address>
+        <button onclick="openMap()">Venue Location</button>
+        <span>
+            Rooms: {{venueData.bedrooms}},
+            Room Type: {{venueData.room_type}},
+            Beds: {{venueData.beds}},
+            Max Nights:{{venueData.maximum_nights}}
+            Amenities: {{venueData.amenities}}
+        </span>
+        <h4>Price: {{venueData.price}}</h4>
+        <h4>Host Details</h4>
+        <p>Host Name: {{venueData.host_name}}</p>
+        <p>Host Since: {{venueData.host_since}}</p>
+        <p>Host Verified: {{venueData.host_verified}}</p>
+        <p>Host Location: {{venueData.host_location}}</p>
+        <h4>Reviews</h4>
+        
+      </div>
+    </main>
+  </body>
+</html>

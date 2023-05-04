@@ -56,10 +56,10 @@ const mwf = {
   // Middleware #
   checkUserRole(req, res, next) {
     if(isAuthenticated(req.session)) {
-      if (req.session.user.accountType === 'user') {
-        return res.redirect('/guestHomepage');
-      } else if (req.session.user.accountType === 'host') {
-        return res.redirect('/hostHomepage')
+      if (req.session.user.accountType === "guest") {
+        return res.render('components/guestHomepage');
+      } else if (req.session.user.accountType === "host") {
+        return res.render('/components/hostHomepage')
       }
     }
     else {
@@ -72,12 +72,15 @@ const mwf = {
   },
   
   // // Middleware 4
-  //   checkProtectedRoute (req, res, next)  {
-  //   if (isAuthenticated(req.session)) {
-  //     next();
-  //   }
-  //   res.redirect('/users');
-  // },
+    checkProtectedRoute (req, res, next)  {
+    if (isAuthenticated(req.session)) {
+     
+      next();
+    }
+    else{
+    res.redirect('/login');
+  }
+  },
   
   // Middleware 5
     checkAdminRoute (req, res, next) {

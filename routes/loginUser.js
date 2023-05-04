@@ -10,7 +10,7 @@ router
   .get(async (req, res) => {
       //code here for GET
       try {
-        //res.render('components/landingPage', {title: 'Landing Page'});
+        res.render('components/landingPage', {title: 'Landing Page'});
       } catch (error) {
         res.status(400).json({error: e});
       }
@@ -22,7 +22,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      console.log("hello");
+     
       res.render('components/login', {title: 'Login Page'});
     } catch (error) {
       res.status(400).json({error: e});
@@ -36,53 +36,23 @@ router
       const user = await userMethods.checkUser(username, password);
       const validationErrors = validation.login(username, password);
       
-      console.log("Inside login route")
+     
       if (!validationErrors) {
         if(!user) {
           res.render('components/error', {title: 'login credentials cannot be validated, enter again'});
         }
         else {
-          console.log("response inside else");
-          req.session.user = {firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
+         
+          req.session.user = {id:user.id,firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
           if(user.role === "admin") res.redirect('/admin');
           else if(user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
         }
       } else res.render('components/login', { title: 'Login Page', errors: validationErrors });
-      //res.redirect('/login/user-pref');
+      
     } catch (error) {
       console.log(error);
       res.status(400).json({error: 'Page Not Available'});
-    }
-});
-
-// http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
-router
-.route('/user-pref')
-  .get(async (req, res) => {
-      //code here for GET
-      try {
-        res.render('components/afterLogin', {title: 'User Preference Page'})
-      } catch (error) {
-        res.status(400).json({error: e});
-      }
-    })
-  .post(async (req, res) => {
-    try {
-      const buttonVal = req.body.button;
-
-      console.log("User Type: ", buttonVal);
-
-      if(buttonVal === 'guest') {
-        console.log("inside if user", buttonVal);
-        res.render('components/guestHomepage', {title: 'Guest Homepage'});
-      } else if (buttonVal === 'host') {
-        res.render('components/hostHomepage', {title: 'Host Homepage'});
-      } else {
-        res.status(400).json({ error: 'Invalid button value' });
-      }
-    } catch (error) {
-      res.status(400).json({error: error});
     }
 });
 
@@ -94,14 +64,14 @@ router
     try {
       res.render('components/signUp', {title: 'Sign Up Page'});
     } catch (error) {
-      res.status(400).json({error: e});
+      res.status(400).json({error: error});
     }
   })
   .post(async (req, res) => {
     //code here for GET
     try {
       const { firstName, lastName, email, password, phoneNumber, accountType, role } = req.body;
-      // console.log(req.body);
+      
       const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType, role);
 
       if (!validationErrors) {    
@@ -116,13 +86,56 @@ router
           accountType,
           role
         )
+        if(user){
+          res.redirect("/login");
+        }
       }
     } 
     catch(error) {
-        console.log(error, "line 147 loginUser");
+        
         res.status(400).json(error);
       }
   });
+
+  // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
+router
+.route('/user-pref')
+  .get(async (req, res) => {
+      //code here for GET
+      try {
+        res.render('components/afterLogin', {title: 'User Preference Page'})
+      } catch (error) {
+        res.status(400).json({error: "Cannot redirect to User-Preference Page"});
+      }
+    })
+  .post(async (req, res) => {
+    try {
+      const buttonVal = req.body.accountType;
+      console.log("The Button clickcked is: ", buttonVal , req.session.user);
+      const userCollection = await userMethods.getUserById(req.session.user.id);      //const user
+     
+      
+
+     
+
+      if(buttonVal === "guest") {
+        console.log("inside if user 122", buttonVal);
+        //await userCollection.userMethods.updateUserPatch(req.session.user.accountType = buttonVal);
+        //res.render('components/guestHomepage', {title: 'Guest Homepage'});
+       // res.redirect('/guest/dashboard');
+       res.status(200).send({redirectUrl:'/guest/dashboard'});
+      } else if (buttonVal === "host") {
+        //await userCollection.userMethods.updateUserPatch(accountType = buttonVal);
+        //res.render('components/hostHomepage', {title: 'Host Homepage'});
+        res.status(200).json({redirectUrl:'/host/dashboard'});
+       // res.redirect('/host/dashboard');
+      } else {
+        res.status(400).json({ error: 'Invalid button value' });
+      }
+    } catch (error) {
+      res.status(400).json({error: "Didnt find youe homepage, sorry"});
+    }
+});
     
 router
   .route('/error')

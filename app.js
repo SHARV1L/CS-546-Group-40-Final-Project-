@@ -54,8 +54,10 @@ app.use('/login', mwf.checkLoginAccess);
 app.use('/sign-up', mwf.checkRegisterAccess);
 app.use('/logout', mwf.checkLogoutAccess);
 app.use('/', mwf.loggingMiddleware);
-//app.use('/user-pref', mwf.checkUserRole);
-
+app.use('/user-pref', mwf.checkProtectedRoute);
+app.use('/guest',mwf.checkProtectedRoute);
+app.use('/host',mwf.checkProtectedRoute);
+app.use('/listing',mwf.checkProtectedRoute);
 configRoutes(app);
 
 app.listen(3000, () => {
