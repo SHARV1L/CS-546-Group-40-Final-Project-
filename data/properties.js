@@ -9,6 +9,7 @@ let exportedFunctions={
 
     async createProperty(
         //userId,
+        userId,
         propertyName,
         description,
         numberOfRooms,
@@ -32,7 +33,7 @@ let exportedFunctions={
         //have to write some other validation functions
 
         let newProperty={
-            //userId:userId,
+            userId:userId,  // commented out here
             propertyName:propertyName,
             description:description,
             numberOfRooms:numberOfRooms,
@@ -42,7 +43,11 @@ let exportedFunctions={
             latitude:latitude,
             longitude:longitude,
             pricePerNight:pricePerNight,
-            availability:availability
+            availability:availability,
+            // image: {
+            //   data: fs.readFileSync(image.path),
+            //   contentType: image.mimetype
+            // }
         }
 
 

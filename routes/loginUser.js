@@ -3,6 +3,7 @@ import validation from '../validation.js';
 import userMethods from '../data/users.js';
 import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
+import {usersData} from '../data/index.js';
 
 const router = Router();
 
@@ -45,12 +46,15 @@ router
         }
         else {
           console.log("response inside else");
+          console.log(`User ID before setting session: ${user._id}`);
           req.session.user = {firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
+          req.session.userId = user._id;
           if(user.role === "admin") res.redirect('/admin');
           else if(user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
         }
       } else res.render('components/login', { title: 'Login Page', errors: validationErrors });
+       // changes here
       //res.redirect('/login/user-pref');
     } catch (error) {
       console.log(error);
@@ -155,7 +159,7 @@ router.post('/add-property', async (req, res) => {
   console.log(req.body);
   try {
     const newProperty = await propertyData.createProperty(
-      //req.body.userId,
+      req.session.userId,
       req.body.propertyName,
       req.body.description,
       req.body.numberOfRooms,
@@ -165,7 +169,8 @@ router.post('/add-property', async (req, res) => {
       req.body.latitude,
       req.body.longitude,
       req.body.pricePerNight,
-      req.body.availability
+      req.body.availability,
+      //req.file
     );
     res.redirect('/thankyou');
   } catch (e) {
@@ -180,6 +185,57 @@ router.post('/add-property', async (req, res) => {
 router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });
 });
+
+// getting property list
+router.get('/property-list', async (req, res) => {
+  try {
+    let properties = await propertyData.getAllProperty();
+    res.render('components/property', { properties });
+  } catch (e) {
+    console.error(e);
+    res.render('error', { error: 'Error fetching properties' });
+  }
+});
+
+//getting person details 
+router.get('/personaldetails', async (req, res) => {
+  try {
+    console.log('Retrieved session data:', req.session);
+    const userId = req.session.userId;
+    console.log(`Retrieved userId from session: ${userId}`);
+    console.log(userId);
+    let user = await usersData.getUserById(userId);
+    console.log(user);
+    res.render('components/personal-details', {user});
+  } catch (e) {
+    console.error(e);
+    res.render('components/error', { error: 'Error fetching properties' });
+  }
+});
+
+//getting view property
+router.get('/viewProperty', async (req, res) => {
+  try {
+    // Retrieve the user ID from the session
+    const userId = req.session.userId;
+    // if (!userId) {
+    //   // If the user is not logged in, redirect to the login page
+    //   res.redirect('/login');
+    //   return;
+    // }
+
+    // Retrieve all properties associated with the host
+    const propertyCollection = await property();
+    const properties = await propertyCollection.find({ userId: userId }).toArray();
+
+    // Render the properties view with the retrieved properties
+    res.render('components/viewProperty', { properties });
+  } catch (e) {
+    console.error(e);
+    res.render('error', { error: 'Error fetching properties' });
+  }
+});
+
 
 
 
