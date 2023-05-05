@@ -159,6 +159,7 @@ let exportedFunctions = {
       if (!bcrypt.comparePass(password, user.password)) {
         throw 'Passwords do not match';
       } else {
+        console.log(`Returning user with ID: ${user._id}`); // add logging statement here
         // Return user data without password
       return {
         id:user._id,

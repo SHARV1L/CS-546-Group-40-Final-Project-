@@ -1,6 +1,9 @@
 import {Router} from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
+import { property } from "../config/mongoCollections.js";
+import { propertyData } from '../data/index.js';
+import {usersData} from '../data/index.js';
 
 const router = Router();
 
@@ -55,6 +58,118 @@ router
       res.status(400).json({error: 'Page Not Available'});
     }
 });
+
+
+
+
+
+
+
+
+router.get('/guestHomepage', (req, res) => {
+  res.render('components/guestHomepage', { title: 'Guest Homepage' });
+});
+router.get('/hostHomepage', (req, res) => {
+  res.render('components/hostHomepage', { title: 'Host Homepage' });
+});
+
+router.post("/guestHomepageRedirect",async(req,res)=>{
+  res.redirect('/guestHomepage');
+});
+
+router.post("/hostHomepageRedirect",async(req,res)=>{
+  res.redirect('/hostHomepage');
+});
+
+router.get('/postProperty', (req, res) => {
+  res.render('components/postProperty', { title: 'postProperty' });
+});
+
+
+// POST request to add a new property to the database
+router.post('/add-property', async (req, res) => {
+  console.log(req.body);
+  try {
+    const newProperty = await propertyData.createProperty(
+      req.session.userId,
+      req.body.propertyName,
+      req.body.description,
+      req.body.numberOfRooms,
+      req.body.numberOfBathrooms,
+      req.body.amenities,
+      req.body.address,
+      req.body.latitude,
+      req.body.longitude,
+      req.body.pricePerNight,
+      req.body.availability,
+      //req.file
+    );
+    res.redirect('/thankyou');
+  } catch (e) {
+    console.log(e);
+    res.render('error', { error: 'Error adding property' });
+  }
+});
+
+
+
+
+router.get('/thankYou', (req, res) => {
+  res.render('components/thankYou', { title: 'Thank You' });
+});
+
+// getting property list
+router.get('/property-list', async (req, res) => {
+  try {
+    let properties = await propertyData.getAllProperty();
+    res.render('components/property', { properties });
+  } catch (e) {
+    console.error(e);
+    res.render('error', { error: 'Error fetching properties' });
+  }
+});
+
+//getting person details 
+router.get('/personaldetails', async (req, res) => {
+  try {
+    console.log('Retrieved session data:', req.session);
+    const userId = req.session.userId;
+    console.log(`Retrieved userId from session: ${userId}`);
+    console.log(userId);
+    let user = await usersData.getUserById(userId);
+    console.log(user);
+    res.render('components/personal-details', {user});
+  } catch (e) {
+    console.error(e);
+    res.render('components/error', { error: 'Error fetching properties' });
+  }
+});
+
+//getting view property
+router.get('/viewProperty', async (req, res) => {
+  try {
+    // Retrieve the user ID from the session
+    const userId = req.session.userId;
+    // if (!userId) {
+    //   // If the user is not logged in, redirect to the login page
+    //   res.redirect('/login');
+    //   return;
+    // }
+
+    // Retrieve all properties associated with the host
+    const propertyCollection = await property();
+    const properties = await propertyCollection.find({ userId: userId }).toArray();
+
+    // Render the properties view with the retrieved properties
+    res.render('components/viewProperty', { properties });
+  } catch (e) {
+    console.error(e);
+    res.render('error', { error: 'Error fetching properties' });
+  }
+});
+
+
+
 
 // http://localhost:3000/sign-up
 router
@@ -112,23 +227,15 @@ router
     try {
       const buttonVal = req.body.accountType;
       console.log("The Button clickcked is: ", buttonVal , req.session.user);
-      const userCollection = await userMethods.getUserById(req.session.user.id);      //const user
-     
-      
-
-     
-
-      if(buttonVal === "guest") {
+       
+     if(buttonVal === "guest") {
         console.log("inside if user 122", buttonVal);
-        //await userCollection.userMethods.updateUserPatch(req.session.user.accountType = buttonVal);
-        //res.render('components/guestHomepage', {title: 'Guest Homepage'});
-       // res.redirect('/guest/dashboard');
+        
        res.status(200).send({redirectUrl:'/guest/dashboard'});
       } else if (buttonVal === "host") {
-        //await userCollection.userMethods.updateUserPatch(accountType = buttonVal);
-        //res.render('components/hostHomepage', {title: 'Host Homepage'});
+       
         res.status(200).json({redirectUrl:'/host/dashboard'});
-       // res.redirect('/host/dashboard');
+       
       } else {
         res.status(400).json({ error: 'Invalid button value' });
       }
