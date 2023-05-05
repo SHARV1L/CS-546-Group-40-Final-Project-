@@ -14,7 +14,7 @@ const constructorMethod = (app) => {
   app.use('/booking', bookingRoutes);
   app.use('/property', propertyRoutes);
   app.use('/review', reviewRoutes);
-  app.use('/listing', listingRoutes);  // Property Listing Page route
+  app.use('/search', listingRoutes);  // Property Listing Page route
   
 
   app.use('*', (req, res) => {

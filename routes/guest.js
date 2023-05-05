@@ -84,7 +84,7 @@ router
       }
       else if(selected_option=="search")
       {
-        res.redirect('/listing/search');
+        res.redirect('/search');
       }
     }
     catch(error){

@@ -16,32 +16,32 @@
     </header>
     <main>
       <div class="venue-details">
-        <h2>{{venueData.name}}</h2>
-        <img alt={{venueData.name}} src={{venueData.picture_url}}>
-        <a href={{venueData.listing_url}} target="_blank">Venue Information</a>
+        <h2>{{propertyDetails.name}}</h2>
+        <img alt={{propertyDetails.name}} src={{propertyDetails.picture_url}} style="width: 400px;height: 400px;">
+        <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
         <address>
           Address:<br>
-          {{venueData.address}}<br>
-          {{venueData.city}}, {{venueData.state}} {{venueData.postalCode}}
+          {{propertyDetails.address}}<br>
+          {{propertyDetails.city}}, {{propertyDetails.state}} {{propertyDetails.postalCode}}
         </address>
         <address>
           Phone:<br>
-          {{venueData.phone}}
+          {{propertyDetails.phone}}
         </address>
         <button onclick="openMap()">Venue Location</button>
         <span>
-            Rooms: {{venueData.bedrooms}},
-            Room Type: {{venueData.room_type}},
-            Beds: {{venueData.beds}},
-            Max Nights:{{venueData.maximum_nights}}
-            Amenities: {{venueData.amenities}}
+            Rooms: {{propertyDetails.bedrooms}},
+            Room Type: {{propertyDetails.room_type}},
+            Beds: {{propertyDetails.beds}},
+            Max Nights:{{propertyDetails.maximum_nights}}
+            Amenities: {{propertyDetails.amenities}}
         </span>
-        <h4>Price: {{venueData.price}}</h4>
+        <h4>Price: {{propertyDetails.price}}</h4>
         <h4>Host Details</h4>
-        <p>Host Name: {{venueData.host_name}}</p>
-        <p>Host Since: {{venueData.host_since}}</p>
-        <p>Host Verified: {{venueData.host_verified}}</p>
-        <p>Host Location: {{venueData.host_location}}</p>
+        <p>Host Name: {{propertyDetails.host_name}}</p>
+        <p>Host Since: {{propertyDetails.host_since}}</p>
+        <p>Host Verified: {{propertyDetails.host_verified}}</p>
+        <p>Host Location: {{propertyDetails.host_location}}</p>
         <h4>Reviews</h4>
         
       </div>

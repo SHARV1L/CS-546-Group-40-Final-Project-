@@ -3,6 +3,7 @@ import { property } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import validation from '../validation.js';
 import userData from "./users.js";
+
 //import { createUser, getAllUsers, removeUser, updateUserPatch, updateUserPut } from '../data/users.js';
 
 let exportedFunctions={
@@ -55,23 +56,35 @@ let exportedFunctions={
      
     },
     
-    async getAllProperty(){
-        console.log("here there ");
+    async getAllProperty(data){
+        console.log("here there ",data);
         const propertyCollection=await property();
-        const propertyList=await propertyCollection.find({}).toArray();
+        let searchQuery=[];
+        if(data.location!==''){
+          searchQuery.push({neighbourhood_group_cleansed:data.location});
+        }
+        if(data.price!==''){
+          searchQuery.push({price:`$${data.price}`});
+        }
+        if(data.availability!==''){
+          searchQuery.push({availability:data.availability});
+        }
+        
+        const propertyList=await propertyCollection.find({$or:searchQuery},{id:1,name:1}).limit(20).toArray();
+        console.log(propertyList.length);
         return propertyList;
     },
     
     async getPropertyById(id){
-        id=validation.checkId(id);
-        console.log(id,"teststeststestst", property);
+        //id=validation.checkId(id);
+        //console.log(id,"teststeststestst", property);
         try{
         var propertyCollection = await property();
 
         console.log("teststeststestst")
        
-        const propertyOne=await propertyCollection.findOne({_id:new ObjectId(id)});
-        // const propertyList=await propertyCollection.find({}).toArray();
+        const propertyOne=await propertyCollection.findOne({id:id});
+        
         console.log(propertyOne);
         if(!propertyOne) throw "User Not Found error";
         return propertyOne;

@@ -12,13 +12,13 @@
     
     <main>
     <ol>
-        {{#each venues}}
-            <li>venue: <a href="/listing/{{id}}">{{name}}</a></li>
+        {{#each propertyList}}
+            <li>Property: <a href="/search/{{id}}">{{name}}</a></li>
         {{/each}}
     </ol>
 
 
-    <a href="/search-rentals" class="search-link">Make another search</a>
+    <a href="/search" class="search-link">Make another search</a>
     </main>
   </body>
 </html>
