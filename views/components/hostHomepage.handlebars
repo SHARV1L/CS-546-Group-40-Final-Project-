@@ -22,24 +22,24 @@
  
       <br>
       <br>
-      <Button id="search-property"> Post Property </Button>
+      <Button id="post-property"> Post Property </Button>
     </main>
 
      <a href="/logout">Logout</a>
     {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
     
     <script>
-  const searchButton = document.getElementById('search-property');
-  searchButton.addEventListener('click', function() {
-    window.location.href = '/postProperty';
+  const postButton = document.getElementById('post-property');
+  postButton.addEventListener('click', function() {
+    window.location.href = '/host/post_property';
   });
     const personalDetailsButton = document.getElementById('personal-details');
     personalDetailsButton.addEventListener('click', function() {
-    window.location.href = '/personaldetails';
+    window.location.href = '/host/personaldetails';
   });
     const viewPropertyButton = document.getElementById('view-property');
     viewPropertyButton.addEventListener('click', function() {
-    window.location.href = '/viewProperty';
+    window.location.href = '/host/view_property';
   });
   </script> 
 

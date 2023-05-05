@@ -70,7 +70,7 @@ async function  handleUserPref(ev) {
   let data = await response.json();
  
     if (response.ok) {
-      alert("Guest Selected!");
+     
       window.location.href=data.redirectUrl;
      
     } else {
