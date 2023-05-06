@@ -7,7 +7,7 @@ const exportedFunctions = {
 
    async createReview(
         userId,
-        //property_id,
+        // property_id,
         //host_id,
         reviewText,
         ratings,

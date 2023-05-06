@@ -20,7 +20,8 @@ let exportedFunctions={
         latitude,
         longitude,
         pricePerNight,
-        availability
+        availability,
+        
     ){
         //userId=validation.checkId(userId);
         //const userCollection=await users();

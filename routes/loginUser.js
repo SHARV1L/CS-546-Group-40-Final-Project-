@@ -63,8 +63,6 @@ router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });
 });
 
-
-
 //getting person details 
 router.get('/personaldetails', async (req, res) => {
   try {
