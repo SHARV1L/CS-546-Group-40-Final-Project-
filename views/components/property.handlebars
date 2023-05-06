@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,3 +50,68 @@
     </main>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Property Details</title>
+    <link rel="stylesheet" href="/public/css/main-styles.css">
+  </head>
+  <body>
+      <script>
+         function openMap(){
+             //pass lat long values to gmap for the selected property
+             alert('open map!');
+         }
+         function bookNow(){
+           alert('bookNow!');
+         }
+      </script>
+    <header>
+      <h1>Property Details</h1>
+    </header>
+    <main>
+      <div class="venue-details">
+        <h2>{{propertyDetails.propertyName}}</h2>
+        <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px;">
+        <button class="button-primary" onclick="bookNow()">Book Now</button>
+        <button onclick="openMap()">Venue Location</button>
+        <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
+        <address>
+          Address:<br>
+          {{propertyDetails.address}}<br>
+         
+        </address>
+        <address>
+          Phone:<br>
+          {{propertyDetails.phone}}
+        </address>
+        
+        <span>
+            Rooms: {{propertyDetails.noOfRooms}},
+           
+            Beds: {{propertyDetails.beds}},
+            
+            Amenities: {{#each propertyDetails.amenities}}
+            <td>{{this}}</td>{{/each}}
+        </span>
+        <h4>Price: {{propertyDetails.pricePerNight}} perNight</h4>
+        <h4>Reviews</h4>
+        {{#each propertyDetails.reviews}}
+        <tr>
+          <td>Rating: {{this.rating}}</td>
+          <td>Feedback: {{this.feedback}}</td>
+        </tr>
+        {{/each}}
+        <h4>Host Details</h4>
+        <p>Host Name: {{propertyDetails.host_name}}</p>
+        <p>Host Since: {{propertyDetails.host_since}}</p>
+        <p>Host Verified: {{propertyDetails.host_verified}}</p>
+        <p>Host Location: {{propertyDetails.host_location}}</p>
+
+        
+      </div>
+    </main>
+  </body>
+</html>
+>>>>>>> 8650c0996abf34781722b397aea30d29185d84df

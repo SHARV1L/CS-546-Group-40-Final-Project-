@@ -63,6 +63,8 @@ router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });
 });
 
+
+
 //getting person details 
 router.get('/personaldetails', async (req, res) => {
   try {
@@ -78,6 +80,71 @@ router.get('/personaldetails', async (req, res) => {
     res.render('components/error', { error: 'Error fetching properties' });
   }
 });
+
+//getting person details of host
+router.get('/host/personaldetails', async (req, res) => {
+  try {
+    console.log('Retrieved session data:', req.session);
+    const userId = req.session.user.id;
+    console.log(`Retrieved userId from session: ${userId}`);
+    console.log(userId);
+    let user = await usersData.getUserById(userId);
+    console.log(user);
+    res.render('components/host-personalDetails', {user});
+  } catch (e) {
+    console.error(e);
+    res.render('components/error', { error: 'Error fetching properties' });
+  }
+});
+
+// post property routes here
+router.post('/host/postProperty', async (req, res) => {
+  console.log(req.body);
+  try {
+    const newProperty = await propertyData.createProperty(
+      req.session.user.id,
+      req.body.propertyName,
+      req.body.description,
+      req.body.numberOfRooms,
+      req.body.numberOfBathrooms,
+      req.body.amenities,
+      req.body.address,
+      req.body.latitude,
+      req.body.longitude,
+      req.body.pricePerNight,
+      req.body.availability,
+      //req.file
+    );
+    res.redirect('/thankyou');
+  } catch (e) {
+    console.log(e);
+    res.render('error', { error: 'Error adding property' });
+  }
+});
+
+//routes of view property
+router.get('/host/viewProperty', async (req, res) => {
+  try {
+    // Retrieve the user ID from the session
+    const userId = req.session.user.id;
+    console.log(userId);
+    // if (!userId) {
+    //   // If the user is not logged in, redirect to the login page
+    //   res.redirect('/login');
+    //   return;
+    // }
+
+    const propertyCollection = await property();
+    const properties = await propertyCollection.find({ userId: userId }).toArray();
+
+    // Render the properties view with the retrieved properties
+    res.render('components/viewProperty', { properties });
+  } catch (e) {
+    console.error(e);
+    res.render('error', { error: 'Error fetching properties' });
+  }
+});
+
 
 // http://localhost:3000/sign-router
 router.route('/sign-up')
