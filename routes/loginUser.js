@@ -100,6 +100,49 @@ router.get('/host/personaldetails', async (req, res) => {
 // post property routes here
 router.post('/host/postProperty', async (req, res) => {
   console.log(req.body);
+  const {
+    propertyName,
+    description,
+    numberOfRooms,
+    numberOfBathrooms,
+    amenities,
+    address,
+    latitude,
+    longitude,
+    pricePerNight,
+    availability,
+  } = req.body;
+  try{
+    if (
+      !propertyName ||
+      !description ||
+      !numberOfRooms ||
+      !numberOfBathrooms ||
+      !amenities ||
+      !address ||
+      !latitude ||
+      !longitude ||
+      !pricePerNight ||
+      !availability
+    ) {
+      return res.status(400).send({ message: 'All fields are required.' });
+    }
+  
+    if (!validation.isValidCoordinates(latitude, longitude)) {
+      return res.status(400).send({ message: 'Invalid latitude or longitude.' });
+    }
+  
+    if (isNaN(numberOfRooms) || isNaN(numberOfBathrooms) || isNaN(pricePerNight)) {
+      return res.status(400).send({ message: 'Invalid number value(s).' });
+    }
+  
+    if (numberOfRooms <= 0 || numberOfBathrooms <= 0 || pricePerNight <= 0) {
+      return res.status(400).send({ message: 'Number values must be greater than zero.' });
+    }
+  }
+  catch(e){
+    console.log(e);
+  }
   try {
     const newProperty = await propertyData.createProperty(
       req.session.user.id,

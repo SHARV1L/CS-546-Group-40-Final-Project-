@@ -3,6 +3,7 @@ function validateForm(form) {
     const description = form.description.value.trim();
     const numberOfRooms = form.numberOfRooms.valueAsNumber;
     const numberOfBathrooms = form.numberOfBathrooms.valueAsNumber;
+    const amenities=form.amenities.value.trim();
     const address = form.address.value.trim();
     const latitude = form.latitude.value.trim();
     const longitude = form.longitude.value.trim();
@@ -26,6 +27,10 @@ function validateForm(form) {
     if (isNaN(numberOfBathrooms) || numberOfBathrooms <= 0) {
       alert('Number of Bathrooms is required and must be greater than 0.');
       return false;
+    }
+    if(!amenities){
+        alert('Amenities is required');
+        return false;
     }
   
     if (!address) {

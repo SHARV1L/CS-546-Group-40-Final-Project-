@@ -21,6 +21,25 @@ const exportedMethods = {
       throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
     return strVal;
   },
+  checkInteger(value) {
+    const numberValue = parseFloat(value);
+  
+    if (isNaN(numberValue) || numberValue <= 0) {
+      return false;
+    }
+  
+    return Math.floor(numberValue) === numberValue;
+  },
+  isValidCoordinates(latitude, longitude) {
+    return (
+      !isNaN(latitude) &&
+      !isNaN(longitude) &&
+      latitude >= -90 &&
+      latitude <= 90 &&
+      longitude >= -180 &&
+      longitude <= 180
+    );
+  },
 
   checkStringArray(arr, varName) {
     //We will allow an empty array for this,
