@@ -5,8 +5,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session'
 import mwf from './middleware.js'
 
-
-
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
@@ -34,8 +32,8 @@ app.use(session({
     secret: 'I have three german shephards and a labrador back home',
     resave: false,
     saveUninitialized: true
-  }));
-  
+}));
+
 app.use(cookieParser());
 app.use('/assets', staticDirMedia);
 app.use('/styles', staticDirStyles);
@@ -50,7 +48,7 @@ app.set('view engine', 'handlebars');
 
 // Middleware function:
 //app.use('/hosts', mwf.checkAdminRoute);
-app.use('/login', mwf.checkLoginAccess); 
+app.use('/login', mwf.checkLoginAccess);
 app.use('/sign-up', mwf.checkRegisterAccess);
 //app.use('/', mwf.checkRegisterAccess);
 app.use('/', mwf.loggingMiddleware);
