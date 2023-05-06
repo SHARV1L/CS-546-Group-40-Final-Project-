@@ -21,7 +21,7 @@ router
     if (!hostInfo || Object.keys(hostInfo).length === 0) {
       return res
         .status(400)
-        .json({ error: 'There are no fields in the request body' });
+        .json({error: 'There are no fields in the request body'});
     }
 
     try {
@@ -33,15 +33,15 @@ router
         hostInfo.lastName,
         'Last Name'
       );
-      hostInfo.email = validation.checkValidEmail(hostInfo.email, "email");
-      hostInfo.password = validation.checkValidPassword(hostInfo.password, "passwd");
-      hostInfo.phoneNumber = validation.checkValidPhone(hostInfo.phoneNumber, "phone");
-      hostInfo.accountType = validation.checkString(hostInfo.accountType, "accountType");
+      hostInfo.email=validation.checkValidEmail(hostInfo.email,"email");
+      hostInfo.password=validation.checkValidPassword(hostInfo.password,"passwd");
+      hostInfo.phoneNumber=validation.checkValidPhone(hostInfo.phoneNumber,"phone");
+      hostInfo.accountType=validation.checkString(hostInfo.accountType,"accountType");
 
     } catch (e) {
-      return res.status(400).json({ error: e });
+      return res.status(400).json({error: e});
     }
-    try {
+    try { 
       const newHost = await hostsData.createHost(
         hostInfo.firstName,
         hostInfo.lastName,

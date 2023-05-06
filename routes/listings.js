@@ -33,34 +33,16 @@ router.route('/:listingId').get(async (req, res) => {
     res.render('components/property', {title: 'Your property',propertyDetails:propertyDetails})
     //res.render('components/property', {title: 'Your property',venueData:{id:"12345",name:"Test Prop",listing_url:"xyz",picture_url:"",address:"Test Address",city:"Amroha",state:"UP",amenities:"Locks on Bedroon, TV , bathTub , AC , Wifi",roomType:"private"}})
   } catch (error) {
-    res.status(400).json({ error: e });
+    res.status(400).json({error: e});
   }
 });
 
 // http://localhost:3000/bookings{:id}   //move this to booking
 router.route('/bookings').get(async (req, res) => {
   try {
-    res.render('components/booking', { title: 'Your property' })
+    res.render('components/booking', {title: 'Your property'})
   } catch (error) {
-    res.status(400).json({ error: e });
-  }
-});
-
-// http://localhost:3000/search_rentals/property_search_by_id
-router.route('./search_rentals/:propertyId').get(async (req, res) => {
-  try {
-    res.render('components/property', { title: 'Your property' })
-  } catch (error) {
-    res.status(400).json({ error: e });
-  }
-});
-
-// http://localhost:3000/bookings{:id}  
-router.route('/bookings').get(async (req, res) => {
-  try {
-    res.render('components/booking', { title: 'Your property' })
-  } catch (error) {
-    res.status(400).json({ error: e });
+    res.status(400).json({error: e});
   }
 });
 

@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import {Router} from 'express';
 
 const router = Router();
 
-import { usersData } from '../data/index.js';
+import {usersData} from '../data/index.js';
 import validation from '../validation.js';
 import { propertyData } from '../data/index.js';
 
@@ -21,7 +21,7 @@ router
     if (!propertyInfo || Object.keys(propertyInfo).length === 0) {
       return res
         .status(400)
-        .json({ error: 'There are no fields in the request body' });
+        .json({error: 'There are no fields in the request body'});
     }
 
     // try {
@@ -38,14 +38,14 @@ router
     //   userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
     //   userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
 
-
+    
 
     // } catch (e) {
     //   return res.status(400).json({error: e});
     // }
 
     //should write some validation functions here
-    try {
+    try { 
       const newProperty = await propertyData.createProperty(
         //propertyInfo.userId,
         propertyInfo.propertyName,
@@ -72,13 +72,13 @@ router
     try {
       req.params.id = validation.checkId(req.params.id, 'ID URL Param');
     } catch (e) {
-      return res.status(400).json({ error: e });
+      return res.status(400).json({error: e});
     }
     try {
       let property = await propertyData.getPropertyById(req.params.id);
       res.json(property);
     } catch (e) {
-      res.status(404).json({ error: 'User not found' });
+      res.status(404).json({error: 'User not found'});
     }
   })
   .put(async (req, res) => {
@@ -86,21 +86,21 @@ router
     if (!propertyInfo || Object.keys(propertyInfo).length === 0) {
       return res
         .status(400)
-        .json({ error: 'There are no fields in the request body' });
+        .json({error: 'There are no fields in the request body'});
     }
     try {
       req.params.id = validation.checkId(req.params.id);
-      //   userInfo.firstName = validation.checkString(
-      //     userInfo.firstName,
-      //     'First Name'
-      //   );
-      //   userInfo.lastName = validation.checkString(
-      //     userInfo.lastName,
-      //     'Last Name'
-      //   );
-      //add validation functions here
+    //   userInfo.firstName = validation.checkString(
+    //     userInfo.firstName,
+    //     'First Name'
+    //   );
+    //   userInfo.lastName = validation.checkString(
+    //     userInfo.lastName,
+    //     'Last Name'
+    //   );
+    //add validation functioins here
     } catch (e) {
-      return res.status(400).json({ error: e });
+      return res.status(400).json({error: e});
     }
 
     try {
@@ -121,7 +121,7 @@ router
     } catch (e) {
       let status = e[0] ? e[0] : 500;
       let message = e[1] ? e[1] : 'Internal Server Error';
-      res.status(status).send({ error: message });
+      res.status(status).send({error: message});
     }
   })
   .patch(async (req, res) => {
@@ -129,26 +129,26 @@ router
     if (!propertyInfo || Object.keys(propertyInfo).length === 0) {
       return res
         .status(400)
-        .json({ error: 'There are no fields in the request body' });
+        .json({error: 'There are no fields in the request body'});
     }
     try {
       req.params.id = validation.checkId(req.params.id);
-      //   if (userInfo.firstName) {
-      //     userInfo.firstName = validation.checkString(
-      //       userInfo.firstName,
-      //       'First Name'
-      //     );
-      //   }
+    //   if (userInfo.firstName) {
+    //     userInfo.firstName = validation.checkString(
+    //       userInfo.firstName,
+    //       'First Name'
+    //     );
+    //   }
 
-      //   if (userInfo.lastName) {
-      //     userInfo.lastName = validation.checkString(
-      //       userInfo.lastName,
-      //       'Last Name'
-      //     );
-      //   }
-      // write validation functions here
+    //   if (userInfo.lastName) {
+    //     userInfo.lastName = validation.checkString(
+    //       userInfo.lastName,
+    //       'Last Name'
+    //     );
+    //   }
+    // write validation functions here
     } catch (e) {
-      return res.status(400).json({ error: e });
+      return res.status(400).json({error: e});
     }
 
     try {
@@ -160,14 +160,14 @@ router
     } catch (e) {
       let status = e[0] ? e[0] : 500;
       let message = e[1] ? e[1] : 'Internal Server Error';
-      res.status(status).send({ error: message });
+      res.status(status).send({error: message});
     }
   })
   .delete(async (req, res) => {
     try {
       req.params.id = validation.checkId(req.params.id);
     } catch (e) {
-      return res.status(400).json({ error: e });
+      return res.status(400).json({error: e});
     }
 
     try {
@@ -176,7 +176,7 @@ router
     } catch (e) {
       let status = e[0] ? e[0] : 500;
       let message = e[1] ? e[1] : 'Internal Server Error';
-      res.status(status).send({ error: message });
+      res.status(status).send({error: message});
     }
   });
 

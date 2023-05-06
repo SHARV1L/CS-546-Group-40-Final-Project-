@@ -8,13 +8,13 @@ const encryption = async (password) => {
   return hash;
 }
 
-const comparePass = async (password, hash) => {
-  try {
-    const isMatch = await bcryptjs.compare(password, hash);
-    return isMatch;
-  } catch (e) {
-    return false;
-  }
-}
+  const comparePass = async (password, hash) => {
+    try {
+      const isMatch = await bcryptjs.compare(password, hash);
+      return isMatch;
+    } catch (e) {
+      return false;
+    }
+  } 
 
-export default { encryption, comparePass };
+export default { encryption, comparePass};

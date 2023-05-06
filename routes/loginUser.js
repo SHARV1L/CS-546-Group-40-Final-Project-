@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
 import { property } from "../config/mongoCollections.js";
@@ -21,14 +21,14 @@ router
 
 // http://localhost:3000/login
 router
-  .route('/login')
+.route('/login')
   .get(async (req, res) => {
     //code here for GET
     try {
      
       res.render('components/login', {title: 'Login Page'});
     } catch (error) {
-      res.status(400).json({ error: e });
+      res.status(400).json({error: e});
     }
   })
   .post(async (req, res) => {
@@ -55,9 +55,9 @@ router
       
     } catch (error) {
       console.log(error);
-      res.status(400).json({ error: 'Page Not Available' });
+      res.status(400).json({error: 'Page Not Available'});
     }
-  });
+});
 
 router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });
@@ -86,7 +86,7 @@ router.route('/sign-up')
   .get(async (req, res) => {
     //code here for GET
     try {
-      res.render('components/afterLogin', { title: 'User Preference Page' })
+      res.render('components/signUp', {title: 'Sign Up Page'});
     } catch (error) {
       res.status(400).json({error: error});
     }
@@ -123,7 +123,7 @@ router.route('/sign-up')
 
   // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
 router
-  .route('/user-pref')
+.route('/user-pref')
   .get(async (req, res) => {
       //code here for GET
       try {
@@ -171,19 +171,19 @@ export default router;
 
 // Final Project Rubrics: -
 
-// -10 if you dont have custom css
+// -10 if you dont have custom css 
 // -5 for minimal css
 // -10 if here is no client side input validation *****
 // -10 if application is vulnerable to XSS
-// -5 for not including node module s and start
-// -2 per field for no invliad or blank or data that doesn't make sense
+// -5 for not including node module s and start 
+// -2 per field for no invliad or blank or data that doesn't make sense 
 // 5 point cap per form
 // -2 point per dependency if dependenicies miss
 // -5 if a normal user can access the things that admin can access
 // -5 in valid html ******
 // -2 per page totally issues 6 point cap  ******
 // -10 if core feature is not inclded
-// -5 if feature doesnt workm as expected
+// -5 if feature doesnt workm as expected 
 // -10 if we are able to make same account with username and email address
 // sign in as case sesnitive
 // -2 to -10 for bug and usability issues
