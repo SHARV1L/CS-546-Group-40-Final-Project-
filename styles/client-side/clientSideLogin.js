@@ -1,57 +1,88 @@
-const loginForm = document.getElementById('login-form');
+// const loginForm = document.getElementById('login-form');
 
-loginForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+// loginForm.addEventListener('submit', async (event) => {
+//     event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+//     const email = document.getElementById('email').value;
+//     const password = document.getElementById('password').value;
 
-    const response = await fetch('/login', {
-        method: 'POST',
-        body: JSON.stringify({username: email, password: password})
-      });    
+//     console.log(email, "is the email entered");
 
-    const result = await response.json();
-        if (result.message === 'Invalid credentials') {
-            throw 'Invalid credentials';
-        } else {
-            location.href = '/users';
-        }
-});
+//     const response = await fetch('/login', {
+//         method: 'POST',
+//         body: JSON.stringify({username: email, password: password})
+//       });    
 
-const signUpForm = document.getElementById('signup-form');
+//     const result = await response.json();
+//         if (result.message === 'Invalid credentials') {
+//             throw 'Invalid credentials';
+//         } else {
+//             location.href = '/users';
+//         }
+// });
 
-signUpForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
+// const signUpForm = document.getElementById('signup-form');
 
-  const firstName = document.getElementById('firstName').value;
-  const lastName = document.getElementById('lastName').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const phoneNumber = document.getElementById('phoneNumber').value;
-  const accountType = document.getElementById('accountType').value;
+// signUpForm.addEventListener('submit', async (event) => {
+//   event.preventDefault();
 
-  if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType) {
-    throw 'Please fill in all required fields';
-  }
-  // Send the sign up request to the server
-  const response = await fetch('/sign-up', { 
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ firstName, lastName, email, password, phoneNumber, accountType })
-  });
+//   const firstName = document.getElementById('firstName').value;
+//   const lastName = document.getElementById('lastName').value;
+//   const email = document.getElementById('email').value;
+//   const password = document.getElementById('password').value;
+//   const phoneNumber = document.getElementById('phoneNumber').value;
+//   const accountType = document.getElementById('accountType').value;
+//   const role = document.getElementById('role').value;
 
-  if (response.ok) {
-    // Successful sign up, redirect to the login page
-    window.location.href = '/login';
-  } else {
-    // Sign up failed, display the error message
-    alert(response.message);
-  }
-});
+//   if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType || !role) {
+//     throw 'Please fill in all required fields';
+//   }
+//   // Send the sign up request to the server
+//   const response = await fetch('/sign-up', { 
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ firstName, lastName, email, password, phoneNumber, accountType, role })
+//   });
 
+//   if (response.ok) {
+//     // Successful sign up, redirect to the login page
+//     window.location.href = '/login';
+//   } else {
+//     // Sign up failed, display the error message
+//     alert(response.message);
+//   }
+// });
+
+async function  handleUserPref(ev) {
+  
+  let buttonVal=ev.target.value;
+        
+       
+  const response = await fetch('/user-pref', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ accountType: buttonVal})
+    });
+  let data = await response.json();
+ 
+    if (response.ok) {
+     
+      window.location.href=data.redirectUrl;
+     
+    } else {
+      throw "Invalid Button Value, only click on the given button";
+    }
+  
+}
+
+
+
+
+// search rental listner: client side validation
 const search_rentals = document.getElementById('search_rentals');
 
 search_rentals.addEventListener('submit', async (event) => {
@@ -61,7 +92,7 @@ search_rentals.addEventListener('submit', async (event) => {
   const price = document.getElementById('price').value;
   const availability = document.getElementById('availability').value;
   const amenities = document.getElementById('amenities').value;
-  //const role = document.getElementById('role').value;
+  const role = document.getElementById('role').value;
 
   if ( !location || !price || !available || !amenities ) {
     throw 'Please fill in all required fields';
@@ -104,3 +135,5 @@ search_rentals.addEventListener('submit', async (event) => {
   });
 
 });
+
+

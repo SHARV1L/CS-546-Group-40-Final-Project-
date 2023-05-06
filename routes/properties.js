@@ -47,7 +47,7 @@ router
     //should write some validation functions here
     try {
       const newProperty = await propertyData.createProperty(
-        propertyInfo.userId,
+        //propertyInfo.userId,
         propertyInfo.propertyName,
         propertyInfo.description,
         propertyInfo.numberOfRooms,
@@ -98,14 +98,14 @@ router
       //     userInfo.lastName,
       //     'Last Name'
       //   );
-      //add validation functioins here
+      //add validation functions here
     } catch (e) {
       return res.status(400).json({ error: e });
     }
 
     try {
       const updatedProperty = await propertyData.updatePropertyPut(
-        req.params.id,
+        //req.params.id,
         propertyInfo.propertyName,
         propertyInfo.description,
         propertyInfo.numberOfRooms,

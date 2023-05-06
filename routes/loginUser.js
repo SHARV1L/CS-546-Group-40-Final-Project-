@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
+import { property } from "../config/mongoCollections.js";
+import { propertyData } from '../data/index.js';
+import {usersData} from '../data/index.js';
 
 const router = Router();
 
@@ -8,12 +11,12 @@ const router = Router();
 router
   .route('/')
   .get(async (req, res) => {
-    //code here for GET
-    try {
-      //res.render('components/landingPage', {title: 'Landing Page'});
-    } catch (error) {
-      res.status(400).json({ error: e });
-    }
+      //code here for GET
+      try {
+        res.render('components/landingPage', {title: 'Landing Page'});
+      } catch (error) {
+        res.status(400).json({error: e});
+      }
   });
 
 // http://localhost:3000/login
@@ -22,8 +25,8 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      console.log("hello");
-      res.render('components/login', { title: 'Login Page' });
+     
+      res.render('components/login', {title: 'Login Page'});
     } catch (error) {
       res.status(400).json({ error: e });
     }
@@ -35,72 +38,67 @@ router
       // validating username and password
       const user = await userMethods.checkUser(username, password);
       const validationErrors = validation.login(username, password);
-
+      
+     
       if (!validationErrors) {
-        if (!user) {
-          res.redirect('/sign-up');
+        if(!user) {
+          res.render('components/error', {title: 'login credentials cannot be validated, enter again'});
         }
         else {
-          console.log("response inside else");
-          req.session.user = { firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email }; //// change username to firstName
-          if (user.role === "host") res.redirect('/host');
-          else if (user.role === "user") res.redirect('/user');
+         
+          req.session.user = {id:user.id,firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
+          if(user.role === "admin") res.redirect('/admin');
+          else if(user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
         }
       } else res.render('components/login', { title: 'Login Page', errors: validationErrors });
-      //res.redirect('/login/user-pref');
+      
     } catch (error) {
       console.log(error);
       res.status(400).json({ error: 'Page Not Available' });
     }
   });
 
-// http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
-router
-  .route('/login/user-pref')
+router.get('/thankYou', (req, res) => {
+  res.render('components/thankYou', { title: 'Thank You' });
+});
+
+
+
+//getting person details 
+router.get('/personaldetails', async (req, res) => {
+  try {
+    console.log('Retrieved session data:', req.session);
+    const userId = req.session.user.id;
+    console.log(`Retrieved userId from session: ${userId}`);
+    console.log(userId);
+    let user = await usersData.getUserById(userId);
+    console.log(user);
+    res.render('components/personal-details', {user});
+  } catch (e) {
+    console.error(e);
+    res.render('components/error', { error: 'Error fetching properties' });
+  }
+});
+
+// http://localhost:3000/sign-router
+router.route('/sign-up')
   .get(async (req, res) => {
     //code here for GET
     try {
       res.render('components/afterLogin', { title: 'User Preference Page' })
     } catch (error) {
-      res.status(400).json({ error: e });
-    }
-  })
-  .post(async (req, res) => {
-    try {
-      if (user - pref === guest) {
-        res.render('components/guestHomepage', { title: 'Guest Homepage' });
-      }
-      else if (user - pref === hosts) {
-        res.render('components/hostHomepage', { title: 'Host Homepage' });
-      }
-    } catch (error) {
-      res.status(400).json({ error: e });
-    }
-  });
-
-// http://localhost:3000/sign-up
-router
-  .route('/sign-up')
-  .get(async (req, res) => {
-    //code here for GET
-    try {
-      res.render('components/signUp', { title: 'Sign Up Page' });
-    } catch (error) {
-      res.status(400).json({ error: e });
+      res.status(400).json({error: error});
     }
   })
   .post(async (req, res) => {
     //code here for GET
     try {
-      const { firstName, lastName, email, password, phoneNumber, accountType } = req.body;
-      // console.log(req.body);
-      const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType);
+      const { firstName, lastName, email, password, phoneNumber, accountType, role } = req.body;
+      
+      const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType, role);
 
-      console.log("validation:", validationErrors);
-
-      console.log("outside if:", req.body);
-      if (!validationErrors) {
+      if (!validationErrors) {    
         console.log("inside if:", req.body);
         //creating new user 
         const user = await userMethods.createUser(
@@ -109,45 +107,65 @@ router
           email,
           password,
           phoneNumber,
-          accountType
+          accountType,
+          role
         )
-        console.log("user:", user);
-        if (user) {
-          res.redirect('/login');
-        } else res.redirect('/user-pref');
+        if(user){
+          res.redirect("/login");
+        }
       }
-      else res.redirect('/sign-up');
-    }
-    catch (error) {
-      res.status(400).json(error);
-    }
+    } 
+    catch(error) {
+        
+        res.status(400).json(error);
+      }
   });
 
+  // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
 router
   .route('/user-pref')
   .get(async (req, res) => {
-    //code here for GET
-    try {
-      res.render('components/afterLogin', { title: 'User Preference Page' });
-    } catch (error) {
-      res.status(400).json({ error: e });
-    }
-  })
-  .post(async (req, res) => {
-    //code here for GET
-    try {
-      const { email, password } = req.body;
-      console.log(username);
-      const validationErrors = validation.signup(email, password);
-      if (validationErrors) {
-        return res.render('components/signUp', { title: 'Sign Up Page', errors: validationErrors });
+      //code here for GET
+      try {
+        res.render('components/afterLogin', {title: 'User Preference Page'})
+      } catch (error) {
+        res.status(400).json({error: "Cannot redirect to User-Preference Page"});
       }
-      res.redirect('/login');
-      //res.render('components/signUp', {title: 'Sign Up Page'});
+    })
+  .post(async (req, res) => {
+    try {
+      const buttonVal = req.body.accountType;
+      console.log("The Button clickcked is: ", buttonVal , req.session.user);
+       
+     if(buttonVal === "guest") {
+        console.log("inside if user 122", buttonVal);
+        
+       res.status(200).send({redirectUrl:'/guest/dashboard'});
+      } else if (buttonVal === "host") {
+       
+        res.status(200).json({redirectUrl:'/host/dashboard'});
+       
+      } else {
+        res.status(400).json({ error: 'Invalid button value' });
+      }
     } catch (error) {
-      res.status(400).json({ error: 'Sign up error' });
+      res.status(400).json({error: "Didnt find youe homepage, sorry"});
     }
-  });
+});
+    
+router
+  .route('/error')
+  .get(async (req, res) => {
+    //code here for GET
+    res.render('error', { error: 'Error Page' });
+});
+
+router
+  .route('/logout')
+  .get(async (req, res) => {
+  req.session.destroy();
+  res.send('Logged out');
+});
 
 export default router;
 

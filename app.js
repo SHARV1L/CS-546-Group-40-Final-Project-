@@ -4,6 +4,8 @@ import exphbs from 'express-handlebars';
 import cookieParser from 'cookie-parser';
 import session from 'express-session'
 import mwf from './middleware.js'
+import multer from 'multer';
+
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -17,6 +19,9 @@ const staticDirStyles = express.static(__dirname + '/styles');
 // console.log(staticDir1);
 
 const app = express();
+const upload = multer({ dest: 'uploads/' });
+app.use(upload.single('image'));
+
 
 const rewriteUnsupportedBrowerMethods = (req, res, next) => {
     if (req.body && req.body._method) {
@@ -47,12 +52,15 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 // Middleware function:
-//app.use('/hosts', mwf.checkAdminRoute);
-app.use('/login', mwf.checkLoginAccess);
+app.use('/admin', mwf.checkAdminRoute);
+app.use('/login', mwf.checkLoginAccess); 
 app.use('/sign-up', mwf.checkRegisterAccess);
-//app.use('/', mwf.checkRegisterAccess);
+app.use('/logout', mwf.checkLogoutAccess);
 app.use('/', mwf.loggingMiddleware);
-
+app.use('/user-pref', mwf.checkProtectedRoute);
+app.use('/guest',mwf.checkProtectedRoute);
+app.use('/host',mwf.checkProtectedRoute);
+app.use('/search',mwf.checkProtectedRoute);
 configRoutes(app);
 
 app.listen(3000, () => {

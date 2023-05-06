@@ -8,7 +8,7 @@ body {
 }
 
 body {
-	background: #537d58;
+	background: white;
 	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
@@ -17,8 +17,89 @@ main {
 	margin: auto;
 }
 
-header {
+/* header {
 	border-bottom: 1px solid #505583;
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+} */
+
+header {
+	border-bottom: 1px solid white;
+	background-color: #FF6B6B;
+	color: #F4D35E;
+	padding: 20px;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+	color: white;
+}
+
+p {
+	font-size: 1rem;
+	line-height: 2;
+	color: black;
+}
+.form-container {
+	margin: 20px auto;
+	max-width: 400px;
+	border: 1px solid #ddd;
+	padding: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 10px;
+	color:#FF6B6B
+}
+
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="email"] {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
+button{
+	background-color: #FFD166;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+	background-color: #FF6B6B;
+}
+
+.buttons-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 20px;
+	border: 20px;
+}
+
+#search-property {
+	background-color: #008CBA;
+	text-align: center;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+}
+
+#search-property:hover {
+	background-color: #0077B5;
 }
 
 .login-btn, .signup-btn {

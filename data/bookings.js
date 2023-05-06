@@ -26,8 +26,6 @@ const exportedFunctions = {
       totalPrice: totalPrice
     };
 
-
-
     const bookingCollection = await booking();
     const newInsertInformation = await bookingCollection.insertOne(newBooking);
     if (!newInsertInformation.insertedId) throw "Insert Failed";

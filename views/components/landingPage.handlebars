@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,16 +8,40 @@
 
 <body>
     <main>
-        <h1>Welcome to our Website - Landing Page</h1>
-        <p>About us: Your stay for your next visit. You can find the property you like and you can have a look at what
-            all it provides.
-            I'm sure you will get the right fit for you.</p>
-        <button id="login-button" onclick="location.href='/login'">Click to login</button>
-        <br>
-        <br>
-        <button id="sign-up-button" onclick="location.href='/sign-up'">Click to Sign-Up</button>
-        </form>
+      <h1>Welcome to our Website - Landing Page</h1>
+      <p>About us: Your stay for your next visit. You can find the property you like and you can have a look at what all it provides. 
+        I'm sure you will get the right fit for you.</p>
+      <button type="button" id="login-button" onclick="location.href='/login'">Click to login</button>
+      <br>
+      <br>
+      <button type="button" id="sign-up-button" onclick="location.href='/sign-up'">Click to Sign-Up</button>  
+      </form>
     </main>
-</body>
+  </body>
+</html> --}}
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Rental Website</title>
+  <link rel="stylesheet" href="../../styles/components-styles/landingPage.css">
+</head>
+<body>
+  <header>
+    <h1>Vacation Rental Website</h1>
+  </header>
+  <main>
+    <div class="cta-container">
+      <h2>Welcome!</h2>
+      <p>Please login or sign up to get started.</p>
+      <div class="buttons">
+        <a href="/login"><button class="button-primary">Login</button></a>
+        <a href="/sign-up"><button class="button-secondary">Sign Up</button></a>
+      </div>
+    </div>
+  </main>
+</body>
 </html>
