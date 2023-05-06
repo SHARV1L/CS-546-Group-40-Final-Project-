@@ -32,7 +32,7 @@ const seedProperties =[
     latitude:"40.640402656712844",
     longitude:"-73.88853475272201",
     pricePerNight:30,
-    availability:["4/6/2023","5/6/2023","6/6/2023","7/6/2023"],
+    availability:["2023-05-09","2023-05-10","2023-05-08"],
     reviews:[],
     images:"https://a0.muscache.com/pictures/30b294c9-0b0c-440f-b621-c52f772a264a.jpg",
   },
@@ -47,7 +47,7 @@ const seedProperties =[
     latitude:"40.640402656712552",
     longitude:"-73.88853475272204",
     pricePerNight:50,
-    availability:["10/12/2023","11/12/2023","12/12/2023"],
+    availability:[],
     images:"https://a0.muscache.com/pictures/30b294c9-0b0c-440f-b621-c52f772a264a.jpg",
     reviews:[{rating:4,feedback:"Good Property",guestId:new ObjectId('64556acf6d9a87cb3f50af67')}]
 

@@ -20,7 +20,7 @@ router.route('/list').post(async (req, res) => {
       
       //write code to fetch available properties and pass them as venues
      
-     res.render('components/listing', {title: 'Property Listing',propertyList:propertyList});
+     res.render('components/listing', {title: 'Property Listing',propertyList:propertyList,checkin:req.body.checkinDate,checkout:req.body.checkoutDate});
     } catch (error) {
       res.status(400).json({error: error});
     }
@@ -29,6 +29,7 @@ router.route('/list').post(async (req, res) => {
 // http://localhost:3000/search/property_search_by_id
 router.route('/:listingId').get(async (req, res) => {
   try {
+
     let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
     res.render('components/property', {title: 'Your property', propertyDetails:propertyDetails})
     //res.render('components/property', {title: 'Your property',venueData:{id:"12345",name:"Test Prop",listing_url:"xyz",picture_url:"",address:"Test Address",city:"Amroha",state:"UP",amenities:"Locks on Bedroon, TV , bathTub , AC , Wifi",roomType:"private"}})

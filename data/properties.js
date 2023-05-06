@@ -3,7 +3,7 @@ import { property } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import validation from '../validation.js';
 import userData from "./users.js";
-
+import helpers from "../helper.js";
 //import { createUser, getAllUsers, removeUser, updateUserPatch, updateUserPut } from '../data/users.js';
 
 let exportedFunctions={
@@ -62,7 +62,7 @@ let exportedFunctions={
     },
     
     async getAllProperty(data){
-        console.log("here there ",data);
+        console.log(data);
         const propertyCollection=await property();
         let searchQuery=[];
         if(data.location!==''){
@@ -71,8 +71,11 @@ let exportedFunctions={
         if(data.price!==''){
           searchQuery.push({pricePerNight:Number(data.price)});
         }
-        if(data.availability!==''){
-          searchQuery.push({availability:{$nin:data.availability}});
+        if(data.checkinDate!==''&&data.checkoutDate!==''){
+          console.log('check')
+          let dates = await helpers.getDatesInRange(new Date(data.checkinDate),new Date(data.checkoutDate));
+          console.log("$:",dates);
+          searchQuery.push({availability:{$nin:dates}});
         }
         console.log(searchQuery);
         const propertyList=await propertyCollection.find({$or:searchQuery},{_id:1,name:1}).limit(20).toArray();
@@ -86,11 +89,11 @@ let exportedFunctions={
         try{
         var propertyCollection = await property();
 
-        console.log("teststeststestst")
+        //console.log("teststeststestst")
        
         const propertyOne=await propertyCollection.findOne({_id:new ObjectId(id)});
         
-        console.log(propertyOne);
+        //console.log(propertyOne);
         if(!propertyOne) throw "User Not Found error";
         return propertyOne;
       }
