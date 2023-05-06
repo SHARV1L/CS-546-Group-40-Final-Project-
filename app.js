@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session'
 import mwf from './middleware.js'
 import multer from 'multer';
-
+import path from 'path';
 
 
 import {fileURLToPath} from 'url';
@@ -23,7 +23,6 @@ const staticDirStyles = express.static(__dirname + '/styles');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 app.use(upload.single('image'));
-
 
 const rewriteUnsupportedBrowerMethods = (req, res, next) => {
     if (req.body && req.body._method){

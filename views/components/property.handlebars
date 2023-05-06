@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Property Details</title>
-    <link rel="stylesheet" href="/public/css/main-styles.css">
-  </head>
-  <body>
-      <script>
-         function openMap(){
-             //pass lat long values to gmap for the selected property
-             alert('open map!');
-         }
-      </script>
-    <header>
-      <h1>Property Details</h1>
-    </header>
-    <main>
-      <div class="venue-details">
-        <h2>{{propertyDetails.name}}</h2>
-        <img alt={{propertyDetails.name}} src={{propertyDetails.picture_url}} style="width: 400px;height: 400px;">
-        <button class="button-primary">Book Now</button>
-        <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
-        <address>
-          Address:<br>
-          {{propertyDetails.address}}<br>
-          {{propertyDetails.city}}, {{propertyDetails.state}} {{propertyDetails.postalCode}}
-        </address>
-        <address>
-          Phone:<br>
-          {{propertyDetails.phone}}
-        </address>
-        <button onclick="openMap()">Venue Location</button>
-        <span>
-            Rooms: {{propertyDetails.bedrooms}},
-            Room Type: {{propertyDetails.room_type}},
-            Beds: {{propertyDetails.beds}},
-            Max Nights:{{propertyDetails.maximum_nights}}
-            Amenities: {{propertyDetails.amenities}}
-        </span>
-        <h4>Price: {{propertyDetails.price}}</h4>
-        <h4>Host Details</h4>
-        <p>Host Name: {{propertyDetails.host_name}}</p>
-        <p>Host Since: {{propertyDetails.host_since}}</p>
-        <p>Host Verified: {{propertyDetails.host_verified}}</p>
-        <p>Host Location: {{propertyDetails.host_location}}</p>
-        <h4>Reviews</h4>
-        
-      </div>
-    </main>
-  </body>
+
+<head>
+  <title>Property Details</title>
+  
+</head>
+
+<body>
+  
+  <header>
+    <h1>Property Details</h1>
+  </header>
+  <main>
+    <div class="venue-details">
+      <h2>{{propertyDetails.name}}</h2>
+      <img alt={{propertyDetails.name}} src={{propertyDetails.picture_url}} style="width: 400px;height: 400px;">
+      <button class="button-primary">Book Now</button>
+      <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
+      <address>
+        Address:<br>
+        {{propertyDetails.address}}<br>
+        {{propertyDetails.city}}, {{propertyDetails.state}} {{propertyDetails.postalCode}}
+      </address>
+      <address>
+        Phone:<br>
+        {{propertyDetails.phone}}
+      </address>
+      <a href="https://www.google.com/maps/@{{latitude}},{{longitude}},15z?hl=en-US&key={{API_KEY}}" target="_blank">Venue Location</a>
+      <span>
+        Rooms: {{propertyDetails.bedrooms}},
+        Room Type: {{propertyDetails.room_type}},
+        Beds: {{propertyDetails.beds}},
+        Max Nights:{{propertyDetails.maximum_nights}}
+        Amenities: {{propertyDetails.amenities}}
+      </span>
+      <h4>Price: {{propertyDetails.price}}</h4>
+      <h4>Host Details</h4>
+      <p>Host Name: {{propertyDetails.host_name}}</p>
+      <p>Host Since: {{propertyDetails.host_since}}</p>
+      <p>Host Verified: {{propertyDetails.host_verified}}</p>
+      <p>Host Location: {{propertyDetails.host_location}}</p>
+      <h4>Reviews</h4>
+
+    </div>
+  </main>
+</body>
+
 </html>

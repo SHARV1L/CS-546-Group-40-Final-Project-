@@ -1,9 +1,11 @@
-import {Router} from 'express';
+import { Router } from 'express';
 const router = Router();
-import {usersData} from '../data/index.js';
+import { usersData } from '../data/index.js';
 import validation from '../validation.js';
 import { ObjectId } from 'mongodb';
 //import {exportedFunctions} from '../data/users.js';
+import multer from 'multer';
+import path from 'path';
 
 router
   .route('/')
@@ -21,7 +23,7 @@ router
     if (!userInfo || Object.keys(userInfo).length === 0) {
       return res
         .status(400)
-        .json({error: 'There are no fields in the request body'});
+        .json({ error: 'There are no fields in the request body' });
     }
 
     try {
@@ -33,15 +35,15 @@ router
         userInfo.lastName,
         'Last Name'
       );
-      userInfo.email=validation.checkValidEmail(userInfo.email,"email");
-      userInfo.password=validation.checkValidPassword(userInfo.password,"passwd");
-      userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
-      userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
+      userInfo.email = validation.checkValidEmail(userInfo.email, "email");
+      userInfo.password = validation.checkValidPassword(userInfo.password, "passwd");
+      userInfo.phoneNumber = validation.checkValidPhone(userInfo.phoneNumber, "phone");
+      userInfo.accountType = validation.checkString(userInfo.accountType, "accountType");
 
     } catch (e) {
-      return res.status(400).json({error: e});
+      return res.status(400).json({ error: e });
     }
-    try { 
+    try {
       const newUser = await usersData.createUser(
         userInfo.firstName,
         userInfo.lastName,
@@ -57,65 +59,90 @@ router
     }
   });
 
-  router
+router
   .route('/dashboard')
-  .get(async (req,res) => {
+  .get(async (req, res) => {
     try {
-    // const userCollection = await guest();
-    console.log("in guest dash");
-    res.render('components/guestHomepage',{title: 'Guest Dashboard Page',user: req.session.user});
-    } catch(error) {
-      res.status(400).json({error: 'could not find the user, try again'})
+      // const userCollection = await guest();
+      console.log("in guest dash");
+      res.render('components/guestHomepage', { title: 'Guest Dashboard Page', user: req.session.user });
+    } catch (error) {
+      res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
-  .post(async(req,res)=>{
-    try{
-      let {selected_option}=req.body;
-       if(selected_option=="user_personal"){
-         res.redirect('/guest/personal');
-       }
-       else if(selected_option=="past_bookings")
-       {
+  .post(async (req, res) => {
+    try {
+      let { selected_option } = req.body;
+      if (selected_option == "user_personal") {
+        res.redirect('/guest/personal');
+      }
+      else if (selected_option == "past_bookings") {
         res.redirect('/guest/past_bookings');
-       }
-      else if(selected_option=="upcoming_bookings")
-      {
+      }
+      else if (selected_option == "upcoming_bookings") {
         res.redirect('/guest/upcoming_bookings');
       }
-      else if(selected_option=="search")
-      {
+      else if (selected_option == "search") {
         res.redirect('/search');
       }
     }
-    catch(error){
-      res.status(400).json({error: 'could not find the user, try again'})
+    catch (error) {
+      res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
 
-  router.route('/personal').get(async(req,res)=>{
-    res.render('components/personal-details',{title:'Personal Details',user:req.session.user});
-  }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
-    //define logic to update the user details
+router
+  .route('/dashboard/upload')
+  .get(async (req, res) => {
+    try {
+      // const userCollection = await guest();
+      console.log("in guest dash upload");
+      res.render('components/guestHomepage', { title: 'Guest Dashboard Page' });
+    } catch (error) {
+      res.status(400).json({ error: 'could not find the user, try again' })
+    }
+  })
+  .post(async (req, res) => {
+    // Image upload 
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        console.log(file);
+        cb(null, '../assests/Images');
+      },
+      filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now() + path.extname(file.originalname));
+      }
+    })
+    const imageUpload = multer({ storage: storage });
+    imageUpload.single("image");
+    res.send("Image uploaded");
   });
 
-  router.route('/past_bookings').get(async(req,res)=>{
-    //fetch data from db for list of past bookings for current user
-    res.render('components/pastBookings',{title:'Past Bookings',user:req.session.user,bookings:[]});
-  }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
-    //define logic to update the user details
-  });
-  
-  router.route('/upcoming_bookings').get(async(req,res)=>{
-    //fetch data from db for list of past bookings for current user
-    res.render('components/upcomingBookings',{title:'Upcoming Bookings',user:req.session.user,bookings:[]});
-  }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
-    //define logic to update the user details
-  });
+router.route('/personal').get(async (req, res) => {
+  res.render('components/personal-details', { title: 'Personal Details', user: req.session.user });
+}).post(async (req, res) => {
+  console.log("req.body:", req.body);
+  //define logic to update the user details
+});
 
-  
+router.route('/past_bookings').get(async (req, res) => {
+  //fetch data from db for list of past bookings for current user
+  res.render('components/pastBookings', { title: 'Past Bookings', user: req.session.user, bookings: [] });
+}).post(async (req, res) => {
+  console.log("req.body:", req.body);
+  //define logic to update the user details
+});
+
+router.route('/upcoming_bookings').get(async (req, res) => {
+  //fetch data from db for list of past bookings for current user
+  res.render('components/upcomingBookings', { title: 'Upcoming Bookings', user: req.session.user, bookings: [] });
+}).post(async (req, res) => {
+  console.log("req.body:", req.body);
+  //define logic to update the user details
+});
+
+
 
 //   router
 //   .route('/:id') ////////// commented lines for checking the code, should be uncommented later

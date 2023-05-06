@@ -36,6 +36,20 @@ const exportedMethods = {
 
     return arr;
   },
+  checkCoordinate(coordinate, varName) {
+      if (!coordinate) {
+          throw new Error(`You must provide an ${varName}`);
+      }
+      if (typeof coordinate !== 'string') {
+          throw new Error(`Given ${varName} must be a string!`);
+      }
+      for (let i = 0; i < coordinate.length; i++) {
+          if (!(coordinate.charCodeAt(i) >= 48 && coordinate.charCodeAt(i) <= 57) && !(coordinate.charCodeAt(i) == 46) && !(coordinate.charCodeAt(i) == 45)) {
+              throw new Error(`You must supply a valid ${varName}!`);
+          }
+      }
+      return coordinate;
+  },
 
   login(username, password) {
     if (username.length > 0 && password.length > 0) {

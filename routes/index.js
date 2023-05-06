@@ -15,10 +15,10 @@ const constructorMethod = (app) => {
   app.use('/property', propertyRoutes);
   app.use('/review', reviewRoutes);
   app.use('/search', listingRoutes);  // Property Listing Page route
-  
+
 
   app.use('*', (req, res) => {
-    res.status(404).json({error : 'Not Found'}); //render('error',  {class: 'Not Found', message: "No matching values"});
+    res.status(404).json({ error: 'Not Found' }); //render('error',  {class: 'Not Found', message: "No matching values"});
   });
 };
 

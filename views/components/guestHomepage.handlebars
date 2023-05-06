@@ -17,12 +17,17 @@
     <main> 
       <h2>Hi, {{{user.firstName}}}! how have you been? </h2>
       <h3>  </h3>
+      <form method="post" action="/guest/dashboard/upload" enctype="multipart/form-data">
+        <input type="file" accept="image/jpg" name="image">
+        <input type="submit" >
+      </form>
+      <br><br>
       <form id="guestHomepage" method="post" action="/guest/dashboard">
         <div class="buttons-container"> 
           <Button id="personal-details" type="submit" name="selected_option" value="user_personal"> Personal </Button> 
           <Button id="past_booking" type="submit" name="selected_option" value="past_bookings"> Past Bookings </Button> 
           <Button id="upcoming_booking" type="submit" name="selected_option" value="upcoming_bookings"> Upcoming Bookings </Button> 
-        </div>
+        </div>     
         <br>
         <br>
         <br>

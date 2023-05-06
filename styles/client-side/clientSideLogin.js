@@ -136,3 +136,17 @@ search_rentals.addEventListener('submit', async (event) => {
 
 });
 
+function initMap() {
+  var myLatLng = {lat: latitude, lng: longitude};
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 12,
+    center: myLatLng
+  });
+
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'My Location'
+  });
+}
