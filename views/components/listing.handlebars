@@ -11,9 +11,10 @@
     </header>
     
     <main>
+    
     <ol>
         {{#each propertyList}}
-            <li>Property: <a href="/search/{{_id}}">{{propertyName}}</a></li>
+            <li>Property: <a href="/search/{{_id}}?checkin={{../checkin}}&checkout={{../checkout}}">{{propertyName}}</a></li>
         {{/each}}
     </ol>
 

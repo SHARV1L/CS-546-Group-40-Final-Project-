@@ -10,8 +10,19 @@
              //pass lat long values to gmap for the selected property
              alert('open map!');
          }
-         function bookNow(){
+    function bookNow(data){
            alert('bookNow!');
+           console.log("$",data);
+    let obj ={
+   
+    "totalPrice":60,//calculate totalPrice*(checkout-checkin)
+    "checkInDate":"",
+    "checkOutDate":"2023-05-15",
+    "property_id":""
+      }
+           // code to hit booking api // http://localhost:3000/booking //post request //send obj in req.body
+
+           
          }
       </script>
     <header>
@@ -19,6 +30,7 @@
     </header>
     <main>
       <div class="venue-details">
+        <h2>{{checkin}}{{checkout}}</h2>
         <h2>{{propertyDetails.propertyName}}</h2>
         <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px;">
         <button class="button-primary" onclick="bookNow()">Book Now</button>
