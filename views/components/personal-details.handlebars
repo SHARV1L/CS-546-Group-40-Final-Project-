@@ -1,7 +1,39 @@
-<h1>Personal Details</h1>
-<p>First Name: {{user.firstName}}</p>
-<p>Last Name: {{user.lastName}}</p>
-<p>Email: {{user.email}}</p>
-{{!-- <p>Password: {{user.password}}</p> --}}
-<p>Phone Number: {{user.phoneNumber}}</p>
-<p>Account Type: {{user.accountType}}</p>
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <title>Profile Info</title>
+        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+    </head>
+  <body>
+    <header>
+    <h1>{{{title}}}</h1>
+    
+   
+    </header>
+    <main> 
+      
+      <h3> {{{title}}} </h3>
+      <form id="profilepage" method="post" action="/guest/personal">
+
+         <img src={{{user.profilePic}}}/>
+         <label for="username">Username</label>
+         <input placeholder="username" type="text" readonly name="username" value={{{user.firstName}}}/>
+         <label for="phone">Phone Number</label>
+         <input placeholder="phone" type="text" readonly name="phone" value={{{user.phoneNumber}}}/>
+         <label for="email">Email</label>
+         <input placeholder="email" type="text" readonly name="email" value={{{user.email}}}/>
+         <label for="role">Role</label>
+         <input placeholder="role" type="text" readonly name="role" value={{{user.role}}}/>
+        
+        <br>
+        <br>
+        <br>
+        <Button id="edit-profile" type="submit" name="edit" > Edit </Button>
+      </form>
+    </main>
+    
+     <a href="/logout">Logout</a>
+    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+    </main>
+  </body>
+</html>

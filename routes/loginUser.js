@@ -25,7 +25,7 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      console.log("hello");
+     
       res.render('components/login', {title: 'Login Page'});
     } catch (error) {
       res.status(400).json({error: e});
@@ -39,169 +39,37 @@ router
       const user = await userMethods.checkUser(username, password);
       const validationErrors = validation.login(username, password);
       
-      console.log("Inside login route")
+     
       if (!validationErrors) {
         if(!user) {
           res.render('components/error', {title: 'login credentials cannot be validated, enter again'});
         }
         else {
-          console.log("response inside else");
-          console.log(`User ID before setting session: ${user._id}`);
-          req.session.user = {firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
-          req.session.userId = user._id;
+         
+          req.session.user = {id:user.id,firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role}; //// change username to firstName
           if(user.role === "admin") res.redirect('/admin');
           else if(user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
         }
       } else res.render('components/login', { title: 'Login Page', errors: validationErrors });
-       // changes here
-      //res.redirect('/login/user-pref');
+      
     } catch (error) {
       console.log(error);
       res.status(400).json({error: 'Page Not Available'});
     }
 });
 
-
-// http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
-router
-.route('/user-pref')
-  .get(async (req, res) => {
-      //code here for GET
-      try {
-        res.render('components/afterLogin', {title: 'User Preference Page'})
-      } catch (error) {
-        res.status(400).json({error: e});
-      }
-    });
-//   .post(async (req, res) => {
-//     try {
-//       const buttonVal = req.body.button;
-
-//       console.log("User Type: ", buttonVal);
-
-//       if(buttonVal === 'guest') {
-//         console.log("inside if user", buttonVal);
-//         res.render('components/guestHomepage', {title: 'Guest Homepage'});
-//       } else if (buttonVal === 'host') {
-//         res.render('components/hostHomepage', {title: 'Host Homepage'});
-//       } else {
-//         res.status(400).json({ error: 'Invalid button value' });
-//       }
-//     } catch (error) {
-//       res.status(400).json({error: error});
-//     }
-// });
-
-
-// changes here 
-
-
-
-
-// router.post('/user-pref', async (req, res) => {
-//   try {
-//     const buttonVal = req.body.button;
-
-//     if (buttonVal === 'guest') {
-//       // redirect to guestHomepage
-//       res.redirect('/guestHomepage');
-//     } else if (buttonVal === 'host') {
-//       // redirect to hostHomepage
-//       res.redirect('/hostHomepage');
-//     } else {
-//       // invalid button value
-//       res.status(400).json({ error: 'Invalid button value' });
-//     }
-//   } catch (error) {
-//     // handle error
-//     res.status(400).json({ error: error });
-//   }
-// });
-
-
-router.get('/guestHomepage', (req, res) => {
-  res.render('components/guestHomepage', { title: 'Guest Homepage' });
-});
-router.get('/hostHomepage', (req, res) => {
-  res.render('components/hostHomepage', { title: 'Host Homepage' });
-});
-
-router.post("/guestHomepageRedirect",async(req,res)=>{
-  res.redirect('/guestHomepage');
-});
-
-router.post("/hostHomepageRedirect",async(req,res)=>{
-  res.redirect('/hostHomepage');
-});
-
-router.get('/postProperty', (req, res) => {
-  res.render('components/postProperty', { title: 'postProperty' });
-});
-
-// router.post('/host/add-property', async(req, res) => {
-//   const propertyInfo=req.body;
-//   const propertyCollection= await property();
-//   propertyCollection.insertOne(propertyInfo, (err, result) => {
-//     if (err) {
-//       console.log(err);
-//       res.sendStatus(500);
-//     } else {
-//       console.log("error no getting");
-//       console.log(result);
-//       res.redirect("/thank-you");
-//     }
-//   });
-// });
-
-// POST request to add a new property to the database
-router.post('/add-property', async (req, res) => {
-  console.log(req.body);
-  try {
-    const newProperty = await propertyData.createProperty(
-      req.session.userId,
-      req.body.propertyName,
-      req.body.description,
-      req.body.numberOfRooms,
-      req.body.numberOfBathrooms,
-      req.body.amenities,
-      req.body.address,
-      req.body.latitude,
-      req.body.longitude,
-      req.body.pricePerNight,
-      req.body.availability,
-      //req.file
-    );
-    res.redirect('/thankyou');
-  } catch (e) {
-    console.log(e);
-    res.render('error', { error: 'Error adding property' });
-  }
-});
-
-
-
-
 router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });
 });
 
-// getting property list
-router.get('/property-list', async (req, res) => {
-  try {
-    let properties = await propertyData.getAllProperty();
-    res.render('components/property', { properties });
-  } catch (e) {
-    console.error(e);
-    res.render('error', { error: 'Error fetching properties' });
-  }
-});
+
 
 //getting person details 
 router.get('/personaldetails', async (req, res) => {
   try {
     console.log('Retrieved session data:', req.session);
-    const userId = req.session.userId;
+    const userId = req.session.user.id;
     console.log(`Retrieved userId from session: ${userId}`);
     console.log(userId);
     let user = await usersData.getUserById(userId);
@@ -213,48 +81,21 @@ router.get('/personaldetails', async (req, res) => {
   }
 });
 
-//getting view property
-router.get('/viewProperty', async (req, res) => {
-  try {
-    // Retrieve the user ID from the session
-    const userId = req.session.userId;
-    // if (!userId) {
-    //   // If the user is not logged in, redirect to the login page
-    //   res.redirect('/login');
-    //   return;
-    // }
-
-    // Retrieve all properties associated with the host
-    const propertyCollection = await property();
-    const properties = await propertyCollection.find({ userId: userId }).toArray();
-
-    // Render the properties view with the retrieved properties
-    res.render('components/viewProperty', { properties });
-  } catch (e) {
-    console.error(e);
-    res.render('error', { error: 'Error fetching properties' });
-  }
-});
-
-
-
-
-// http://localhost:3000/sign-up
-router
-.route('/sign-up')
+// http://localhost:3000/sign-router
+router.route('/sign-up')
   .get(async (req, res) => {
     //code here for GET
     try {
       res.render('components/signUp', {title: 'Sign Up Page'});
     } catch (error) {
-      res.status(400).json({error: e});
+      res.status(400).json({error: error});
     }
   })
   .post(async (req, res) => {
     //code here for GET
     try {
       const { firstName, lastName, email, password, phoneNumber, accountType, role } = req.body;
-      // console.log(req.body);
+      
       const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType, role);
 
       if (!validationErrors) {    
@@ -269,13 +110,48 @@ router
           accountType,
           role
         )
+        if(user){
+          res.redirect("/login");
+        }
       }
     } 
     catch(error) {
-        console.log(error, "line 147 loginUser");
+        
         res.status(400).json(error);
       }
   });
+
+  // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
+router
+.route('/user-pref')
+  .get(async (req, res) => {
+      //code here for GET
+      try {
+        res.render('components/afterLogin', {title: 'User Preference Page'})
+      } catch (error) {
+        res.status(400).json({error: "Cannot redirect to User-Preference Page"});
+      }
+    })
+  .post(async (req, res) => {
+    try {
+      const buttonVal = req.body.accountType;
+      console.log("The Button clickcked is: ", buttonVal , req.session.user);
+       
+     if(buttonVal === "guest") {
+        console.log("inside if user 122", buttonVal);
+        
+       res.status(200).send({redirectUrl:'/guest/dashboard'});
+      } else if (buttonVal === "host") {
+       
+        res.status(200).json({redirectUrl:'/host/dashboard'});
+       
+      } else {
+        res.status(400).json({ error: 'Invalid button value' });
+      }
+    } catch (error) {
+      res.status(400).json({error: "Didnt find youe homepage, sorry"});
+    }
+});
     
 router
   .route('/error')

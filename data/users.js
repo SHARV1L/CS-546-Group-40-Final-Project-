@@ -35,7 +35,7 @@ let exportedFunctions = {
 
       const userCollection = await users();
   
-      console.log(email);
+      
       const existingUser = await userCollection.findOne({email: email.trim()});
    
       if (existingUser) {
@@ -52,7 +52,7 @@ let exportedFunctions = {
         password: hashedPassword,
         phoneNumber: phoneNumber.trim(),
         //profilePicture:profilePicture,
-        accountType: accountType.trim(),
+        //accountType: accountType.trim(),
         role: role.trim(),
       };
         
@@ -71,11 +71,8 @@ let exportedFunctions = {
     
   async getUserById (id) {
     id = validation.checkId( id );
-    console.log(id);
     const userCollection = await users();
-    console.log(userCollection);
     const user = await userCollection.findOne({_id : new ObjectId(id)});
-    console.log(user);
     if(!user) throw "User Not Found error";
     return user;
   },
@@ -93,16 +90,17 @@ let exportedFunctions = {
     
     async updateUserPut (
     id,
-    firstName,
-    lastName   
+    //firstName,
+    //lastName   
+    accountType
     ) {
       id = validation.checkId( id );
-      firstName = validation.checkString(firstName, 'First Name');
-      lastName = validation.checkString(lastName, 'Last Name');
+      //firstName = validation.checkString(firstName, 'First Name');
+      //lastName = validation.checkString(lastName, 'Last Name');
+      accountType = (accountType, 'Account Type');
       
       const userUpdatedInfo = {
-       firstName : firstName,
-       lastName : lastName
+       accountType: accountType
       };
 
       const userCollection = await users();
@@ -164,11 +162,12 @@ let exportedFunctions = {
         console.log(`Returning user with ID: ${user._id}`); // add logging statement here
         // Return user data without password
       return {
-        _id: user._id,
+        id:user._id,
         firstName: user.firstName,
         lastName: user.lastName,
-        emailAddress: user.emailAddress,
-        phoneNumber: user.phonenumber,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        accountType: user.accountType,
         role: user.role
       };
     }
