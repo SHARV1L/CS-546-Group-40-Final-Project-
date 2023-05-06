@@ -66,16 +66,16 @@ let exportedFunctions={
         const propertyCollection=await property();
         let searchQuery=[];
         if(data.location!==''){
-          searchQuery.push({neighbourhood_group_cleansed:data.location});
+          searchQuery.push({address: `/.*${data.location}.*/i`});
         }
         if(data.price!==''){
-          searchQuery.push({price:`$${data.price}`});
+          searchQuery.push({pricePerNight:Number(data.price)});
         }
         if(data.availability!==''){
-          searchQuery.push({availability:data.availability});
+          searchQuery.push({availability:{$nin:data.availability}});
         }
-        
-        const propertyList=await propertyCollection.find({$or:searchQuery},{id:1,name:1}).limit(20).toArray();
+        console.log(searchQuery);
+        const propertyList=await propertyCollection.find({$or:searchQuery},{_id:1,name:1}).limit(20).toArray();
         console.log(propertyList.length);
         return propertyList;
     },
@@ -88,7 +88,7 @@ let exportedFunctions={
 
         console.log("teststeststestst")
        
-        const propertyOne=await propertyCollection.findOne({id:id});
+        const propertyOne=await propertyCollection.findOne({_id:new ObjectId(id)});
         
         console.log(propertyOne);
         if(!propertyOne) throw "User Not Found error";
