@@ -2,7 +2,7 @@
   <html lang="en">
     <head>
         <title>Vacation Rental Application</title>
-        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
     </head>
   <body>
     <header>
@@ -14,7 +14,7 @@
     
     <ol>
         {{#each propertyList}}
-            <li>Property: <a href="/search/{{_id}}?checkin={{../checkin}}&checkout={{../checkout}}">{{propertyName}}</a></li>
+            <li><a href="/search/{{_id}}?checkin={{../checkin}}&checkout={{../checkout}}">{{propertyName}}</a></li>
         {{/each}}
     </ol>
 

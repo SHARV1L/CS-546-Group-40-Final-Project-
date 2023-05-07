@@ -2,21 +2,23 @@
   <html lang="en">
     <head>
         <title>Guest Login</title>
-        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+        <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
     </head>
   <body>
     <header>
     <h1>{{{title}}}</h1>
-    <h2>Hello, how are you? We missed you here!</h2>
+    <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
    
     </header>
+
 
     <br>
     <br>
 
     <main> 
-      <h2>Hi, {{{user.firstName}}}! how have you been? </h2>
-      <h3>  </h3>
+      {{!-- <h3>Hi, {{{user.firstName}}}! how have you been? </h3> --}}
+ 
+      <br>
       <form id="guestHomepage" method="post" action="/guest/dashboard">
         <div class="buttons-container"> 
           <Button id="personal-details" type="submit" name="selected_option" value="user_personal"> Personal </Button> 
@@ -24,8 +26,7 @@
           <Button id="upcoming_booking" type="submit" name="selected_option" value="upcoming_bookings"> Upcoming Bookings </Button> 
         </div>
         <br>
-        <br>
-        <br>
+
         <Button id="search-property" type="submit" name="selected_option" value="search"> Search Property </Button>
       </form>
     </main>

@@ -2,6 +2,7 @@ import {booking} from './config/mongoCollections.js';
 import { property } from './config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 import { closeConnection } from './config/mongoConnection.js';
+
 const seedBookings =[
     {userId:new ObjectId("644e976a0a60e9505cddcf00"),
      property_id:new ObjectId("6454b270f1baf13e668068ae"),
@@ -49,8 +50,7 @@ const seedProperties =[
     pricePerNight:50,
     availability:[],
     images:"https://a0.muscache.com/pictures/30b294c9-0b0c-440f-b621-c52f772a264a.jpg",
-    reviews:[{rating:4,feedback:"Good Property",guestId:new ObjectId('64556acf6d9a87cb3f50af67')}]
-
+    reviews:[{rating:4, feedback:"Good Property", guestId:new ObjectId('64556acf6d9a87cb3f50af67')}]
   }
 ]
 
