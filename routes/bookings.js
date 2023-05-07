@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import { booking } from '../config/mongoCollections.js';
 import {usersData} from '../data/index.js';
 import { propertyData } from '../data/index.js';
 import { bookingsData } from '../data/index.js';
@@ -51,40 +52,26 @@ router
   })
   .post(async (req, res) => {
     let bookingInfo = req.body;
+    //console.log(bookingInfo);
+    try { 
     if (!bookingInfo || Object.keys(bookingInfo).length === 0) {
       return res
         .status(400)
         .json({error: 'There are no fields in the request body'});
     }
-
-    // try {
-    //   userInfo.firstName = validation.checkString(
-    //     userInfo.firstName,
-    //     'First Name'
-    //   );
-    //   userInfo.lastName = validation.checkString(
-    //     userInfo.lastName,
-    //     'Last Name'
-    //   );
-    //   userInfo.email=validation.checkValidEmail(userInfo.email,"email");
-    //   userInfo.password=validation.checkValidPassword(userInfo.password,"passwd");
-    //   userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
-    //   userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
-
-    // } catch (e) {
-    //   return res.status(400).json({error: e});
-    // }
-
-    // validation functions here
-    try { 
+   // validation functions here
+    else{
+      
       const newBooking = await bookingsData.createBooking(
-        bookingInfo.userId,
-        //property_id,
+        req.session.user.id,
+        bookingInfo.property_id,
         bookingInfo.checkInDate,
         bookingInfo.checkOutDate,
         bookingInfo.totalPrice
       );
+
       res.json(newBooking);
+    }
     } catch (e) {
       res.status(500).send("Error creating user");
     }
