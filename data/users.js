@@ -23,9 +23,9 @@ let exportedFunctions = {
     // phoneNumber = validation.checkValidPhone(phoneNumber,'Phone Number');
     // accountType = (accountType, 'User - Preference');
     
-    //profilePicture=validation.checkValidProfilePicture(profilePicture,Profile1);
-    //accountType = validation.checkString(accountType, "Account Type");
-    //console.log(firstName);
+    // profilePicture=validation.checkValidProfilePicture(profilePicture,Profile1);
+    // accountType = validation.checkString(accountType, "Account Type");
+    // console.log(firstName);
 
     if (role.trim() !== 'admin' && role.trim() !== 'user') {
       throw " Enter a valid user or admin "

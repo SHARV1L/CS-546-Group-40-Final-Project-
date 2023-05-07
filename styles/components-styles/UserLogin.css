@@ -10,6 +10,8 @@ body {
 body {
 	background: white;
 	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+	margin: 0;
+	padding: 0;
 }
 
 main {
@@ -41,7 +43,7 @@ header h1 {
 p {
 	font-size: 1rem;
 	line-height: 2;
-	color: black;
+	color: #0077B5;
 }
 .form-container {
 	margin: 20px auto;
@@ -82,13 +84,19 @@ button:hover {
 	background-color: #FF6B6B;
 }
 
-.buttons-container {
+/* .buttons-container {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-top: 20px;
 	border: 20px;
-}
+} */
+.buttons-container {
+	display: flex;
+	flex-direction: row;
+	justify-content:space-around;
+  }
+  
 
 #search-property {
 	background-color: #008CBA;
@@ -99,6 +107,18 @@ button:hover {
 }
 
 #search-property:hover {
+	background-color: #0077B5;
+}
+
+#post-property {
+	background-color: #008CBA;
+	text-align: center;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+}
+
+#post-property:hover {
 	background-color: #0077B5;
 }
 
@@ -118,4 +138,17 @@ button:hover {
   
   .login-btn:hover, .signup-btn:hover {
 	background-color: #8e3e87;
+  }
+
+
+  a {
+	color: #3F51B5;
+	display: block;
+	margin-top: 1rem;
+	/* text-align: center; */
+	text-decoration: none;
+  }
+  
+  a:hover {
+	text-decoration: underline;
   }

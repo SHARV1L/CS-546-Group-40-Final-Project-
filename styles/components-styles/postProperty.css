@@ -3,7 +3,7 @@ body {
   }
   
   header {
-    background-color: #333;
+    background-color: #FC4445;
     color: white;
     padding: 1rem;
     text-align: center;
@@ -48,7 +48,7 @@ body {
   
   button[type="submit"] {
     padding: 0.5rem 1rem;
-  background-color: #333;
+  background-color: #FC4445;
   color: white;
   border: none;
   border-radius: 4px;

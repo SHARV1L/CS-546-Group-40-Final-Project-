@@ -31,8 +31,8 @@ router.route('/:listingId').get(async (req, res) => {
   try {
 
     let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
-    res.render('components/property', {title: 'Your property',propertyDetails:propertyDetails,checkin:req.query.checkin,checkout:req.query.checkout})
-
+    res.render('components/property', {title: 'Your property', propertyDetails:propertyDetails})
+    //res.render('components/property', {title: 'Your property',venueData:{id:"12345",name:"Test Prop",listing_url:"xyz",picture_url:"",address:"Test Address",city:"Amroha",state:"UP",amenities:"Locks on Bedroon, TV , bathTub , AC , Wifi",roomType:"private"}})
   } catch (error) {
     res.status(400).json({error: e});
   }

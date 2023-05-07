@@ -11,20 +11,21 @@
              alert('open map!');
          }
     function bookNow(data){
-           alert('bookNow!');
-           console.log("$",data);
-    let obj ={
-   
-    "totalPrice":60,//calculate totalPrice*(checkout-checkin)
-    "checkInDate":"",
-    "checkOutDate":"2023-05-15",
-    "property_id":""
+      alert('bookNow!');
+      console.log("$",data);
+      const checkInDate = new Date(checkin);
+      const checkOutDate = new Date(checkout);
+
+      let obj ={
+      "totalPrice": {propertyDetails.totalPrice},//calculate totalPrice*(checkout-checkin)
+      "checkInDate": checkInDate,
+      "checkOutDate": checkOutDate,
+      "property_id": {propertyDetails.id}
       }
            // code to hit booking api // http://localhost:3000/booking //post request //send obj in req.body
-
-           
-         }
+    }
       </script>
+      
     <header>
       <h1>Property Details</h1>
     </header>

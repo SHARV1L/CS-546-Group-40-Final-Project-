@@ -1,65 +1,64 @@
-// const loginForm = document.getElementById('login-form');
+const loginForm = document.getElementById('login-form');
 
-// loginForm.addEventListener('submit', async (event) => {
-//     event.preventDefault();
+loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-//     const email = document.getElementById('email').value;
-//     const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-//     console.log(email, "is the email entered");
+    console.log(email, "is the email entered");
 
-//     const response = await fetch('/login', {
-//         method: 'POST',
-//         body: JSON.stringify({username: email, password: password})
-//       });    
+    const response = await fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({username: email, password: password})
+      });    
 
-//     const result = await response.json();
-//         if (result.message === 'Invalid credentials') {
-//             throw 'Invalid credentials';
-//         } else {
-//             location.href = '/users';
-//         }
-// });
+    const result = await response.json();
+        if (result.message === 'Invalid credentials') {
+            throw 'Invalid credentials';
+        } else {
+            location.href = '/users';
+        }
+});
 
-// const signUpForm = document.getElementById('signup-form');
+const signUpForm = document.getElementById('signup-form');
 
-// signUpForm.addEventListener('submit', async (event) => {
-//   event.preventDefault();
+signUpForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-//   const firstName = document.getElementById('firstName').value;
-//   const lastName = document.getElementById('lastName').value;
-//   const email = document.getElementById('email').value;
-//   const password = document.getElementById('password').value;
-//   const phoneNumber = document.getElementById('phoneNumber').value;
-//   const accountType = document.getElementById('accountType').value;
-//   const role = document.getElementById('role').value;
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const phoneNumber = document.getElementById('phoneNumber').value;
+  const accountType = document.getElementById('accountType').value;
+  const role = document.getElementById('role').value;
 
-//   if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType || !role) {
-//     throw 'Please fill in all required fields';
-//   }
-//   // Send the sign up request to the server
-//   const response = await fetch('/sign-up', { 
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ firstName, lastName, email, password, phoneNumber, accountType, role })
-//   });
+  if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType || !role) {
+    throw 'Please fill in all required fields';
+  }
+  // Send the sign up request to the server
+  const response = await fetch('/sign-up', { 
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ firstName, lastName, email, password, phoneNumber, accountType, role })
+  });
 
-//   if (response.ok) {
-//     // Successful sign up, redirect to the login page
-//     window.location.href = '/login';
-//   } else {
-//     // Sign up failed, display the error message
-//     alert(response.message);
-//   }
-// });
+  if (response.ok) {
+    // Successful sign up, redirect to the login page
+    window.location.href = '/login';
+  } else {
+    // Sign up failed, display the error message
+    alert(response.message);
+  }
+});
 
 async function  handleUserPref(ev) {
   
   let buttonVal=ev.target.value;
         
-       
   const response = await fetch('/user-pref', {
       method: 'POST',
       headers: {
@@ -78,8 +77,6 @@ async function  handleUserPref(ev) {
     }
   
 }
-
-
 
 
 // search rental listner: client side validation
@@ -115,12 +112,11 @@ search_rentals.addEventListener('submit', async (event) => {
 //   }
 });
 
+// review through AJAX request
 const reviews = document.getElementById('reviews');
 
 search_rentals.addEventListener('submit', async (event) => {
   event.preventDefault();
-
-  const location = document.getElementById('reviews').value;
 
   if ( !reviews ) {
     throw 'Please fill in the review';
@@ -131,7 +127,7 @@ search_rentals.addEventListener('submit', async (event) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ reviews })
+    body: JSON.stringify({ reviews, property_id: req.params.id })
   });
 
 });
