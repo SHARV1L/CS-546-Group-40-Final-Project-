@@ -2,30 +2,19 @@
 <html lang="en">
   <head>
     <title>Property Details</title>
-    <link rel="stylesheet" href="/public/css/main-styles.css">
+    <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
   </head>
   <body>
       <script>
-         function openMap(){
-             //pass lat long values to gmap for the selected property
-             alert('open map!');
-         }
-    function bookNow(data){
-      alert('bookNow!');
-      console.log("$",data);
-      const checkInDate = new Date(checkin);
-      const checkOutDate = new Date(checkout);
+        
+      src="../styles/client-side/propertyClientSide.js"
 
-      let obj ={
-      "totalPrice": {propertyDetails.totalPrice},//calculate totalPrice*(checkout-checkin)
-      "checkInDate": checkInDate,
-      "checkOutDate": checkOutDate,
-      "property_id": {propertyDetails.id}
+      function openMap(){
+        //pass lat long values to gmap for the selected property
+        alert('open map!');
       }
-           // code to hit booking api // http://localhost:3000/booking //post request //send obj in req.body
-    }
+        
       </script>
-      
     <header>
       <h1>Property Details</h1>
     </header>
@@ -34,17 +23,13 @@
         <h2>{{checkin}}{{checkout}}</h2>
         <h2>{{propertyDetails.propertyName}}</h2>
         <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px;">
-        <button class="button-primary" onclick="bookNow()">Book Now</button>
+        <button id="book" class="button-primary" onclick="bookNow()">Book Now</button>
         <button onclick="openMap()">Venue Location</button>
         <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
         <address>
           Address:<br>
           {{propertyDetails.address}}<br>
          
-        </address>
-        <address>
-          Phone:<br>
-          {{propertyDetails.phone}}
         </address>
         
         <span>
@@ -55,7 +40,7 @@
             Amenities: {{#each propertyDetails.amenities}}
             <td>{{this}}</td>{{/each}}
         </span>
-        <h4>Price: {{propertyDetails.pricePerNight}} perNight</h4>
+        <h4>Price: ${{propertyDetails.pricePerNight}} perNight</h4>
         <h4>Reviews</h4>
         {{#each propertyDetails.reviews}}
         <tr>
