@@ -91,7 +91,9 @@ signUpForm.addEventListener('submit', async (event) => {
 
   if (response.ok) {
     // Successful sign up, redirect to the login page
+    window.location.href=data.redirectUrl;
     window.location.href = '/login';
+   
   } else {
     // Sign up failed, display the error message
     alert(response.message);
@@ -102,7 +104,7 @@ async function  handleUserPref(ev) {
   
   let buttonVal=ev.target.value;
         
-  const response = await fetch('/user-pref', {
+  const response = await fetch('/sign-up', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
