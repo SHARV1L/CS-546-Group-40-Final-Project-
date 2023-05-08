@@ -16,8 +16,7 @@ router.route('/').get(async (req, res) => {
 router.route('/list').post(async (req, res) => {
     try {
       let propertyList   = await propertyMethods.getAllProperty(req.body);
-      
-      
+            
       //write code to fetch available properties and pass them as venues
      
      res.render('components/listing', {title: 'Property Listing',propertyList:propertyList,checkin:req.body.checkinDate,checkout:req.body.checkoutDate});

@@ -45,7 +45,8 @@ router
   .get(async (req, res) => {
     try {
       let bookingList = await bookingsData.getAllBookings();
-      res.json(bookingList);
+      //res.json(bookingList);
+      res.render('/components/booking', {title: 'Booking Page'} )
     } catch (e) {
       res.sendStatus(500);
     }

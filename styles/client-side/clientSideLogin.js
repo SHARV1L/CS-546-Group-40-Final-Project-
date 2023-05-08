@@ -127,7 +127,7 @@ search_rentals.addEventListener('submit', async (event) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ reviews, property_id: req.params.id })
+    body: JSON.stringify({ review, property_id: req.params.id })
   });
 
 });

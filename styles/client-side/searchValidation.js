@@ -1,7 +1,8 @@
 function validateSearchForm(form) {
     const location = form.location.value.trim();
     const charges = form.price.value.trim();
-    const availability = form.availability.value.trim();
+    const checkinDate = form.checkinDate.value.trim();
+    const checkoutDate = form.checkoutDate.value.trim();
     const amenities = form.amenities.value.trim();
   
     if (!location) {
@@ -13,11 +14,11 @@ function validateSearchForm(form) {
       alert('Charges per night is required.');
       return false;
     }
-  
-    if (!availability) {
-      alert('Availability is required.');
-      return false;
-    }
+          
+    // if (!availability) {
+    //   alert('Availability is required.');
+    //   return false;
+    // }
   
     if (!amenities) {
       alert('Amenities are required.');
