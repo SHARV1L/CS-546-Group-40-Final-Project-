@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session'
 import mwf from './middleware.js'
 import multer from 'multer';
+import bodyParser from 'body-parser';
 
 
 
@@ -23,6 +24,8 @@ const staticDirStyles = express.static(__dirname + '/styles');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 app.use(upload.single('image'));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use('/uploads', express.static('uploads'));
 
 
 const rewriteUnsupportedBrowerMethods = (req, res, next) => {

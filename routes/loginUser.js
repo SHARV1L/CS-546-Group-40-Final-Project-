@@ -1,9 +1,11 @@
 import {Router} from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
+import { users } from "../config/mongoCollections.js";
 import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
 import {usersData} from '../data/index.js';
+import { ObjectId } from 'mongodb';
 
 const router = Router();
 
@@ -63,6 +65,31 @@ router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });
 });
 
+ // Route for handling image upload
+ router.post('/upload-image', async (req, res) => {
+  try {
+    const { imageData } = req.body;
+    if (!imageData) {
+      throw new Error('Image data is missing');
+    }
+    const userId = req.session.user.id; // Replace with the actual user ID
+
+    const userCollection = await users();
+
+    // Save the image data to the user collection
+    await userCollection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { image: imageData } }
+    );
+
+    res.status(200).json({ message: 'Image uploaded successfully' });
+  } catch (error) {
+    console.error('Error uploading image:', error); // Log the error
+    res.status(500).json({ message: 'Image upload failed', error });
+  }
+});
+
+
 
 
 //getting person details 
@@ -99,7 +126,9 @@ router.get('/host/personaldetails', async (req, res) => {
 
 // post property routes here
 router.post('/host/postProperty', async (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
+  //const base64Images = JSON.parse(req.body.base64Images || '[]');
+  //const base64Images = JSON.parse(req.body.base64Images || '[]');
   const {
     propertyName,
     description,
@@ -111,7 +140,9 @@ router.post('/host/postProperty', async (req, res) => {
     longitude,
     pricePerNight,
     availability,
+    images
   } = req.body;
+  //console.log('Received base64Images:', base64Images);
   try{
     if (
       !propertyName ||
@@ -146,16 +177,18 @@ router.post('/host/postProperty', async (req, res) => {
   try {
     const newProperty = await propertyData.createProperty(
       req.session.user.id,
-      req.body.propertyName,
-      req.body.description,
-      req.body.numberOfRooms,
-      req.body.numberOfBathrooms,
-      req.body.amenities,
-      req.body.address,
-      req.body.latitude,
-      req.body.longitude,
-      req.body.pricePerNight,
-      req.body.availability,
+      propertyName,
+      description,
+      numberOfRooms,
+      numberOfBathrooms,
+      amenities,
+      address,
+      latitude,
+      longitude,
+      pricePerNight,
+      availability,
+      images
+      //JSON.parse(base64Images || '[]')
       //req.file
     );
     res.redirect('/thankyou');

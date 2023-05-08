@@ -20,7 +20,8 @@ let exportedFunctions={
         latitude,
         longitude,
         pricePerNight,
-        availability
+        availability,
+        images
     ){
         //userId=validation.checkId(userId);
         //const userCollection=await users();
@@ -45,6 +46,7 @@ let exportedFunctions={
             longitude:longitude,
             pricePerNight:pricePerNight,
             availability:availability,
+            images:images
             // image: {
             //   data: fs.readFileSync(image.path),
             //   contentType: image.mimetype
@@ -55,6 +57,10 @@ let exportedFunctions={
         const propertyCollection=await property();
         const newInsertInformation=await propertyCollection.insertOne(newProperty);
         if(!newInsertInformation.insertedId) throw "Insert Failed";
+        const insertedProperty = await this.getPropertyById(newInsertInformation.insertedId.toString());
+        console.log('Inserted Property Images:', insertedProperty.images);
+
+
         return await this.getPropertyById(newInsertInformation.insertedId.toString());
 
 
@@ -87,13 +93,14 @@ let exportedFunctions={
         //id=validation.checkId(id);
         //console.log(id,"teststeststestst", property);
         try{
-        var propertyCollection = await property();
+        console.log(id);
+        const propertyCollection = await property();
 
         //console.log("teststeststestst")
        
         const propertyOne=await propertyCollection.findOne({_id:new ObjectId(id)});
         
-        //console.log(propertyOne);
+        console.log(propertyOne);
         if(!propertyOne) throw "User Not Found error";
         return propertyOne;
       }

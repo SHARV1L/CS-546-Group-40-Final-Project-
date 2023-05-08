@@ -4,6 +4,8 @@ import {hostsData} from '../data/index.js';
 import validation from '../validation.js';
 import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
+import { ObjectId } from 'mongodb';
+import { users } from "../config/mongoCollections.js";
 //import {exportedFunctions} from '../data/users.js';
 
 router
@@ -61,9 +63,13 @@ router
   .route('/dashboard')
   .get(async (req,res) => {
     try {
+      const userId = req.session.user.id; // Replace with the actual user ID
+      console.log(userId);
+      const userCollection = await users();
+      const userData = await userCollection.findOne({ _id: new ObjectId(userId) })
     
     console.log("in host dash");
-    res.render('components/hostHomepage',{title: 'Host Dashboard Page',user: req.session.user});
+    res.render('components/hostHomepage',{user: userData});
     } catch(error) {
       res.status(400).json({error: 'could not find the user, try again'})
     }
@@ -95,6 +101,18 @@ router
       res.status(400).json({error: 'could not find the user, try again'})
     }
   })
+  // router.route('/:listingId').get(async (req, res) => {
+  //   try {
+  
+  //     let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
+  //     res.render('components/viewPropertyDetails', {title: 'Your property', propertyDetails:propertyDetails})
+  //     //res.render('components/property', {title: 'Your property',venueData:{id:"12345",name:"Test Prop",listing_url:"xyz",picture_url:"",address:"Test Address",city:"Amroha",state:"UP",amenities:"Locks on Bedroon, TV , bathTub , AC , Wifi",roomType:"private"}})
+  //   } catch (error) {
+  //     res.status(400).json({error: e});
+  //   }
+  // });
+
+
 
   router.route('/personal').get(async(req,res)=>{
     res.render('components/personal-details',{title:'Personal Details',user:req.session.user});

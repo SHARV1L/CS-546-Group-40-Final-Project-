@@ -28,8 +28,14 @@ router.route('/list').post(async (req, res) => {
 // http://localhost:3000/search/property_search_by_id
 router.route('/:listingId').get(async (req, res) => {
   try {
-
+    console.log(req.params);
     let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
+    // propertyDetails.images = `data:image/jpeg;base64,${propertyDetails.images}`;
+    // if (propertyDetails.images.toLowerCase().endsWith('.jpg')) {
+    //   // If it's a .JPG file, convert it to a data URL
+    //   propertyDetails.images = `data:image/jpeg;base64,${propertyDetails.images}`;
+    // }
+    console.log(propertyDetails);
     res.render('components/property', {title: 'Your property', propertyDetails:propertyDetails})
     //res.render('components/property', {title: 'Your property',venueData:{id:"12345",name:"Test Prop",listing_url:"xyz",picture_url:"",address:"Test Address",city:"Amroha",state:"UP",amenities:"Locks on Bedroon, TV , bathTub , AC , Wifi",roomType:"private"}})
   } catch (error) {

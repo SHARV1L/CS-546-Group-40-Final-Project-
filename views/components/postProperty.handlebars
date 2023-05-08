@@ -41,8 +41,17 @@
       <label for="availability">Availability:</label>
       <input type="text" name="availability" id="availability" required>
 
-      <label for="images">Images:</label>
-      <input type="file" name="images" id="images" multiple required accept="image/*">
+      {{!-- <label for="images">Images:</label>
+      <input type="file" name="images" id="images" multiple required accept="image/*"> --}}
+
+{{!-- <label for="images">Images:</label>
+<input type="file" name="images" id="images" multiple accept="image/*" style="display:none">
+<button type="button" onclick="document.getElementById('images').click()">Upload Images</button>
+<div id="images-preview"></div>
+<input type="hidden" name="base64Images" id="base64Images" value=""> --}}
+
+<input type="file" name="images" id="images" multiple accept="image/*" onchange="previewImages(event)">
+
 
       <button id="add-property" type="submit">Add Property</button>
     </form>
@@ -54,7 +63,56 @@
       dateFormat: 'Y-m-d',
       minDate: 'today'
     });
+
+
+function previewImages(event) {
+  const imageInput = event.target;
+  const imagesPreview = document.getElementById('images-preview');
+  imagesPreview.innerHTML = '';
+
+  if (imageInput.files && imageInput.files.length > 0) {
+    for (const imageFile of imageInput.files) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.width = 100;
+        img.height = 100;
+        imagesPreview.appendChild(img);
+      };
+      reader.readAsDataURL(imageFile);
+    }
+  }
+}
+
+document.getElementById('add--property').addEventListener('submit', function (e) {
+  const imageInput = document.getElementById('images');
+  const base64ImagesInput = document.getElementById('base64Images');
+  const base64Images = [];
+
+  if (imageInput.files && imageInput.files.length > 0) {
+    for (const imageFile of imageInput.files) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        base64Images.push(e.target.result);
+        if (base64Images.length === imageInput.files.length) {
+          // Store the base64-encoded images in the hidden input field
+          base64ImagesInput.value = JSON.stringify(base64Images);
+        }
+      };
+      reader.readAsDataURL(imageFile);
+    }
+  } else {
+    base64ImagesInput.value = '';
+  }
+});
+
+
+
+
   </script>
   <script src="../../styles/client-side/addPropertyFormValidation.js"></script>
 </body>
 </html>
+
+

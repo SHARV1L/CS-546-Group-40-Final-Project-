@@ -22,8 +22,8 @@
       <div class="venue-details">
         <h2>{{checkin}}{{checkout}}</h2>
         <h2>{{propertyDetails.propertyName}}</h2>
-        <img alt={{propertyDetails.propertyName}} src="{{propertyDetails.images}}" style="width: 400px;height: 400px;">
-        <button id="book" class="button-primary" onclick="bookNow()">Book Now</button>
+        <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px;">
+        {{!-- <button id="book" class="button-primary" onclick="bookNow()">Book Now</button> --}}
         <button onclick="openMap()">Venue Location</button>
         <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
         <address>

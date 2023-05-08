@@ -1,10 +1,14 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Properties</title>
   <link rel="stylesheet" href="../../styles/components-styles/viewProperty.css">
+    <script>
+    function bookNow(listingId) {
+      window.location.href = '/search/property_search_by_id/' + listingId;
+    }
+  </script>
 </head>
 <body>
   <h1>Properties</h1>
@@ -21,51 +25,8 @@
         <th>Longitude</th>
         <th>Price per Night</th>
         <th>Availability</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each properties}}
-        <tr>
-          <td>{{this.name}}</td>
-          <td>{{this.description}}</td>
-          <td>{{this.numberOfRooms}}</td>
-          <td>{{this.numberOfBathrooms}}</td>
-          <td>{{this.amenities}}</td>
-          <td>{{this.address}}</td>
-          <td>{{this.latitude}}</td>
-          <td>{{this.longitude}}</td>
-          <td>{{this.pricePerNight}}</td>
-          <td>{{this.availability}}</td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <a href="/logout">Logout</a>
-</body>
-</html>
-=======
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Properties</title>
-  <link rel="stylesheet" href="../../styles/components-styles/viewProperty.css">
-</head>
-<body>
-  <h1>Properties</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Property Name</th>
-        <th>Description</th>
-        <th>Number of Rooms</th>
-        <th>Number of Bathrooms</th>
-        <th>Amenities</th>
-        <th>Address</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Price per Night</th>
-        <th>Availability</th>
+        <th>Image</th>
+        {{!-- <th>Property link</th> --}}
       </tr>
     </thead>
     <tbody>
@@ -81,6 +42,8 @@
           <td>{{this.longitude}}</td>
           <td>{{this.pricePerNight}}</td>
           <td>{{this.availability}}</td>
+          <td>{{this.images}}</td>
+          {{!-- <td><button class="book-now-button" onclick="bookNow('{{this.id}}')">View Property</button></td> --}}
         </tr>
       {{/each}}
     </tbody>
@@ -88,4 +51,3 @@
   <a href="/logout">Logout</a>
 </body>
 </html>
->>>>>>> 8650c0996abf34781722b397aea30d29185d84df
