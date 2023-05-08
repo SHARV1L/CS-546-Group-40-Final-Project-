@@ -20,24 +20,24 @@ const router = Router();
 // });
 
 // // http://localhost:3000/booking/confirmation
-// router.route('/bookings/confirmation').get(async (req, res) => {
-//   //code here for GET
-//   try {
-//     res.render('components/confirmation', {title: 'Confirmation'});
-//   } catch (error) {
-//     res.status(400).json({error: e});
-//   }
-// });
+router.route('/confirmation').get(async (req, res) => {
+  //code here for GET
+  try {
+    res.render('components/confirmation', {title: 'Confirmation'});
+  } catch (error) {
+    res.status(400).json({error: e});
+  }
+});
 
 // // http://localhost:3000/booking/booking-failed
-// router.route('/bookings/bookingFailed').get(async (req, res) => {
-//   //code here for GET
-//   try {
-//     res.render('components/error', {title: 'Error Booking'});
-//   } catch (error) {
-//     res.status(400).json({error: e});
-//   }
-// });
+router.route('/bookingFailed').get(async (req, res) => {
+  //code here for GET
+  try {
+    res.render('components/error', {title: 'Error Booking'});
+  } catch (error) {
+    res.status(400).json({error: e});
+  }
+});
 
 //////////////// added from here 
 router
@@ -53,7 +53,7 @@ router
   })
   .post(async (req, res) => {
     let bookingInfo = req.body;
-    //console.log(bookingInfo);
+    console.log(bookingInfo);
     try { 
     if (!bookingInfo || Object.keys(bookingInfo).length === 0) {
       return res
@@ -71,7 +71,7 @@ router
         bookingInfo.totalPrice
       );
 
-      res.json(newBooking);
+      res.json({booking:newBooking,redirectUrl:"/booking/confirmation"});
     }
     } catch (e) {
       res.status(500).send("Error creating user");
