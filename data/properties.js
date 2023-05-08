@@ -20,7 +20,8 @@ let exportedFunctions={
         latitude,
         longitude,
         pricePerNight,
-        availability
+        availability,
+        review
     ){
         //userId=validation.checkId(userId);
         //const userCollection=await users();
@@ -34,17 +35,18 @@ let exportedFunctions={
         //have to write some other validation functions
 
         let newProperty={
-            userId:userId,  // commented out here
-            propertyName:propertyName,
-            description:description,
-            numberOfRooms:numberOfRooms,
-            numberofBathrooms:numberofBathrooms,
-            amenities:amenities,
-            address:address,
-            latitude:latitude,
-            longitude:longitude,
-            pricePerNight:pricePerNight,
-            availability:availability,
+            userId: userId,  // commented out here
+            propertyName: propertyName,
+            description: description,
+            numberOfRooms: numberOfRooms,
+            numberofBathrooms: numberofBathrooms,
+            amenities: amenities,
+            address: address,
+            latitude: latitude,
+            longitude: longitude,
+            pricePerNight: pricePerNight,
+            availability: availability,
+            review: review
             // image: {
             //   data: fs.readFileSync(image.path),
             //   contentType: image.mimetype

@@ -35,7 +35,7 @@ function validateSignUpForm(form) {
       alert('Role is required.');
       return false;
     }
-  
+    
     return true;
   }
   

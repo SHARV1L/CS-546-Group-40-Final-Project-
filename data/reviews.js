@@ -7,7 +7,7 @@ const exportedFunctions = {
 
    async createReview(
         userId,
-        // property_id,
+        property_id,
         //host_id,
         reviewText,
         ratings,
@@ -16,11 +16,11 @@ const exportedFunctions = {
 
      let newReview={
         userId:userId,
+        property_id:property_id,
         reviewText:reviewText,
         ratings:ratings
       };
      
-   
       const reviewCollection=await reviews();
       const newInsertInformation=await reviewCollection.insertOne(newReview);
       if(!newInsertInformation.insertedId) throw "Insert Failed";
