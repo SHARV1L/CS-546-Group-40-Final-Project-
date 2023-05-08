@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-  <html lang="en">
-    <head>
-        <title>Login</title>
-        <link rel="stylesheet" href="/styles/components-styles/UserLogin.css">
-    </head>
-  <body>
-    <header>
+<html lang="en">
+
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/styles/components-styles/UserLogin.css">
+</head>
+
+<body>
+  <header>
     <h1>User Login</h1>
-    </header>
-    <main> 
-      <div class="login-form">
-        <form id="login-form" action="/login" method="post">
+  </header>
+  <main>
+    <div class="login-form">
+      <form id="login-form" action="/login" method="post">
 
-          <label for="username">Username:</label>
-          <input type="text" placeholder="Enter your username" id="username" name="username" required>
-          <label for="password">Password:</label>
-          <input type="password" placeholder="Enter your password" id="password" name="password" required>
-          <button type="submit" id="login-btn">Login</button>
+        <label for="username">Username:</label>
+        <input type="text" placeholder="Enter your username" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" placeholder="Enter your password" id="password" name="password" required>
+        <button type="submit" id="login-btn">Login</button>
 
 
 
-            {{!-- <label for="login" aria-placeholder="login">Login Form</label><br><br>
-            <textarea type="text" placeholder="username" id="username" name="username" required></textarea><br>
-            <textarea type="password" placeholder="password" id="password" name="password" required></textarea><br>
-            <button type="submit" id="login-btn" >Login</button>!--}}
-        </form>
-        <p>Don't have an account? <a href="/sign-up">Register here</a>.</p>
-      </div>
-    </main>
-  </body>
+        {{!-- <label for="login" aria-placeholder="login">Login Form</label><br><br>
+        <textarea type="text" placeholder="username" id="username" name="username" required></textarea><br>
+        <textarea type="password" placeholder="password" id="password" name="password" required></textarea><br>
+        <button type="submit" id="login-btn">Login</button>!--}}
+      </form>
+      <p>Don't have an account? <a href="/sign-up">Register here</a>.</p>
+    </div>
+  </main>
+</body>
+
 </html>

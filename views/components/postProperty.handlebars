@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Add Property</title>
   <link rel="stylesheet" href="../../styles/components-styles/postProperty.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
+
 <body>
   <header>
     <h1>Add Property</h1>
@@ -55,30 +57,32 @@
       minDate: 'today'
     });
 
-    {{!-- const addPropertyButton = document.getElementById('add-property');
-    addPropertyButton.addEventListener('click', function(event) {
-      event.preventDefault(); // prevent the default form submission behavior
+    {
+      {
+        !-- const addPropertyButton = document.getElementById('add-property');
+        addPropertyButton.addEventListener('click', function (event) {
+          event.preventDefault(); // prevent the default form submission behavior
 
-      const form = document.querySelector('form');
-      const formData = new FormData(form); // create a FormData object with the form data
+          const form = document.querySelector('form');
+          const formData = new FormData(form); // create a FormData object with the form data
 
-      fetch('/property', {
-        method: 'POST',
-        body: formData // set the body of the request to the form data
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        // do something with the response data, e.g. display a success message
-        window.location.href = '/thankYou'; // redirect to the thank you page
-      })
-      .catch(error => {
-        console.error(error);
-        // display an error message
-      });
-    }); --}}
-
-
+          fetch('/property', {
+            method: 'POST',
+            body: formData // set the body of the request to the form data
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              // do something with the response data, e.g. display a success message
+              window.location.href = '/thankYou'; // redirect to the thank you page
+            })
+            .catch(error => {
+              console.error(error);
+              // display an error message
+            });
+        }); --}
+    }
   </script>
 </body>
+
 </html>

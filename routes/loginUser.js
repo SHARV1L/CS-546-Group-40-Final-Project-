@@ -25,7 +25,6 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-
       res.render('components/login', { title: 'Login Page' });
     } catch (error) {
       res.status(400).json({ error: e });
@@ -45,8 +44,8 @@ router
           res.render('components/error', { title: 'login credentials cannot be validated, enter again' });
         }
         else {
-
-          req.session.user = { id: user.id, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role }; //// change username to firstName
+          req.session.user = { id: user.id, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role };
+          //// change username to firstName
           if (user.role === "admin") res.redirect('/admin');
           else if (user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
@@ -109,7 +108,7 @@ router.route('/sign-up')
           phoneNumber,
           accountType,
           role
-        )
+        );
         if (user) {
           res.redirect("/login");
         }

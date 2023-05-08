@@ -5,8 +5,7 @@ import validation from '../validation.js';
 import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
 //import {exportedFunctions} from '../data/users.js';
-import multer from 'multer';
-import path from 'path';
+import { ImageModel, imageUpload } from '../middleware.js';
 
 router
   .route('/')
@@ -27,14 +26,8 @@ router
     }
 
     try {
-      hostInfo.firstName = validation.checkString(
-        hostInfo.firstName,
-        'First Name'
-      );
-      hostInfo.lastName = validation.checkString(
-        hostInfo.lastName,
-        'Last Name'
-      );
+      hostInfo.firstName = validation.checkString(hostInfo.firstName, 'First Name');
+      hostInfo.lastName = validation.checkString(hostInfo.lastName, 'Last Name');
       hostInfo.email = validation.checkValidEmail(hostInfo.email, "email");
       hostInfo.password = validation.checkValidPassword(hostInfo.password, "passwd");
       hostInfo.phoneNumber = validation.checkValidPhone(hostInfo.phoneNumber, "phone");
@@ -53,6 +46,7 @@ router
         hostInfo.accountType
       );
       res.json(newHost);
+      req.session.host = newHost;
     } catch (e) {
       res.status(500).send("Error creating host");
 
@@ -94,7 +88,7 @@ router
       res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
-  router
+router
   .route('/dashboard/upload')
   .get(async (req, res) => {
     try {
@@ -105,22 +99,30 @@ router
       res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
-  .post(async(req, res) => {
+  .post(async (req, res) => {
     // Image upload 
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        console.log(file);
-        cb(null, '../Images');
-      },
-      filename: (req, file, cb) => {
-        console.log(file);
-        cb(null, Date.now() + path.extname(file.originalname));
-      }
-    })
-    const imageUpload = multer({ storage: storage });
     let imgFile = imageUpload.single("image");
     console.log(imgFile);
+    imgFile(req, res, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        const newImage = new ImageSchema({
+          name: req.body.name,
+          image: {
+            data: req.file.filename,
+            contentType: "image/png"
+          }
+        })
+        newImage
+          .save()
+          .then(() => res.send("Successfully uploaded"))
+          .catch(err => console.log(err));
+      }
+    })
     res.send("Image uploaded");
+
   });
 
 
@@ -165,7 +167,7 @@ router.route('/post_property').get(async (req, res) => {
       req.body.longitude,
       req.body.pricePerNight,
       req.body.availability,
-      //req.file
+      // req.file
     );
     if (newProperty) {
       res.redirect('/thankyou')
@@ -174,10 +176,10 @@ router.route('/post_property').get(async (req, res) => {
     console.log(e);
     res.render('error', { error: 'Error adding property' });
   }
-  //define logic to add the property
+  // define logic to add the property
 });
 router.route('/view_property').get(async (req, res) => {
-  //fetch data from db for list of past bookings for current user
+  // fetch data from db for list of past bookings for current user
   try {
     // Retrieve the user ID from the session
     const userId = req.session.user.id;
@@ -186,9 +188,17 @@ router.route('/view_property').get(async (req, res) => {
     // Retrieve all properties associated with the host
     const propertyCollection = await property();
     const properties = await propertyCollection.find({ userId: userId }).toArray();
+    const API_KEY = 'AIzaSyBCUg-veMVyt8-KtxfaGvbkaghWtY9RJqk';
+    const links = [];
+    for (let i = 0; i < properties.length; i++) {
+      const link = `https://maps.googleapis.com/maps/api/geocode/json?address=${properties[i].address}&key=${API_KEY}`;
+      links.push(link);
+    }
     console.log(properties);
     // Render the properties view with the retrieved properties
-    res.render('components/viewProperty', { properties: properties });
+    res.render('components/viewProperty', { properties: properties, links: links });
+
+
   } catch (e) {
     console.error(e);
     res.render('error', { error: 'Error fetching properties' });

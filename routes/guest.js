@@ -6,6 +6,9 @@ import { ObjectId } from 'mongodb';
 //import {exportedFunctions} from '../data/users.js';
 import multer from 'multer';
 import path from 'path';
+import userMethods from '../data/users.js';
+import { ImageModel, imageUpload } from '../middleware.js';
+import { users } from '../config/mongoCollections.js';
 
 router
   .route('/')
@@ -27,14 +30,8 @@ router
     }
 
     try {
-      userInfo.firstName = validation.checkString(
-        userInfo.firstName,
-        'First Name'
-      );
-      userInfo.lastName = validation.checkString(
-        userInfo.lastName,
-        'Last Name'
-      );
+      userInfo.firstName = validation.checkString(userInfo.firstName, 'First Name');
+      userInfo.lastName = validation.checkString(userInfo.lastName, 'Last Name');
       userInfo.email = validation.checkValidEmail(userInfo.email, "email");
       userInfo.password = validation.checkValidPassword(userInfo.password, "passwd");
       userInfo.phoneNumber = validation.checkValidPhone(userInfo.phoneNumber, "phone");
@@ -97,26 +94,32 @@ router
     try {
       // const userCollection = await guest();
       console.log("in guest dash upload");
-      res.render('components/guestHomepage', { title: 'Guest Dashboard Page' });
+      res.render('components/guestHomepage', { title: 'Guest Dashboard Page', user: req.session.user });
     } catch (error) {
       res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
   .post(async (req, res) => {
     // Image upload 
-    const storage = multer.diskStorage({
-      destination: (req, file, cb) => {
-        console.log(file);
-        cb(null, '../assests/Images');
-      },
-      filename: (req, file, cb) => {
-        console.log(file);
-        cb(null, Date.now() + path.extname(file.originalname));
+    let userId = req.session.user.id;
+    const getUserById = await userMethods.getUserById(userId);
+    let userUpdatedInfo;
+
+    imageUpload(req, res, (err) => {
+      if (err) {
+        console.log(err);
       }
-    })
-    const imageUpload = multer({ storage: storage });
-    imageUpload.single("image");
-    res.send("Image uploaded");
+      else {
+        const newImage = new ImageModel({
+          name: req.body.name,
+          image: {
+            data: req.file.filename,
+            contentType: 'image/jpg'
+          }
+        })
+        newImage.save()
+      }
+    });
   });
 
 router.route('/personal').get(async (req, res) => {

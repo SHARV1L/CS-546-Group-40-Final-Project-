@@ -1,54 +1,53 @@
 /* CSS for properties.handlebars */
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .property {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .property img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    margin-right: 20px;
-  }
-  
-  .property h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .property p {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-  }
-  
-  .property span {
-    font-weight: bold;
-  }
-  
-  .property a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .property a:hover {
-    text-decoration: underline;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.property {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.property img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.property h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.property p {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.property span {
+  font-weight: bold;
+}
+
+.property a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.property a:hover {
+  text-decoration: underline;
+}

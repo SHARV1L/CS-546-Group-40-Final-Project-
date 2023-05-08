@@ -1,109 +1,109 @@
 body {
-    font-family: Arial, sans-serif;
-  }
-  
-  header {
-    background-color: #333;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  h1 {
-    margin: 0;
-  }
-  
-  main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  textarea {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  
-  textarea {
-    height: 10rem;
-  }
-  
-  button[type="submit"] {
-    padding: 0.5rem 1rem;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+textarea {
+  height: 10rem;
+}
+
+button[type="submit"] {
+  padding: 0.5rem 1rem;
   background-color: #333;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
+}
+
+button[type="submit"]:hover {
   background-color: #444;
-  }
-  
-  .error-message {
+}
+
+.error-message {
   color: red;
   margin-bottom: 1rem;
-  }
-  
-  .flatpickr-wrapper {
+}
+
+.flatpickr-wrapper {
   width: 100%;
-  }
-  
-  .flatpickr-day.selected.startRange,
-  .flatpickr-day.selected.endRange {
+}
+
+.flatpickr-day.selected.startRange,
+.flatpickr-day.selected.endRange {
   background-color: #333;
   color: white;
-  }
-  
-  .flatpickr-day.today {
+}
+
+.flatpickr-day.today {
   background-color: #eee;
-  }
-  
-  .flatpickr-day.disabled {
+}
+
+.flatpickr-day.disabled {
   color: #ccc;
-  }
-  
-  .flatpickr-month {
+}
+
+.flatpickr-month {
   padding: 0.5rem;
   background-color: #f7f7f7;
-  }
-  
-  .flatpickr-prev-month:before,
-  .flatpickr-next-month:before {
+}
+
+.flatpickr-prev-month:before,
+.flatpickr-next-month:before {
   content: "";
   display: block;
   width: 0;
   height: 0;
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
-  }
-  
-  .flatpickr-prev-month:before {
+}
+
+.flatpickr-prev-month:before {
   border-right: 6px solid #333;
   margin-right: 5px;
-  }
-  
-  .flatpickr-next-month:before {
+}
+
+.flatpickr-next-month:before {
   border-left: 6px solid #333;
   margin-left: 5px;
-  }
+}

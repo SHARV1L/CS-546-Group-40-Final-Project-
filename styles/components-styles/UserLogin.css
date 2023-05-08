@@ -43,6 +43,7 @@ p {
 	line-height: 2;
 	color: black;
 }
+
 .form-container {
 	margin: 20px auto;
 	max-width: 400px;
@@ -53,7 +54,7 @@ p {
 label {
 	display: block;
 	margin-bottom: 10px;
-	color:#FF6B6B
+	color: #FF6B6B
 }
 
 input[type="text"],
@@ -68,7 +69,7 @@ input[type="email"] {
 	margin-bottom: 20px;
 }
 
-button{
+button {
 	background-color: #FFD166;
 	color: #fff;
 	border: none;
@@ -102,7 +103,8 @@ button:hover {
 	background-color: #0077B5;
 }
 
-.login-btn, .signup-btn {
+.login-btn,
+.signup-btn {
 	display: inline-block;
 	padding: 8px 16px;
 	border: none;
@@ -114,8 +116,9 @@ button:hover {
 	margin: 4px 2px;
 	transition-duration: 0.4s;
 	cursor: pointer;
-  }
-  
-  .login-btn:hover, .signup-btn:hover {
+}
+
+.login-btn:hover,
+.signup-btn:hover {
 	background-color: #8e3e87;
-  }
+}

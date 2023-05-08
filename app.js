@@ -9,8 +9,8 @@ import multer from 'multer';
 import path from 'path';
 
 
-import {fileURLToPath} from 'url';
-import {dirname} from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -25,7 +25,7 @@ const upload = multer({ dest: 'uploads/' });
 app.use(upload.single('image'));
 
 const rewriteUnsupportedBrowerMethods = (req, res, next) => {
-    if (req.body && req.body._method){
+    if (req.body && req.body._method) {
         req.method = req.body._method;
         delete req.body._method;
     }
@@ -38,8 +38,8 @@ app.use(session({
     secret: 'I have three german shephards and a labrador back home',
     resave: false,
     saveUninitialized: true
-  }));
-  
+}));
+
 app.use(cookieParser());
 app.use('/assets', staticDirMedia);
 app.use('/styles', staticDirStyles);
@@ -54,14 +54,14 @@ app.set('view engine', 'handlebars');
 
 // Middleware function:
 app.use('/admin', mwf.checkAdminRoute);
-app.use('/login', mwf.checkLoginAccess); 
+app.use('/login', mwf.checkLoginAccess);
 app.use('/sign-up', mwf.checkRegisterAccess);
 app.use('/logout', mwf.checkLogoutAccess);
 app.use('/', mwf.loggingMiddleware);
 app.use('/user-pref', mwf.checkProtectedRoute);
-app.use('/guest',mwf.checkProtectedRoute);
-app.use('/host',mwf.checkProtectedRoute);
-app.use('/search',mwf.checkProtectedRoute);
+app.use('/guest', mwf.checkProtectedRoute);
+app.use('/host', mwf.checkProtectedRoute);
+app.use('/search', mwf.checkProtectedRoute);
 configRoutes(app);
 
 app.listen(3000, () => {

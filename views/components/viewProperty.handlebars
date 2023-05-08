@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Properties</title>
   <link rel="stylesheet" href="../../styles/components-styles/viewProperty.css">
 </head>
+
 <body>
   <h1>Properties</h1>
   <table>
@@ -24,21 +26,23 @@
     </thead>
     <tbody>
       {{#each properties}}
-        <tr>
-          <td>{{this.name}}</td>
-          <td>{{this.description}}</td>
-          <td>{{this.numberOfRooms}}</td>
-          <td>{{this.numberOfBathrooms}}</td>
-          <td>{{this.amenities}}</td>
-          <td>{{this.address}}</td>
-          <td>{{this.latitude}}</td>
-          <td>{{this.longitude}}</td>
-          <td>{{this.pricePerNight}}</td>
-          <td>{{this.availability}}</td>
-        </tr>
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.numberOfRooms}}</td>
+        <td>{{this.numberOfBathrooms}}</td>
+        <td>{{this.amenities}}</td>
+        <td>{{this.address}} <a href="{{links.[@index]}}"></a></td>
+        <td>{{this.latitude}}</td>
+        <td>{{this.longitude}}</td>
+        <td>{{this.pricePerNight}}</td>
+        <td>{{this.availability}}</td>
+
+      </tr>
       {{/each}}
     </tbody>
   </table>
   <a href="/logout">Logout</a>
 </body>
+
 </html>
