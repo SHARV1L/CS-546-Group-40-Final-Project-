@@ -8,7 +8,7 @@
 <main>
 <h2>Hey, {{{user.firstName}}}, Please review the property. Your reviews are precious to us </h2>
 
-<form id="reviews" action="/reviews", method="POST">
+<form id="reviews" action="/review", method="POST">
   <label for="rating">Rating:</label>
   <select id="rating" name="rating" required>
     <option value="">Select rating</option>
@@ -20,12 +20,13 @@
   </select>
 
   <label for="review">Review:</label>
-  <textarea id="review" name="review" required></textarea>
-  <input type="hidden" id="property-id" name="property_id" value="{{property_id}}">
+  <input id="review" name="review" type="text"required></input>
+  <input type="hidden" id="property-id" name="property_id" value="{{bookingInfo.property_id}}">
+  <input type="hidden" id="bookingId" name="bookingId" value="{{bookingInfo._id}}">
     <br>
     <br>
   <button type="submit" id="submit-review">Submit Review</button>
 </form>
 </main>
 
-<a href="/reviews" >Go back to your homepage</a>
+<a href="/guest/bookings" >Go back to your Bookings</a>
