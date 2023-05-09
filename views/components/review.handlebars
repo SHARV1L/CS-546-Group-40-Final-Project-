@@ -8,7 +8,7 @@
 <main>
 <h2>Hey, {{{user.firstName}}}, Please review the property. Your reviews are precious to us </h2>
 
-<form id="reviews">
+<form id="reviews" action="/reviews", method="POST">
   <label for="rating">Rating:</label>
   <select id="rating" name="rating" required>
     <option value="">Select rating</option>
@@ -28,4 +28,4 @@
 </form>
 </main>
 
-<a href="/guest/dashboard" >Go back to your homepage</a>
+<a href="/reviews" >Go back to your homepage</a>

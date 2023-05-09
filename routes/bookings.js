@@ -72,7 +72,7 @@ router
       console.log(req.query.bookingId);
       let bookingId = req.query.bookingId;
       let booking = await bookingsData.getBookingById(bookingId);
-      res.render('components/confirmation', {title: 'Confirmation',bookingInfo:booking});
+      res.render('components/confirmation', {title: 'Confirmation', bookingInfo:booking});
     } catch (error) {
       console.log(error);
       res.status(400).render('components/error', {error: 'error booking the property'});
