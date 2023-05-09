@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="../../styles/components-styles/viewProperty.css">
     <script>
     function bookNow(listingId) {
-      window.location.href = '/search/property_search_by_id/' + listingId;
+      window.location.href = '/reviewbyhost';
     }
   </script>
 </head>
@@ -25,8 +25,7 @@
         <th>Longitude</th>
         <th>Price per Night</th>
         <th>Availability</th>
-        <th>Image</th>
-        {{!-- <th>Property link</th> --}}
+        <th>Review</th>
       </tr>
     </thead>
     <tbody>
@@ -43,7 +42,7 @@
           <td>{{this.pricePerNight}}</td>
           <td>{{this.availability}}</td>
           <td>{{this.images}}</td>
-          {{!-- <td><button class="book-now-button" onclick="bookNow('{{this.id}}')">View Property</button></td> --}}
+          <td><button class="Review-button" onclick="bookNow('{{this.id}}')">Review</button></td>
         </tr>
       {{/each}}
     </tbody>

@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
-import { users } from "../config/mongoCollections.js";
+import { reviewByHost, users } from "../config/mongoCollections.js";
 import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
 import {usersData} from '../data/index.js';
@@ -60,6 +60,34 @@ router
       res.status(400).json({error: 'Page Not Available'});
     }
 });
+
+//review button
+router.get('/reviewbyhost', (req, res) => {
+  res.render('components/reviewByHost', { title: 'Review by host' });
+});
+
+router.post('/reviewbyhost', async(req,res)=>{
+  const userId = req.session.user.id;
+  const property1 = await propertyData.getPropertyById(userId);
+  console.log(property1);
+  const review = {
+    rating: req.body.rating,
+    review: req.body.review,
+    userId:userId
+  };
+
+  const reviewByHostCollection=await reviewByHost();
+
+  const result = await reviewByHostCollection.insertOne(review);
+
+console.log(`Inserted ${result.insertedCount} review`);
+
+res.redirect('/thankyou');
+
+
+});
+
+
 
 router.get('/thankYou', (req, res) => {
   res.render('components/thankYou', { title: 'Thank You' });

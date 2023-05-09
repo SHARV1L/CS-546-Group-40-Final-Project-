@@ -19,3 +19,4 @@ export const hosts = getCollectionFn('hosts');
 export const booking = getCollectionFn('booking');
 export const reviews = getCollectionFn('reviews');
 export const property = getCollectionFn('property');
+export const reviewByHost=getCollectionFn('reviewByHost');
