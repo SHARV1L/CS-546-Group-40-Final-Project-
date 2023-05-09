@@ -6,30 +6,22 @@
 <br>
 <br>
 
-<main> 
-  <div class="user-image-container">
-  {{#if user.image}}
-    <img src="{{user.image}}" alt="User image" id="userImage" style="width: 400px;height: 400px;">
-  {{else}}
-    <input type="file" id="imageInput" accept="image/*">
-    <button onclick="uploadImage()">Upload Image</button>
-  {{/if}}
-</div>
+    <main> 
+      {{!-- <span> <Button id="personal-details"> Personal Details</Button> <Button id="view-property"> View Property </Button> </span> --}}
+      <div class="buttons-container">
+        <button id="personal-details">Personal Details</button>
+        <button id="view-property">View Property</button>
+      </div>
+      <br>
+      <br>
+      <Button id="post-property"> Post Property </Button>
+
+      <a href="/user-pref" >Change Sign in preference</a>
+    </main>
 
 <br>
 <br>
 
-  <div class="buttons-container">
-    <button id="personal-details">Personal Details</button>
-    <button id="view-property">View Property</button>
-  </div>
+  </body>
 
-<br>
-<br>
-
-  <button id="post-property">Post Property</button>
-</main>
-
-<a href="/logout">Logout</a>
-
-<script src="/styles/client-side/hostHomePage.js"></script>
+</html>

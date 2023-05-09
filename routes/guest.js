@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import bookingData from '../data/bookings.js';
 import multer from 'multer';
 import fs from 'fs/promises';
+import path from 'path';
 import multiparty from 'multiparty';
 
 // Create a storage engine
@@ -120,47 +121,72 @@ router
 
 
 
-router.route('/upload',upload).post( async (req, res) => {
+router.route('/upload').post( upload.single('image'),async (req, res) => {
     try {
-      const files = req.files;
-      if (files) {
-        const userId = req.session.user.id;
-                const user  = await usersData.updateUserProfilePicture();
+      console.log('upload:', req.body);
 
-        const { writeStream, partHandler } = storage(user._id);
-        for (const file of files) {
-          if (
-            file.mimetype === 'image/jpeg' ||
-            file.mimetype === 'image/jpg'  ||
-            file.mimetype === 'image/png' ||
-            file.mimetype === 'image/gif'
-          ) {
-            const { filename, size } = file;
-            const readStream = fs.createReadStream(file.path);
-            readStream.pipe(partHandler(filename, size));
-          } else {
-            await fs.unlink(file.path);
-          }
-        }
+      // const image = fs.readFileSync(req.body.path);
+      // const base64Image = Buffer.from(image).toString('base64');
+      // const imageData = new Image({
+      //   name: req.file.originalname,
+      //   data: base64Image
+      // });
 
-        const profilePicture = {
-          filename: files.filename,
-          mimetype: files.mimetype,
-          size: files.size,
-        };
+      const base64Image = req.body.base64Image;
+      const originalName = req.body.originalName;
 
-        await usersData.updateUserPatch(userId, { profilePicture });
+      const imageData = new Image({
+      name: originalName,
+      data: base64Image
+    });
+      console.log("Image Data:", imageData);
 
-        // Update the user object in the session
-        req.session.user.profilePicture = profilePicture;
+      const user = await usersData();
+      //const savedImage = await imageData.save();
+      const newData = await usersData.updateUserPatch(req.session.user.id, imageData)
+      res.status(200).json({message: 'Image uploaded successfully!', imageData: imageData});
 
-        // Remove the uploaded files from the server
-        for (const file of files) {
-          await fs.unlink(file.path);
-        }
-      }}
+      // const files = req.files;
+      // if (files) {
+      //   const userId = req.session.user.id;
+      //           const user  = await usersData.updateUserProfilePicture();
+
+      //   const { writeStream, partHandler } = storage(user._id);
+      //   for (const file of files) {
+      //     if (
+      //       file.mimetype === 'image/jpeg' ||
+      //       file.mimetype === 'image/jpg'  ||
+      //       file.mimetype === 'image/png' ||
+      //       file.mimetype === 'image/gif'
+      //     ) {
+      //       const { filename, size } = file;
+      //       const readStream = fs.createReadStream(file.path);
+      //       readStream.pipe(partHandler(filename, size));
+      //     } else {
+      //       await fs.unlink(file.path);
+      //     }
+      //   }
+
+      //   const profilePicture = {
+      //     filename: files.filename,
+      //     mimetype: files.mimetype,
+      //     size: files.size,
+      //   };
+
+      //   await usersData.updateUserPatch(userId, { profilePicture });
+
+      //   // Update the user object in the session
+      //   req.session.user.profilePicture = profilePicture;
+
+      //   // Remove the uploaded files from the server
+      //   for (const file of files) {
+      //     await fs.unlink(file.path);
+      //   }
+      // }
+    }
       catch(error){
 console.log(error);
+res.render('components/error', {error: 'Could not upload the image'})
       }});
 
   
@@ -183,7 +209,7 @@ router
     res.render('components/pastBookings', {title:'Guest Bookings', user: req.session.user,bookings:bookings});
   }).
   post(async(req,res)=>{
-    console.log("req.body:",req.body);
+    console.log("req.body:", req.body);
     //define logic to update the user details
   });
 

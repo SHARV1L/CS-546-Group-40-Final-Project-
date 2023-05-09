@@ -1,16 +1,16 @@
-const reviewForm = document.getElementById(-review-form);
+const reviewForm = document.getElementById("reviews");
 const submitButton = document.getElementById('submit-review');
 
 submitButton.addEventListener('click', (event) => {
     event.preventDefault();
 
-    const rating = document.getElementById('rating').value;
-    const review = document.getElementById('review-text').value;
+    const rating = document.getElementById('ratings').value;
+    const review = document.getElementById('reviewText').value;
     const propertyId = document.getElementById('property_id').value;
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open('POST', '/reviews');
+    xhr.open('POST', '/review');
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     const requestbody = JSON.stringify({ rating, review, propertyId });
@@ -18,7 +18,7 @@ submitButton.addEventListener('click', (event) => {
     xhr.onload = () => {
         if(xhr.status === 200) {
             alert('Review Submitted successfully!');
-            window.location.href = '/guest/dashboard';
+            window.location.href = '/review';
         } else {
             const errorMessage = xhr.responseText;
             alert(`Error: ${errorMessage}`);
