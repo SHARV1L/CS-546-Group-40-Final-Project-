@@ -1,48 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="en">
-
-<head>
-  <title>Guest Login</title>
-  <link rel="stylesheet" href="/styles/components-styles/UserLogin.css">
-</head>
-
-<body>
-  <header>
-    <h1>{{{title}}}</h1>
-    <h2>Hello, how are you? We missed you here!</h2>
-
-  </header>
-
-  <br>
-  <br>
-
-  <main>
-    <h2>Hi, {{{user.firstName}}}! how have you been? </h2>
-    <h3> </h3>
-
-    <input id="fileInput" type="file" accept="image/jpg, image/jpeg, image/png" name="image">
-    <input type="submit">
-
-    <br><br>
-    <form id="guestHomepage" method="post" action="/guest/dashboard">
-      <div class="buttons-container">
-        <Button id="personal-details" type="submit" name="selected_option" value="user_personal"> Personal
-        </Button>&emsp;
-        <Button id="past_booking" type="submit" name="selected_option" value="past_bookings"> Past Bookings
-        </Button>&emsp;
-        <Button id="upcoming_booking" type="submit" name="selected_option" value="upcoming_bookings"> Upcoming Bookings
-        </Button>
-      </div>
-      <br>
-      <br>
-      <br>
-      <Button id="search-property" type="submit" name="selected_option" value="search"> Search Property </Button>
-    </form>
-
-
-    <a href="/logout">Logout</a>
-=======
   <html lang="en">
     <head>
         <title>Guest Login</title>
@@ -75,7 +31,6 @@
     </main>
     
      <a href="/logout">Logout</a>
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
     {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
   </main>
   <script>

@@ -67,21 +67,6 @@ router
       res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
-<<<<<<< HEAD
-  .post(async (req, res) => {
-    try {
-      let { selected_option } = req.body;
-      if (selected_option == "user_personal") {
-        res.redirect('/guest/personal');
-      }
-      else if (selected_option == "past_bookings") {
-        res.redirect('/guest/past_bookings');
-      }
-      else if (selected_option == "upcoming_bookings") {
-        res.redirect('/guest/upcoming_bookings');
-      }
-      else if (selected_option == "search") {
-=======
   .post(async(req,res)=>{
     try{
       let {selected_option}=req.body;
@@ -95,7 +80,6 @@ router
       
       else if(selected_option=="search")
       {
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
         res.redirect('/search');
       }
     }
@@ -123,31 +107,6 @@ router
 
   });
 
-<<<<<<< HEAD
-router.route('/personal').get(async (req, res) => {
-  res.render('components/personal-details', { title: 'Personal Details', user: req.session.user });
-}).post(async (req, res) => {
-  console.log("req.body:", req.body);
-  //define logic to update the user details
-});
-
-router.route('/past_bookings').get(async (req, res) => {
-  //fetch data from db for list of past bookings for current user
-  res.render('components/pastBookings', { title: 'Past Bookings', user: req.session.user, bookings: [] });
-}).post(async (req, res) => {
-  console.log("req.body:", req.body);
-  //define logic to update the user details
-});
-
-router.route('/upcoming_bookings').get(async (req, res) => {
-  //fetch data from db for list of past bookings for current user
-  res.render('components/upcomingBookings', { title: 'Upcoming Bookings', user: req.session.user, bookings: [] });
-}).post(async (req, res) => {
-  console.log("req.body:", req.body);
-  //define logic to update the user details
-});
-
-=======
   router.route('/bookings').get(async(req,res)=>{
     //fetch data from db for list of past bookings for current user
     let bookings = await bookingData.getBookingsByUserId(req.session.user.id);
@@ -159,7 +118,6 @@ router.route('/upcoming_bookings').get(async (req, res) => {
   });
   
   
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 
 
 //   router

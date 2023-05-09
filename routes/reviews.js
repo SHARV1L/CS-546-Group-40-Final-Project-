@@ -20,42 +20,12 @@ router
   })
   .post(async (req, res) => {
     let reviewInfo = req.body;
-<<<<<<< HEAD
-    if (!reviewInfo || Object.keys(reviewInfo).length === 0) {
-      return res
-        .status(400)
-        .json({ error: 'There are no fields in the request body' });
-    }
-
-    // try {
-    //   userInfo.firstName = validation.checkString(
-    //     userInfo.firstName,
-    //     'First Name'
-    //   );
-    //   userInfo.lastName = validation.checkString(
-    //     userInfo.lastName,
-    //     'Last Name'
-    //   );
-    //   userInfo.email=validation.checkValidEmail(userInfo.email,"email");
-    //   userInfo.password=validation.checkValidPassword(userInfo.password,"passwd");
-    //   userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
-    //   userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
-
-    // } catch (e) {
-    //   return res.status(400).json({error: e});
-    // }
-
-    //write validation functions here
-
-    try {
-=======
     console.log("Review Info", reviewInfo);
     try {
       if (!reviewInfo || Object.keys(reviewInfo).length === 0){
         return res.status(400).json({error: 'Review could not be added'});
       }
 
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
       const newReview = await reviewsData.createReview(
         //req.session.user.id,
         reviewInfo.userId,

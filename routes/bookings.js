@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import { Router } from 'express';
-import { usersData } from '../data/index.js';
-=======
 import {Router} from 'express';
 import { booking } from '../config/mongoCollections.js';
 import {usersData} from '../data/index.js';
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 import { propertyData } from '../data/index.js';
 import { bookingsData } from '../data/index.js';
 import validation from '../validation.js';
@@ -65,33 +60,9 @@ router
         .status(400)
         .json({ error: 'There are no fields in the request body' });
     }
-<<<<<<< HEAD
-
-    // try {
-    //   userInfo.firstName = validation.checkString(
-    //     userInfo.firstName,
-    //     'First Name'
-    //   );
-    //   userInfo.lastName = validation.checkString(
-    //     userInfo.lastName,
-    //     'Last Name'
-    //   );
-    //   userInfo.email=validation.checkValidEmail(userInfo.email,"email");
-    //   userInfo.password=validation.checkValidPassword(userInfo.password,"passwd");
-    //   userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
-    //   userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
-
-    // } catch (e) {
-    //   return res.status(400).json({error: e});
-    // }
-
-    // validation functions here
-    try {
-=======
    // validation functions here
     else{
       
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
       const newBooking = await bookingsData.createBooking(
         req.session.user.id,
         bookingInfo.property_id,

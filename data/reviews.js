@@ -5,22 +5,6 @@ import { reviews } from "../config/mongoCollections.js";
 
 const exportedFunctions = {
 
-<<<<<<< HEAD
-  async createReview(
-    userId,
-    //property_id,
-    //host_id,
-    reviewText,
-    ratings,
-  ) {
-    //validations here
-
-    let newReview = {
-      userId: userId,
-      reviewText: reviewText,
-      ratings: ratings
-    };
-=======
    async createReview(
         userId,
         property_id,
@@ -103,7 +87,6 @@ const exportedFunctions = {
         id=validation.checkId(id);
         
         //validation functions here
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 
 
     const reviewCollection = await reviews();

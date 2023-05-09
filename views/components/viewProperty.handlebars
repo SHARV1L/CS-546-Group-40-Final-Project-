@@ -18,6 +18,7 @@
         <th>Number of Bathrooms</th>
         <th>Amenities</th>
         <th>Address</th>
+        <th>Link</th>
         <th>Latitude</th>
         <th>Longitude</th>
         <th>Price per Night</th>
@@ -26,35 +27,21 @@
     </thead>
     <tbody>
       {{#each properties}}
-<<<<<<< HEAD
       <tr>
-        <td>{{this.name}}</td>
+        <td>{{this.propertyName}}</td>
         <td>{{this.description}}</td>
         <td>{{this.numberOfRooms}}</td>
-        <td>{{this.numberOfBathrooms}}</td>
+        <td>{{this.numberofBathrooms}}</td>
         <td>{{this.amenities}}</td>
-        <td>{{this.address}} <a href="{{links.[@index]}}"></a></td>
+        <td>{{this.address}}&nbsp;</td>
+        <td><button type="button" onclick="window.open('{{links.[@index]}}', '_blank')">View on maps</button></td>
         <td>{{this.latitude}}</td>
         <td>{{this.longitude}}</td>
         <td>{{this.pricePerNight}}</td>
         <td>{{this.availability}}</td>
-
       </tr>
-=======
-        <tr>
-          <td>{{this.propertyName}}</td>
-          <td>{{this.description}}</td>
-          <td>{{this.numberOfRooms}}</td>
-          <td>{{this.numberofBathrooms}}</td>
-          <td>{{this.amenities}}</td>
-          <td>{{this.address}}</td>
-          <td>{{this.latitude}}</td>
-          <td>{{this.longitude}}</td>
-          <td>{{this.pricePerNight}}</td>
-          <td>{{this.availability}}</td>
-        </tr>
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
       {{/each}}
+      {{links.[0]}}
     </tbody>
   </table>
   <a href="/logout">Logout</a>

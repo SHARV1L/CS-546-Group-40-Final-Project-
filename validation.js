@@ -75,8 +75,6 @@ const exportedMethods = {
     if (username.length > 0 && password.length > 0) {
       return null;
     }
-<<<<<<< HEAD
-=======
     // Check if the password meets the minimum of 8 length requirement or not
   if (password.length < 8) {
     return { isValid: false, message: 'Password must be at least 8 characters long' };
@@ -87,7 +85,6 @@ const exportedMethods = {
     return { isValid: false, message: 'Username can only contain alphanumeric characters' };
   }
     
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
     else return validationErrors; // if login is successful
   },
 

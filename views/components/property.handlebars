@@ -1,109 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
 <head>
   <title>Property Details</title>
-
+  <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
 <body>
+  <script src="/styles/client-side/propertyClientSide.js"></script>
   <header>
     <h1>Property Details</h1>
   </header>
   <main>
     <div class="venue-details">
-      <h2>{{propertyDetails.name}}</h2>
-      <img alt={{propertyDetails.name}} src={{propertyDetails.picture_url}} style="width: 400px;height: 400px;">
-      <button class="button-primary">Book Now</button>
-      <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
-      <address>
-        Address:<br>
-        {{propertyDetails.address}}<br>
-        {{propertyDetails.city}}, {{propertyDetails.state}} {{propertyDetails.postalCode}}
-      </address>
-      <address>
-        Phone:<br>
-        {{propertyDetails.phone}}
-      </address>
-      <a href="https://www.google.com/maps/@{{latitude}},{{longitude}},15z?hl=en-US&key={{API_KEY}}" target="_blank">
-        Venue Location </a>
-      <span>
-        Rooms: {{propertyDetails.bedrooms}},
-        Room Type: {{propertyDetails.room_type}},
-        Beds: {{propertyDetails.beds}},
-        Max Nights:{{propertyDetails.maximum_nights}}
-        Amenities: {{propertyDetails.amenities}}
+
+      <h2>{{propertyDetails.propertyName}}</h2>
+
+      <span style="display: flex;">
+        <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}}
+          style="width: 400px;height: 400px; margin-right: 100px">
+        <div id="map" style="height: 400px; width: 400px"></div>
       </span>
-      <h4>Price: {{propertyDetails.price}}</h4>
-      <h4>Host Details</h4>
-      <p>Host Name: {{propertyDetails.host_name}}</p>
-      <p>Host Since: {{propertyDetails.host_since}}</p>
-      <p>Host Verified: {{propertyDetails.host_verified}}</p>
-      <p>Host Location: {{propertyDetails.host_location}}</p>
-      <h4>Reviews</h4>
+    </div>
+    <button id="book" class="button-primary"
+      onclick="bookNow('{{checkin}}','{{checkout}}','{{propertyDetails._id}}','{{propertyDetails.pricePerNight}}')">Book
+      Now</button>
+    <button onclick="openMap('{{propertyDetails.address}}','40.640402656712552', '-73.88853475272204')">Venue
+      Location</button>
+    <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
+    <br>
+    <address>
+      Address:<br>
+      {{propertyDetails.address}}<br>
+
+    </address>
+
+    <span>
+      Rooms: {{propertyDetails.noOfRooms}},
+
+      Beds: {{propertyDetails.beds}},
+
+      Amenities: {{#each propertyDetails.amenities}}
+      <td>{{this}}</td>{{/each}}
+    </span>
+    <h4>Price: ${{propertyDetails.pricePerNight}} perNight</h4>
+    <h4>Reviews</h4>
+    {{#each propertyDetails.reviews}}
+    <tr>
+      <td>Rating: {{this.rating}}</td>
+      <td>Feedback: {{this.feedback}}</td>
+    </tr>
+    {{/each}}
+    <h4>Host Details</h4>
+    <p>Host Name: {{propertyDetails.host_name}}</p>
+    <p>Host Since: {{propertyDetails.host_since}}</p>
+    <p>Host Verified: {{propertyDetails.host_verified}}</p>
+    <p>Host Location: {{propertyDetails.host_location}}</p>
+
+
     </div>
   </main>
 </body>
 
 </html>
-=======
-  <head>
-    <title>Property Details</title>
-    <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  </head>
-  <body>
-      <script src="/styles/client-side/propertyClientSide.js"></script>
-    <header>
-      <h1>Property Details</h1>
-    </header>
-    <main>
-      <div class="venue-details">
-        
-        <h2>{{propertyDetails.propertyName}}</h2>
-        
-          <span style = "display: flex;">
-            <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px; margin-right: 100px">  
-            <div id="map" style="height: 400px; width: 400px"></div>
-          </span>
-        </div>
-        <button id="book" class="button-primary" onclick="bookNow('{{checkin}}','{{checkout}}','{{propertyDetails._id}}','{{propertyDetails.pricePerNight}}')">Book Now</button>
-        <button onclick="openMap('{{propertyDetails.address}}','40.640402656712552', '-73.88853475272204')">Venue Location</button>
-        <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
-        <br>
-        <address>
-          Address:<br>
-          {{propertyDetails.address}}<br>
-         
-        </address>
-        
-        <span>
-            Rooms: {{propertyDetails.noOfRooms}},
-           
-            Beds: {{propertyDetails.beds}},
-            
-            Amenities: {{#each propertyDetails.amenities}}
-            <td>{{this}}</td>{{/each}}
-        </span>
-        <h4>Price: ${{propertyDetails.pricePerNight}} perNight</h4>
-        <h4>Reviews</h4>
-        {{#each propertyDetails.reviews}}
-        <tr>
-          <td>Rating: {{this.rating}}</td>
-          <td>Feedback: {{this.feedback}}</td>
-        </tr>
-        {{/each}}
-        <h4>Host Details</h4>
-        <p>Host Name: {{propertyDetails.host_name}}</p>
-        <p>Host Since: {{propertyDetails.host_since}}</p>
-        <p>Host Verified: {{propertyDetails.host_verified}}</p>
-        <p>Host Location: {{propertyDetails.host_location}}</p>
-
-        
-      </div>
-    </main>
-  </body>
-</html>
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973

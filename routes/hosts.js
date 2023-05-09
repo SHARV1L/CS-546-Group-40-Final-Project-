@@ -6,6 +6,7 @@ import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
 import userMethods from '../data/users.js';
 import multer from 'multer';
+import axios from 'axios';
 //import {exportedFunctions} from '../data/users.js';
 
 router
@@ -187,13 +188,24 @@ router.route('/view_property').get(async (req, res) => {
     const properties = await propertyCollection.find({ userId: userId }).toArray();
     const API_KEY = 'AIzaSyBCUg-veMVyt8-KtxfaGvbkaghWtY9RJqk';
     const links = [];
+    let latitude;
+    let longitude;
     for (let i = 0; i < properties.length; i++) {
-      const link = `https://maps.googleapis.com/maps/api/geocode/json?address=${properties[i].address}&key=${API_KEY}`;
+      const API_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${properties[i].address}&key=${API_KEY}`;
+      const response = await axios.get(API_URL);
+      if (response.data.results.length != 0) {
+        const { lat, lng } = response.data.results[0].geometry.location;
+        latitude = lat;
+        longitude = lng;
+      } else {
+        throw 'Location not found';
+      }
+      const link = `https://www.google.com/maps/@${latitude},${longitude},15z?hl=en-US&key=${API_KEY}`
       links.push(link);
     }
     console.log(properties);
     // Render the properties view with the retrieved properties
-    res.render('components/viewProperty', { properties: properties, links: links });
+    res.render('components/viewProperty', { properties: properties, links: links, partialsDir: ['views/partials']});
 
 
   } catch (e) {
