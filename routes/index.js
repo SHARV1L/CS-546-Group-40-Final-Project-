@@ -6,6 +6,7 @@ import reviewRoutes from './reviews.js';
 import listingRoutes from './listings.js';
 //import loginRoutes from './loginUser.js';
 import userRoutes from './loginUser.js';
+import paymentRoutes from './payment.js'
 
 const constructorMethod = (app) => {
   app.use('/', userRoutes); // Landing Page route
@@ -15,6 +16,7 @@ const constructorMethod = (app) => {
   app.use('/property', propertyRoutes);
   app.use('/review', reviewRoutes);
   app.use('/search', listingRoutes);  // Property Listing Page route
+  app.use('/payment', paymentRoutes);
   
 
   app.use('*', (req, res) => {

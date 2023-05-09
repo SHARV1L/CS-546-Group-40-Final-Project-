@@ -5,47 +5,45 @@ import { booking } from "../config/mongoCollections.js";
 import helpers from "../helper.js";
 const exportedFunctions = {
 
- async createBooking(
+  async createBooking(
     userId,
     property_id,
     checkInDate,
     checkOutDate,
     totalPrice
 ){
-    // userId=validation.checkId(userId);
-    // const userCollection=await users();
-    // const userList=await userCollection.find({}).toArray();
-
-    // if(userList.some(obj => obj._id === userId)) throw "userid is not present for the property";
-    
     
     let newBooking={
-     userId:new ObjectId(userId),
-     property_id:new ObjectId(property_id),
-     checkInDate:checkInDate,
-     checkOutDate:checkOutDate,
-     totalPrice:totalPrice,
-     status:"upcoming"
+      userId:new ObjectId(userId),
+      property_id:new ObjectId(property_id),
+      checkInDate:checkInDate,
+      checkOutDate:checkOutDate,
+      totalPrice:totalPrice,
+      status:"pending",
+      payment:"pending"
     };
 
-     const bookingCollection=await booking();
+      const bookingCollection=await booking();
       const newInsertInformation=await bookingCollection.insertOne(newBooking);
       if(!newInsertInformation.insertedId) throw "Insert Failed";
-      else{
-      //updating the property availability once booking is done;
-      
-      const propertyCollection = await property();
-      let dates = await helpers.getDatesInRange(new Date(checkInDate),new Date(checkOutDate));
-      console.log(dates);
-      const updatedProperty = await propertyCollection.findOneAndUpdate({_id:new ObjectId(property_id)},{$push:{availability:{$each:dates}}});
-      if(!updatedProperty){
-        throw "Update Failed";
-      }
+     
       else
       {return await this.getBookingById(newInsertInformation.insertedId.toString())};
-    }
+},
 
-
+async confirmBooking(bookingId){
+  const bookingCollection=await booking();
+  let updatedBooking = await bookingCollection.findOneAndUpdate({_id:new ObjectId(bookingId)},{$set:{status:"confirm",payment:"success"}},{new:true});
+  
+  const propertyCollection = await property();
+  let dates = await helpers.getDatesInRange(new Date(updatedBooking.value.checkInDate),new Date(updatedBooking.value.checkOutDate));
+  
+  const updatedProperty = await propertyCollection.findOneAndUpdate({_id:updatedBooking.value.property_id},{$push:{availability:{$each:dates}}});
+  if(!updatedProperty){
+    throw "Update Failed";
+  }
+  else
+  {return updatedBooking};
 },
 
 async getAllBookings(){

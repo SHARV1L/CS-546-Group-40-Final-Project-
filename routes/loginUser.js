@@ -271,31 +271,36 @@ router.route('/sign-up')
   .post(async (req, res) => {
     //code here for GET
     try {
-      const { firstName, lastName, email, password, phoneNumber, accountType, role } = req.body;
+      const { firstName, lastName, age, email, password, phoneNumber, role } = req.body;
       
-      const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType, role);
+      const validationErrors = validation.signup(firstName, lastName, age, email, password, phoneNumber, role);
+
+      if(age<13){
+        console.log("line 209");
+        res.render('components/error', {errorMessage: "age cannot be less than 13"})
+      }
 
       if (!validationErrors) {    
         console.log("inside if:", req.body);
+        let userInfo = req.body;
         //creating new user 
         const user = await userMethods.createUser(
-          firstName,
-          lastName,
-          email,
-          password,
-          phoneNumber,
-          accountType,
-          role
+          userInfo.firstName,
+          userInfo.lastName,
+          userInfo.age,
+          userInfo.email,
+          userInfo.password,
+          userInfo.phoneNumber,
+          userInfo.role
         )
-        if(user){
-          res.redirect("/login");
-        }
+      if(user) {
+        res.redirect("/login");
+        }  
       }
     } 
     catch(error) {
-        
-        res.status(400).json(error);
-      }
+      res.status(400).render('components/error', {errorMessage: 'Server Error, Sign-up Again'});
+    }
   });
 
   // http://localhost:3000/login/user-pref      /////////////// '.get' step is just for checking route - not required
