@@ -180,3 +180,5 @@ search_rentals.addEventListener('submit', async (event) => {
 });
 
 
+
+

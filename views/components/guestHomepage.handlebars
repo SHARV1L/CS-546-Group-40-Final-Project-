@@ -6,14 +6,28 @@
     </head>
   <body>
     <header>
-    <h1>{{{title}}}</h1>
-    <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
-   
+      
     </header>
-
-
     <br>
     <br>
+    <div>
+      <span>
+        
+        <form id="uploadForm" action="/guest/dashboard" method="POST" enctype="multipart/form-data">
+          <label for="image">Choose a file to upload:</label>
+          <input type="file" id="image" name="image">
+          <button type="submit">Upload</button>
+        </form>
+        {{#if profilePicture}}
+          <img src="data:{{user.profilePicture.mimetype}};base64, {{user.profilePictureBase64}}" alt="Profile Picture">
+        {{/if}}
+        {{#if errorMessage}}
+        <p class="error">{{errorMessage}}</p>
+      {{/if}}
+        <h1>{{{title}}}</h1>
+        <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
+      </span>  
+    </div>
 
     <main> 
       {{!-- <h3>Hi, {{{user.firstName}}}! how have you been? </h3> --}}

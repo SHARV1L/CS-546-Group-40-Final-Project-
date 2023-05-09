@@ -1,9 +1,13 @@
 import {Router} from 'express';
 import { booking } from '../config/mongoCollections.js';
+import { property } from "../config/mongoCollections.js";
+import {ObjectId} from 'mongodb';
 import {usersData} from '../data/index.js';
 import { propertyData } from '../data/index.js';
 import { bookingsData } from '../data/index.js';
 import validation from '../validation.js';
+import helpers from "../helper.js";
+
 //import {exportedFunctions} from '../data/users.js';
 
 const router = Router();
@@ -19,25 +23,6 @@ const router = Router();
 //   }
 // });
 
-// // http://localhost:3000/booking/confirmation
-router.route('/confirmation').get(async (req, res) => {
-  //code here for GET
-  try {
-    res.render('components/confirmation', {title: 'Confirmation'});
-  } catch (error) {
-    res.status(400).json({error: e});
-  }
-});
-
-// // http://localhost:3000/booking/booking-failed
-router.route('/bookingFailed').get(async (req, res) => {
-  //code here for GET
-  try {
-    res.render('components/error', {title: 'Error Booking'});
-  } catch (error) {
-    res.status(400).json({error: e});
-  }
-});
 
 //////////////// added from here 
 router
@@ -71,10 +56,65 @@ router
         bookingInfo.totalPrice
       );
 
-      res.json({booking:newBooking,redirectUrl:"/booking/confirmation"});
+      res.json({booking:newBooking, redirectUrl:"/booking/confirmation"});
     }
     } catch (e) {
       res.status(500).send("Error creating user");
+    }
+  });
+
+  // http://localhost:3000/booking/confirmation
+  router
+  .route('/confirmation')
+  .get(async (req, res) => {
+    //code here for GET
+    try {
+      let bookingList = await bookingsData.getAllBookings();
+      console.log("Booking List", bookingList);
+
+      const bookingId = req.session.booking._id;
+      console.log("Booking ID from session: ", _id);
+
+      const targetBooking = bookingList.find(booking => booking._id.toString() === bookingId);
+
+      if (!targetBooking) {
+        throw new Error('Booking not found');
+      }
+
+      const info = bookingList.find(booking => booking.property_id === targetBooking.property_id);
+
+      let dates = await info.helpers.getDatesInRange(new Date(targetBooking.checkInDate), new Date(targetBooking.checkOutDate));
+      console.log("Dates", dates);
+
+      let price = await info.pricePerNight;
+      console.log("Price of Hotel:", price);
+
+      let fees = price * dates;
+      console.log("Total fees", fees);
+      // const info = await bookingList.findOne({property_id: bookingList.property_id})
+      // console.log("Information", info);
+      // let dates = await info.helpers.getDatesInRange(new Date(data.checkinDate),new Date(data.checkoutDate));
+      // console.log("Dates", dates);
+      // let price = await info.pricePerNight;
+      // console.log("Price of Hotel:", price);
+      // let fees = price * dates; 
+      // console.log("Total fees", fees);
+      res.render('components/confirmation', {title: 'Confirmation'});
+    } catch (error) {
+      console.log(error);
+      res.status(400).render('components/error', {error: 'error booking the property'});
+    }
+  });
+
+  // // http://localhost:3000/booking/booking-failed
+  router
+  .route('/bookingFailed')
+  .get(async (req, res) => {
+    //code here for GET
+    try {
+      res.render('components/error', {title: 'Error Booking'});
+    } catch (error) {
+      res.status(400).json({error: e});
     }
   });
 

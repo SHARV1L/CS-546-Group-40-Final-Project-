@@ -2,6 +2,17 @@ import { users } from "../config/mongoCollections.js";
 import { ObjectId } from 'mongodb';
 import validation from '../validation.js';
 import bcrypt from '../bcrypt.js';
+import multer from 'multer';
+import fs from 'fs/promises';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'data/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
 
 let exportedFunctions = {
 
@@ -13,6 +24,7 @@ let exportedFunctions = {
     phoneNumber,
     accountType,
     role,
+    profilePicture,
     ) {
       // needs to be uncommented later ************** /
 
@@ -55,6 +67,10 @@ let exportedFunctions = {
         //accountType: accountType.trim(),
         role: role.trim(),
       };
+
+      // Read the profile picture file from disk and store it in the database
+      const fileData = await fs.readFile(profilePicture.path);
+      newUser.profilePicture = fileData;
         
         //const userCollection = await users();
         const newInsertInformation = await userCollection.insertOne(newUser);
@@ -87,6 +103,17 @@ let exportedFunctions = {
 
     return {...deletionInfo.value,deleted : true};
     },
+
+    async updateUserProfilePicture (file, id) {
+      const user = await exportedFunctions.getUserById(id);
+      user.profilePicture = {
+        filename: file.filename,
+        mimetype: file.mimetype,
+        size: file.size,
+        data: fs.readFileSync(file.path)
+      };
+      await updateUserPatch(id, { profilePicture: user.profilePicture });
+    },
     
     async updateUserPut (
     id,
@@ -117,25 +144,44 @@ let exportedFunctions = {
     },
 
     async updateUserPatch ( id, userInfo ) {
-    id = validation.checkId(id);
-    if(userInfo.firstName)
-      userInfo.firstName = validation.checkString(userInfo.firstName, 'first name');
-      
-    if(userInfo.lastName)
-      userInfo.lastName = validation.checkString(userInfo.lastName, 'last name');
-     
-    const userCollection = await users();
-    const updatedInfo = await userCollection.findOneAndUpdate(
-      {_id : new ObjectId(id)},
-      {$set : userInfo},
-      {returnDocument : 'after'}
-    );
+      try {
+        id = validation.checkId(id);
+        
+        if(userInfo.firstName)
+          userInfo.firstName = validation.checkString(userInfo.firstName, 'first name');
+          
+        if(userInfo.lastName)
+          userInfo.lastName = validation.checkString(userInfo.lastName, 'last name');
+        
+        const userCollection = await users();
+  
+        if (userInfo.profilePicture) {
+          const fileData = await fs.readFile(userInfo.profilePicture.path);
+          userInfo.profilePicture = {
+            filename: userInfo.profilePicture.filename,
+            mimetype: userInfo.profilePicture.mimetype,
+            size: userInfo.profilePicture.size,
+            data: fileData,
+          };
+          // Remove the uploaded file from the server
+          await fs.unlink(userInfo.profilePicture.path);
+        }
 
-    if(updatedInfo.lastErrorObject.n === 0){
-      throw [404,`Error: update failed could not find user with this ${id}`];
-    }
+        const updatedInfo = await userCollection.findOneAndUpdate(
+          {_id : new ObjectId(id)},
+          {$set : userInfo},
+          {returnDocument : 'after'}
+        );
 
-      return await updatedInfo.value;
+        if(updatedInfo.lastErrorObject.n === 0){
+          throw [404,`Error: update failed could not find user with this ${id}`];
+        }
+  
+        return await this.getUserById(id);
+      } catch (error) {
+          res.render('error', {error: 'Updation Failed'})
+      }
+
     },
     
     async checkUser (email, password) {
