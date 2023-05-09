@@ -1,16 +1,22 @@
+<<<<<<< HEAD
 import { users } from "../config/mongoCollections.js";
 import { ObjectId } from 'mongodb';
+=======
+import { property, users } from "../config/mongoCollections.js";
+import {ObjectId} from 'mongodb';
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 import validation from '../validation.js';
 import { booking } from "../config/mongoCollections.js";
-
+import helpers from "../helper.js";
 const exportedFunctions = {
 
   async createBooking(
     userId,
-    //property_id,
+    property_id,
     checkInDate,
     checkOutDate,
     totalPrice
+<<<<<<< HEAD
   ) {
     userId = validation.checkId(userId);
     const userCollection = await users();
@@ -25,6 +31,41 @@ const exportedFunctions = {
       checkOutDate: checkOutDate,
       totalPrice: totalPrice
     };
+=======
+){
+    // userId=validation.checkId(userId);
+    // const userCollection=await users();
+    // const userList=await userCollection.find({}).toArray();
+
+    // if(userList.some(obj => obj._id === userId)) throw "userid is not present for the property";
+    
+    
+    let newBooking={
+     userId:new ObjectId(userId),
+     property_id:new ObjectId(property_id),
+     checkInDate:checkInDate,
+     checkOutDate:checkOutDate,
+     totalPrice:totalPrice,
+     status:"upcoming"
+    };
+
+     const bookingCollection=await booking();
+      const newInsertInformation=await bookingCollection.insertOne(newBooking);
+      if(!newInsertInformation.insertedId) throw "Insert Failed";
+      else{
+      //updating the property availability once booking is done;
+      
+      const propertyCollection = await property();
+      let dates = await helpers.getDatesInRange(new Date(checkInDate),new Date(checkOutDate));
+      console.log(dates);
+      const updatedProperty = await propertyCollection.findOneAndUpdate({_id:new ObjectId(property_id)},{$push:{availability:{$each:dates}}});
+      if(!updatedProperty){
+        throw "Update Failed";
+      }
+      else
+      {return await this.getBookingById(newInsertInformation.insertedId.toString())};
+    }
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 
 
 
@@ -40,6 +81,7 @@ const exportedFunctions = {
     const bookingCollection = await booking();
     const bookingList = await bookingCollection.find({}).toArray();
     return bookingList;
+<<<<<<< HEAD
   },
 
   async getBookingById(id) {
@@ -50,6 +92,22 @@ const exportedFunctions = {
     const bookingOne = await bookingCollection.findOne({ _id: new ObjectId(id) });
     console.log(bookingOne);
     if (!bookingOne) throw "Booking Not Found error";
+=======
+},
+async getBookingsByUserId(id){
+  const bookingCollection=await booking();
+  const bookingList=await bookingCollection.find({userId: new ObjectId(id)}).toArray();
+  return bookingList;
+},
+async getBookingById(id){
+    id=validation.checkId(id);
+    //console.log(id);
+    const bookingCollection= await booking();
+    //console.log(bookingCollection);
+    const bookingOne=await bookingCollection.findOne({_id:new ObjectId(id)});
+    //console.log(bookingOne);
+    if(!bookingOne) throw "Booking Not Found error";
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
     return bookingOne;
   },
 

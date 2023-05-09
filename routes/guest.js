@@ -3,6 +3,7 @@ const router = Router();
 import { usersData } from '../data/index.js';
 import validation from '../validation.js';
 import { ObjectId } from 'mongodb';
+import bookingData from '../data/bookings.js';
 //import {exportedFunctions} from '../data/users.js';
 import multer from 'multer';
 import path from 'path';
@@ -66,6 +67,7 @@ router
       res.status(400).json({ error: 'could not find the user, try again' })
     }
   })
+<<<<<<< HEAD
   .post(async (req, res) => {
     try {
       let { selected_option } = req.body;
@@ -79,6 +81,21 @@ router
         res.redirect('/guest/upcoming_bookings');
       }
       else if (selected_option == "search") {
+=======
+  .post(async(req,res)=>{
+    try{
+      let {selected_option}=req.body;
+       if(selected_option=="user_personal"){
+         res.redirect('/guest/personal');
+       }
+       else if(selected_option=="bookings")
+       {
+        res.redirect('/guest/bookings');
+       }
+      
+      else if(selected_option=="search")
+      {
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
         res.redirect('/search');
       }
     }
@@ -106,6 +123,7 @@ router
 
   });
 
+<<<<<<< HEAD
 router.route('/personal').get(async (req, res) => {
   res.render('components/personal-details', { title: 'Personal Details', user: req.session.user });
 }).post(async (req, res) => {
@@ -129,6 +147,19 @@ router.route('/upcoming_bookings').get(async (req, res) => {
   //define logic to update the user details
 });
 
+=======
+  router.route('/bookings').get(async(req,res)=>{
+    //fetch data from db for list of past bookings for current user
+    let bookings = await bookingData.getBookingsByUserId(req.session.user.id);
+    console.log(bookings);
+    res.render('components/pastBookings',{title:'Guest Bookings',user:req.session.user,bookings:bookings});
+  }).post(async(req,res)=>{
+    console.log("req.body:",req.body);
+    //define logic to update the user details
+  });
+  
+  
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 
 
 //   router

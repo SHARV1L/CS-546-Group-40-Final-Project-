@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import { Router } from 'express';
 import { usersData } from '../data/index.js';
+=======
+import {Router} from 'express';
+import { booking } from '../config/mongoCollections.js';
+import {usersData} from '../data/index.js';
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
 import { propertyData } from '../data/index.js';
 import { bookingsData } from '../data/index.js';
 import validation from '../validation.js';
@@ -19,24 +25,24 @@ const router = Router();
 // });
 
 // // http://localhost:3000/booking/confirmation
-// router.route('/bookings/confirmation').get(async (req, res) => {
-//   //code here for GET
-//   try {
-//     res.render('components/confirmation', {title: 'Confirmation'});
-//   } catch (error) {
-//     res.status(400).json({error: e});
-//   }
-// });
+router.route('/confirmation').get(async (req, res) => {
+  //code here for GET
+  try {
+    res.render('components/confirmation', {title: 'Confirmation'});
+  } catch (error) {
+    res.status(400).json({error: e});
+  }
+});
 
 // // http://localhost:3000/booking/booking-failed
-// router.route('/bookings/bookingFailed').get(async (req, res) => {
-//   //code here for GET
-//   try {
-//     res.render('components/error', {title: 'Error Booking'});
-//   } catch (error) {
-//     res.status(400).json({error: e});
-//   }
-// });
+router.route('/bookingFailed').get(async (req, res) => {
+  //code here for GET
+  try {
+    res.render('components/error', {title: 'Error Booking'});
+  } catch (error) {
+    res.status(400).json({error: e});
+  }
+});
 
 //////////////// added from here 
 router
@@ -44,18 +50,22 @@ router
   .get(async (req, res) => {
     try {
       let bookingList = await bookingsData.getAllBookings();
-      res.json(bookingList);
+      //res.json(bookingList);
+      res.render('/components/booking', {title: 'Booking Page'} )
     } catch (e) {
       res.sendStatus(500);
     }
   })
   .post(async (req, res) => {
     let bookingInfo = req.body;
+    console.log(bookingInfo);
+    try { 
     if (!bookingInfo || Object.keys(bookingInfo).length === 0) {
       return res
         .status(400)
         .json({ error: 'There are no fields in the request body' });
     }
+<<<<<<< HEAD
 
     // try {
     //   userInfo.firstName = validation.checkString(
@@ -77,14 +87,21 @@ router
 
     // validation functions here
     try {
+=======
+   // validation functions here
+    else{
+      
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
       const newBooking = await bookingsData.createBooking(
-        bookingInfo.userId,
-        //property_id,
+        req.session.user.id,
+        bookingInfo.property_id,
         bookingInfo.checkInDate,
         bookingInfo.checkOutDate,
         bookingInfo.totalPrice
       );
-      res.json(newBooking);
+
+      res.json({booking:newBooking,redirectUrl:"/booking/confirmation"});
+    }
     } catch (e) {
       res.status(500).send("Error creating user");
     }

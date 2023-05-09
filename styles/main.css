@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
 	box-sizing: border-box;
 }
@@ -95,3 +96,103 @@ button[type="button"] {
 button[type="button"]:hover {
 	background-color: #FF6B6B;
 }
+=======
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	font-size: 14pt;
+}
+
+body {
+	background: white;
+	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+main {
+	max-width: 75%;
+	margin: auto;
+}
+
+header {
+	border-bottom: 1px solid #afafaf;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #FF6B6B;
+	margin-bottom: 5px;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+}
+
+h4 {
+	font-size: 1.25rem;
+}
+
+h5 {
+	font-size: 1.15rem;
+}
+
+h6 {
+	font-size: 1.05rem;
+}
+
+p {
+	font-size: 1rem;
+	line-height: 2;
+	color: black;
+}
+
+.post {
+	width: 75%;
+	border-bottom: 1px dashed #333;
+}
+
+.new-post-form {
+	max-width: 300px;
+}
+
+.new-post-form .full-width-input {
+	display: block;
+	min-height: 3em;
+	margin: 10px 0;
+	width: 100%;
+}
+
+label {
+	font-weight: bold;
+}
+
+button[type="button"] {
+	background-color: #FFD166;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+}
+
+button[type="button"]:hover {
+	background-color: #FF6B6B;
+}
+
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973

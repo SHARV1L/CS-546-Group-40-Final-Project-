@@ -21,6 +21,25 @@ const exportedMethods = {
       throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
     return strVal;
   },
+  checkInteger(value) {
+    const numberValue = parseFloat(value);
+  
+    if (isNaN(numberValue) || numberValue <= 0) {
+      return false;
+    }
+  
+    return Math.floor(numberValue) === numberValue;
+  },
+  isValidCoordinates(latitude, longitude) {
+    return (
+      !isNaN(latitude) &&
+      !isNaN(longitude) &&
+      latitude >= -90 &&
+      latitude <= 90 &&
+      longitude >= -180 &&
+      longitude <= 180
+    );
+  },
 
   checkStringArray(arr, varName) {
     //We will allow an empty array for this,
@@ -52,9 +71,23 @@ const exportedMethods = {
   },
 
   login(username, password) {
+
     if (username.length > 0 && password.length > 0) {
       return null;
     }
+<<<<<<< HEAD
+=======
+    // Check if the password meets the minimum of 8 length requirement or not
+  if (password.length < 8) {
+    return { isValid: false, message: 'Password must be at least 8 characters long' };
+  }
+
+  // Check if the username contains only alphanumeric characters
+  if (!/^[a-zA-Z0-9]+$/.test(username)) {
+    return { isValid: false, message: 'Username can only contain alphanumeric characters' };
+  }
+    
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
     else return validationErrors; // if login is successful
   },
 
@@ -84,7 +117,7 @@ const exportedMethods = {
     } else if (password.length < 8) {
       errors.password = 'Password should be at least 8 characters long';
     } else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[^\s]).{8,}$/.test(password)) {
-      throw "Invalid Password should be 4 characters long, 1 Uppercase, 1 Lower case, 1 special charcter and 1 number";
+      throw "Invalid Password should be 4 characters long and keep in mind 1 Uppercase, 1 Lower case, 1 special charcter and 1 number";
     }
   },
 

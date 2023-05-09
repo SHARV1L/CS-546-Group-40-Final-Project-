@@ -80,6 +80,114 @@ router.get('/personaldetails', async (req, res) => {
   }
 });
 
+//getting person details of host
+router.get('/host/personaldetails', async (req, res) => {
+  try {
+    console.log('Retrieved session data:', req.session);
+    const userId = req.session.user.id;
+    console.log(`Retrieved userId from session: ${userId}`);
+    console.log(userId);
+    let user = await usersData.getUserById(userId);
+    console.log(user);
+    res.render('components/host-personalDetails', {user});
+  } catch (e) {
+    console.error(e);
+    res.render('components/error', { error: 'Error fetching properties' });
+  }
+});
+
+// post property routes here
+router.post('/host/postProperty', async (req, res) => {
+  console.log(req.body);
+  const {
+    propertyName,
+    description,
+    numberOfRooms,
+    numberOfBathrooms,
+    amenities,
+    address,
+    latitude,
+    longitude,
+    pricePerNight,
+    availability,
+  } = req.body;
+  try{
+    if (
+      !propertyName ||
+      !description ||
+      !numberOfRooms ||
+      !numberOfBathrooms ||
+      !amenities ||
+      !address ||
+      !latitude ||
+      !longitude ||
+      !pricePerNight ||
+      !availability
+    ) {
+      return res.status(400).send({ message: 'All fields are required.' });
+    }
+  
+    if (!validation.isValidCoordinates(latitude, longitude)) {
+      return res.status(400).send({ message: 'Invalid latitude or longitude.' });
+    }
+  
+    if (isNaN(numberOfRooms) || isNaN(numberOfBathrooms) || isNaN(pricePerNight)) {
+      return res.status(400).send({ message: 'Invalid number value(s).' });
+    }
+  
+    if (numberOfRooms <= 0 || numberOfBathrooms <= 0 || pricePerNight <= 0) {
+      return res.status(400).send({ message: 'Number values must be greater than zero.' });
+    }
+  }
+  catch(e){
+    console.log(e);
+  }
+  try {
+    const newProperty = await propertyData.createProperty(
+      req.session.user.id,
+      req.body.propertyName,
+      req.body.description,
+      req.body.numberOfRooms,
+      req.body.numberOfBathrooms,
+      req.body.amenities,
+      req.body.address,
+      req.body.latitude,
+      req.body.longitude,
+      req.body.pricePerNight,
+      req.body.availability,
+      //req.file
+    );
+    res.redirect('/thankyou');
+  } catch (e) {
+    console.log(e);
+    res.render('error', { error: 'Error adding property' });
+  }
+});
+
+//routes of view property
+router.get('/host/viewProperty', async (req, res) => {
+  try {
+    // Retrieve the user ID from the session
+    const userId = req.session.user.id;
+    console.log(userId);
+    // if (!userId) {
+    //   // If the user is not logged in, redirect to the login page
+    //   res.redirect('/login');
+    //   return;
+    // }
+
+    const propertyCollection = await property();
+    const properties = await propertyCollection.find({ userId: userId }).toArray();
+
+    // Render the properties view with the retrieved properties
+    res.render('components/viewProperty', { properties });
+  } catch (e) {
+    console.error(e);
+    res.render('error', { error: 'Error fetching properties' });
+  }
+});
+
+
 // http://localhost:3000/sign-router
 router.route('/sign-up')
   .get(async (req, res) => {
@@ -186,10 +294,11 @@ export default router;
 // -10 if we are able to make same account with username and email address
 // sign in as case sesnitive
 // -2 to -10 for bug and usability issues
-// -10 for not using seed task
-// -5 for not having suffieceint test data
-// +5 to +15(max) for every extra feature added
-// +15 TA has a complexity bonus
-// potential to get 130 pts in total
-// last semester average for code was 66
+// -10 for not using seed task.
+// -5 for not having suffieceint test data.
+// +5 to +15(max) for every extra feature added.
+// +15 TA has a complexity bonus.
+// potential to get 130 pts in total.
+// last semester average for code was 66.
 // one user can review only once for a particular property.
+// if age < 13 user cannot signup or login.

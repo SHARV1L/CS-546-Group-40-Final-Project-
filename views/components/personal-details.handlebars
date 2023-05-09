@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,3 +41,125 @@
 </body>
 
 </html>
+=======
+{{!-- <!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <title>Profile Info</title>
+        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+    </head>
+  <body>
+    <header>
+    <h1>{{{title}}}</h1>
+    
+   
+    </header>
+    <main> 
+      
+      <h3> {{{title}}} </h3>
+      <form id="profilepage" method="post" action="/guest/personal">
+
+         <img src={{{user.profilePic}}}/>
+         <label for="username">Username</label>
+         <input placeholder="username" type="text" readonly name="username" value={{{user.firstName}}}/>
+         <label for="phone">Phone Number</label>
+         <input placeholder="phone" type="text" readonly name="phone" value={{{user.phoneNumber}}}/>
+         <label for="email">Email</label>
+         <input placeholder="email" type="text" readonly name="email" value={{{user.email}}}/>
+         <label for="role">Role</label>
+         <input placeholder="role" type="text" readonly name="role" value={{{user.role}}}/>
+        
+        <br>
+        <br>
+        <br>
+        <Button id="edit-profile" type="submit" name="edit" > Edit </Button>
+      </form>
+    </main>
+    
+     <a href="/logout">Logout</a>
+    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+    </main>
+  </body>
+</html> --}}
+
+
+{{!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Profile Info</title>
+    <link rel="stylesheet" href="/styles/components-styles/personalDetails.css">
+  </head>
+  <body>
+    <header>
+      <h1>{{{title}}}</h1>
+    </header>
+    <main>
+      <form id="profilepage" method="post" action="/guest/personal">
+        <div class="profile-image">
+          <img src={{{user.profilePic}}} alt="profile picture" />
+        </div>
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input placeholder="username" type="text" readonly name="username" value={{{user.firstName}}} />
+        </div>
+        <div class="input-group">
+          <label for="phone">Phone Number</label>
+          <input placeholder="phone" type="text" readonly name="phone" value={{{user.phoneNumber}}} />
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input placeholder="email" type="text" readonly name="email" value={{{user.email}}} />
+        </div>
+        <div class="input-group">
+          <label for="role">Role</label>
+          <input placeholder="role" type="text" readonly name="role" value={{{user.role}}} />
+        </div>
+        <div class="button-group">
+          <button id="edit-profile" type="submit" name="edit">Edit</button>
+        </div>
+      </form>
+    </main>
+    <footer>
+      <a href="/logout">Logout</a>
+    </footer>
+  </body>
+</html> --}}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Profile Info</title>    
+    <link rel="stylesheet" href="/styles/components-styles/personalDetails.css">
+
+  </head>
+  <body>
+    <header>
+      <h1>{{{title}}}</h1>
+    </header>
+    <main>
+      <h3>{{{title}}}</h3>
+      <form id="profilepage" method="post" action="/guest/personal">
+        {{!-- <div class="profile-image"> --}}
+          <img src={{{user.profilePic}}} alt="profile picture" />
+        {{!-- </div> --}}
+        <label for="username">Username</label>
+        <input placeholder="username" type="text" readonly name="username" value={{{user.firstName}}} />
+        <label for="phone">Phone Number</label>
+        <input placeholder="phone" type="text" readonly name="phone" value={{{user.phoneNumber}}} />
+        <label for="email">Email</label>
+        <input placeholder="email" type="text" readonly name="email" value={{{user.email}}} />
+        <label for="role">Role</label>
+        <input placeholder="role" type="text" readonly name="role" value={{{user.role}}} />
+        <br /><br /><br />
+        <Button id="edit-profile" type="submit" name="edit">Edit</Button>
+      </form>
+    </main>
+    <footer>
+      <a href="/logout">Logout</a>
+      </footer>
+  </body>
+</html>
+
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973

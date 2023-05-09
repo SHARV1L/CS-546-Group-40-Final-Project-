@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ObjectId } from 'mongodb';
 
 const exportedMethods = {
@@ -181,3 +182,25 @@ const exportedMethods = {
 
 };
 export default exportedMethods;
+=======
+const exportedFunctions = {
+
+getDatesInRange(startDate, endDate) {
+   
+    
+    const dates = [];
+  
+    while (startDate < endDate) {
+      let s = startDate.getDate().toString().length==1?'0':'';
+      let x = startDate.getMonth().toString().length==1?'0':'';
+      dates.push(`${startDate.getFullYear()}-${x}${startDate.getMonth()+1}-${s}${startDate.getDate()}`);
+      startDate.setDate(startDate.getDate() + 1);
+    }
+  
+    return dates;
+  }
+
+}
+
+export default exportedFunctions;
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
