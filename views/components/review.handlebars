@@ -6,32 +6,27 @@
   </div>
 </script>
 <main>
-<h2>Hey, {{{user.firstName}}}, Please review the property. Your reviews are precious to us </h2>
+  <h2>Hey, {{{user.firstName}}}, Please review the property. Your reviews are precious to us </h2>
+  <form id="reviews" action="/review", method="POST">
+    <label for="ratings">Rating:</label>
+      <select id="ratings" name="ratings" required>
+        <option value="">Select rating</option>
+        <option value="5">5 stars</option>
+        <option value="4">4 stars</option>
+        <option value="3">3 stars</option>
+        <option value="2">2 stars</option>
+        <option value="1">1 star</option>
+      </select>
 
-<form id="reviews" action="/review", method="POST">
-  <label for="rating">Rating:</label>
-  <select id="rating" name="rating" required>
-    <option value="">Select rating</option>
-    <option value="5">5 stars</option>
-    <option value="4">4 stars</option>
-    <option value="3">3 stars</option>
-    <option value="2">2 stars</option>
-    <option value="1">1 star</option>
-  </select>
-
-  <label for="review">Review:</label>
-<<<<<<< HEAD
-  <textarea id="review" name="review" required></textarea>
-  <input type="text" id="propertyID" name="propertyID" value="{{property_id}}">
-=======
-  <input id="review" name="review" type="text"required></input>
-  <input type="hidden" id="property-id" name="property_id" value="{{bookingInfo.property_id}}">
-  <input type="hidden" id="bookingId" name="bookingId" value="{{bookingInfo._id}}">
->>>>>>> 1dfb6ddec3af6243442e62c84771f1bd8392ea68
-    <br>
-    <br>
-  <button type="submit" id="submit-review">Submit Review</button>
-</form>
+      <label for="reviewText">Review:</label>
+      <input id="reviewText" name="reviewText" placeholder="Give your Feedback!" type="text"required></input>
+      <input type="hidden" id="property-id" name="property_id" value="{{bookingInfo.property_id}}">
+      <input type="hidden" id="bookingId" name="bookingId" value="{{bookingInfo._id}}">
+      <input type="hidden" id="userId" name="userId" value="{{bookingInfo.userId}}">
+        <br>
+        <br>
+      <button type="submit" id="submit-review">Submit Review</button>
+  </form>
 </main>
 
 <a href="/guest/bookings" >Go back to your Bookings</a>

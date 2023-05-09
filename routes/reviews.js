@@ -14,7 +14,7 @@ router
   .get(async (req, res) => {
     try {
       let booking  = await bookingData.getBookingById(req.query.bookingId);  
-      res.render('components/review', {title: 'Review Section',bookingInfo:booking,user:req.session.user});
+      res.render('components/review', {title: 'Review Section', bookingInfo: booking,user:req.session.user});
      
     } catch (e) {
       res.sendStatus(500);
@@ -35,9 +35,9 @@ router
       );
       console.log("New Review Information", newReview);
      
-      res.render('components/thankyou', {title: 'Review Confirmation Page',review:newReview})
+      res.render('components/thankyou', {title: 'Review Confirmation Page', review: newReview})
       }
-      }
+    }
       catch(error) {
         res.render('components/error', {title: error})
       }

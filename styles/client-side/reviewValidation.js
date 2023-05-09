@@ -1,12 +1,12 @@
-const reviewForm = document.getElementById(-review-form);
+const reviewForm = document.getElementById("reviews");
 const submitButton = document.getElementById('submit-review');
 
 submitButton.addEventListener('click', (event) => {
     event.preventDefault();
 
-    const rating = document.getElementById('rating').value;
-    const review = document.getElementById('review-text').value;
-    const propertyId = document.getElementById('propertyId').value;
+    const rating = document.getElementById('ratings').value;
+    const review = document.getElementById('reviewText').value;
+    const propertyId = document.getElementById('property_id').value;
 
     const xhr = new XMLHttpRequest();
 
