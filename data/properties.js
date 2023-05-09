@@ -21,11 +21,7 @@ let exportedFunctions={
         longitude,
         pricePerNight,
         availability,
-<<<<<<< HEAD
-        images
-=======
         review
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
     ){
         //userId=validation.checkId(userId);
         //const userCollection=await users();
@@ -39,20 +35,6 @@ let exportedFunctions={
         //have to write some other validation functions
 
         let newProperty={
-<<<<<<< HEAD
-            userId:userId,  // commented out here
-            propertyName:propertyName,
-            description:description,
-            numberOfRooms:numberOfRooms,
-            numberofBathrooms:numberofBathrooms,
-            amenities:amenities,
-            address:address,
-            latitude:latitude,
-            longitude:longitude,
-            pricePerNight:pricePerNight,
-            availability:availability,
-            images:images
-=======
             userId: userId,  // commented out here
             propertyName: propertyName,
             description: description,
@@ -65,7 +47,6 @@ let exportedFunctions={
             pricePerNight: pricePerNight,
             availability: availability,
             review: review
->>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
             // image: {
             //   data: fs.readFileSync(image.path),
             //   contentType: image.mimetype
