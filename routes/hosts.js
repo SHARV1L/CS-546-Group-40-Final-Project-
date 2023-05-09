@@ -121,17 +121,12 @@ router
     //define logic to update the user details
   });
 
-  router.route('/past_bookings').get(async(req,res)=>{
+  router.route('/bookings').get(async(req,res)=>{
+    console.log("in host bookings");
     //fetch data from db for list of past bookings for current user
-    res.render('components/pastBookings',{title:'Past Bookings',user:req.session.user,bookings:[]});
-  }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
-    //define logic to update the user details
-  });
-  
-  router.route('/upcoming_bookings').get(async(req,res)=>{
-    //fetch data from db for list of past bookings for current user
-    res.render('components/upcomingBookings',{title:'Upcoming Bookings',user:req.session.user,bookings:[]});
+    let bookingList = await hostsData.getBookingsByHostId(req.session.user.id);
+    //let bookingList = await hostsData.getBookingsByHostId(req.query.userId);
+    res.render('components/pastBookings',{title:'Bookings',user:req.session.user,bookings:bookingList});
   }).post(async(req,res)=>{
     console.log("req.body:",req.body);
     //define logic to update the user details
@@ -158,11 +153,11 @@ router
       );
       if(newProperty)
       {
-        res.redirect('/thankyou')
+        res.redirect('/host/thankyou')
       };
     } catch (e) {
       console.log("$$$",e);
-      res.render('components/error', { error: 'Error adding property' });
+      res.render('components/error', { errorMessage: 'Error adding property' });
     }
     //define logic to add the property
   });
@@ -172,11 +167,8 @@ router
       // Retrieve the user ID from the session
       const userId = req.session.user.id;
       console.log(typeof(userId));
-  
-      // Retrieve all properties associated with the host
-      const propertyCollection = await property();
-      const properties = await propertyCollection.find({ userId: userId }).toArray();
-      console.log(properties);
+
+      let properties = await propertyData.getPropertyByHostId(userId);
       // Render the properties view with the retrieved properties
       res.render('components/viewProperty', { properties:properties });
     } catch (e) {
@@ -186,112 +178,13 @@ router
     
   });
 
-
-// router
-//   .route('/:id')
-//   .get(async (req, res) => {
-//     // try {
-//     //   req.params.id = validation.checkId(req.params.id, 'ID URL Param');
-//     // } catch (e) {
-//     //   return res.status(400).json({error: e});
-//     // }
-//     try {
-//       // let host = await hostsData.getHostById(req.params.id);
-//       //res.json(host).render('components/hostHomepage');
-//       res.render('components/hostHomepage', {title: 'Host Homepage'})
-//     } catch (e) {
-//       res.status(404).json({error: 'Host not found'});
-//     }
-//   })
-//   .put(async (req, res) => {
-//     let hostInfo = req.body;
-//     if (!hostInfo || Object.keys(hostInfo).length === 0) {
-//       return res
-//         .status(400)
-//         .json({error: 'There are no fields in the request body'});
-//     }
-//     try {
-//       req.params.id = validation.checkId(req.params.id);
-//       hostInfo.firstName = validation.checkString(
-//         hostInfo.firstName,
-//         'First Name'
-//       );
-//       hostInfo.lastName = validation.checkString(
-//         hostInfo.lastName,
-//         'Last Name'
-//       );
-//     } catch (e) {
-//       return res.status(400).json({error: e});
-//     }
-
-//     try {
-//       const updatedHost = await hostsData.updateHostByPut(
-//         req.params.id,
-//         hostInfo.firstName,
-//         hostInfo.lastName
-//       );
-//       res.json(updatedHost);
-//     } catch (e) {
-//       let status = e[0] ? e[0] : 500;
-//       let message = e[1] ? e[1] : 'Internal Server Error';
-//       res.status(status).send({error: message});
-//     }
-//   })
-//   .patch(async (req, res) => {
-//     let hostInfo = req.body;
-//     if (!hostInfo || Object.keys(hostInfo).length === 0) {
-//       return res
-//         .status(400)
-//         .json({error: 'There are no fields in the request body'});
-//     }
-//     try {
-//       req.params.id = validation.checkId(req.params.id);
-//       if (hostInfo.firstName) {
-//         hostInfo.firstName = validation.checkString(
-//           hostInfo.firstName,
-//           'First Name'
-//         );
-//       }
-
-//       if (hostInfo.lastName) {
-//         hostInfo.lastName = validation.checkString(
-//           hostInfo.lastName,
-//           'Last Name'
-//         );
-//       }
-//     } catch (e) {
-//       return res.status(400).json({error: e});
-//     }
-
-//     try {
-//       const updatedHost = await hostsData.updateHostByPatch(
-//         req.params.id,
-//         hostInfo
-//       );
-//       res.json(updatedHost);
-//     } catch (e) {
-//       let status = e[0] ? e[0] : 500;
-//       let message = e[1] ? e[1] : 'Internal Server Error';
-//       res.status(status).send({error: message});
-//     }
-//   })
-//   .delete(async (req, res) => {
-//     try {
-//       req.params.id = validation.checkId(req.params.id);
-//     } catch (e) {
-//       return res.status(400).json({error: e});
-//     }
-
-//     try {
-//       let deletedHost = await hostsData.removeHostById(req.params.id);
-//       res.json(deletedHost);
-//     } catch (e) {
-//       let status = e[0] ? e[0] : 500;
-//       let message = e[1] ? e[1] : 'Internal Server Error';
-//       res.status(status).send({error: message});
-//     }
-//   });
-
-  
-
+  router
+  .route('/thankyou')
+  .get(async (req, res) => {
+    try {
+      res.status(200).render('components/hostThankYou', {user: req.session.user});
+    } catch (error) {
+      res.render('components/error', {errorMessage: error});
+    }
+  })
 export default router;
