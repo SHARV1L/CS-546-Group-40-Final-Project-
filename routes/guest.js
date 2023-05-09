@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import bookingData from '../data/bookings.js';
 import multer from 'multer';
 import fs from 'fs/promises';
+import path from 'path';
 import multiparty from 'multiparty';
 
 // Create a storage engine
@@ -122,7 +123,29 @@ router
 
 router.route('/upload').post( upload.single('image'),async (req, res) => {
     try {
-      console.log('upload:',req.file,req.files);
+      console.log('upload:', req.body);
+
+      // const image = fs.readFileSync(req.body.path);
+      // const base64Image = Buffer.from(image).toString('base64');
+      // const imageData = new Image({
+      //   name: req.file.originalname,
+      //   data: base64Image
+      // });
+
+      const base64Image = req.body.base64Image;
+      const originalName = req.body.originalName;
+
+      const imageData = new Image({
+      name: originalName,
+      data: base64Image
+    });
+      console.log("Image Data:", imageData);
+
+      const user = await usersData();
+      //const savedImage = await imageData.save();
+      const newData = await usersData.updateUserPatch(req.session.user.id, imageData)
+      res.status(200).json({message: 'Image uploaded successfully!', imageData: imageData});
+
       // const files = req.files;
       // if (files) {
       //   const userId = req.session.user.id;
@@ -163,6 +186,7 @@ router.route('/upload').post( upload.single('image'),async (req, res) => {
     }
       catch(error){
 console.log(error);
+res.render('components/error', {error: 'Could not upload the image'})
       }});
 
   
@@ -185,7 +209,7 @@ router
     res.render('components/pastBookings', {title:'Guest Bookings', user: req.session.user,bookings:bookings});
   }).
   post(async(req,res)=>{
-    console.log("req.body:",req.body);
+    console.log("req.body:", req.body);
     //define logic to update the user details
   });
 

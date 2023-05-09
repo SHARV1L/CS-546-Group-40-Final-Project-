@@ -124,7 +124,7 @@ let exportedFunctions = {
       id = validation.checkId( id );
       //firstName = validation.checkString(firstName, 'First Name');
       //lastName = validation.checkString(lastName, 'Last Name');
-      accountType = (accountType, 'Account Type');
+      //accountType = (accountType, 'Account Type');
       
       const userUpdatedInfo = {
        accountType: accountType

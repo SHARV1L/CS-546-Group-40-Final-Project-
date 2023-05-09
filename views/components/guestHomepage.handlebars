@@ -11,8 +11,7 @@
     <br>
     <br>
     <div>
-      <span>
-        
+      <span>        
         <form id="uploadForm" action="/guest/upload" method="POST">
           <label for="image">Choose a file to upload:</label>
           <input type="file" id="image" name="image">
@@ -23,7 +22,7 @@
         {{/if}}
         {{#if errorMessage}}
         <p class="error">{{errorMessage}}</p>
-      {{/if}}
+        {{/if}}
         <h1>{{{title}}}</h1>
         <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
       </span>  
@@ -42,6 +41,7 @@
 
         <Button id="search-property" type="submit" name="selected_option" value="search"> Search Property </Button>
       </form>
+      <a href="/user-pref" >Change Sign in preference</a>
     </main>
     
      <a href="/logout">Logout</a>

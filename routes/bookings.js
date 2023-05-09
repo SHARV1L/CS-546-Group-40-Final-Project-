@@ -87,7 +87,7 @@ router
     try {
       res.render('components/error', {title: 'Error Booking'});
     } catch (error) {
-      res.status(400).json({error: e});
+      res.status(400).json({error: 'Booking Fail Page'});
     }
   });
 
