@@ -120,45 +120,47 @@ router
 
 
 
-router.route('/upload',upload).post( async (req, res) => {
+router.route('/upload').post( upload.single('image'),async (req, res) => {
     try {
-      const files = req.files;
-      if (files) {
-        const userId = req.session.user.id;
-                const user  = await usersData.updateUserProfilePicture();
+      console.log('upload:',req.file,req.files);
+      // const files = req.files;
+      // if (files) {
+      //   const userId = req.session.user.id;
+      //           const user  = await usersData.updateUserProfilePicture();
 
-        const { writeStream, partHandler } = storage(user._id);
-        for (const file of files) {
-          if (
-            file.mimetype === 'image/jpeg' ||
-            file.mimetype === 'image/jpg'  ||
-            file.mimetype === 'image/png' ||
-            file.mimetype === 'image/gif'
-          ) {
-            const { filename, size } = file;
-            const readStream = fs.createReadStream(file.path);
-            readStream.pipe(partHandler(filename, size));
-          } else {
-            await fs.unlink(file.path);
-          }
-        }
+      //   const { writeStream, partHandler } = storage(user._id);
+      //   for (const file of files) {
+      //     if (
+      //       file.mimetype === 'image/jpeg' ||
+      //       file.mimetype === 'image/jpg'  ||
+      //       file.mimetype === 'image/png' ||
+      //       file.mimetype === 'image/gif'
+      //     ) {
+      //       const { filename, size } = file;
+      //       const readStream = fs.createReadStream(file.path);
+      //       readStream.pipe(partHandler(filename, size));
+      //     } else {
+      //       await fs.unlink(file.path);
+      //     }
+      //   }
 
-        const profilePicture = {
-          filename: files.filename,
-          mimetype: files.mimetype,
-          size: files.size,
-        };
+      //   const profilePicture = {
+      //     filename: files.filename,
+      //     mimetype: files.mimetype,
+      //     size: files.size,
+      //   };
 
-        await usersData.updateUserPatch(userId, { profilePicture });
+      //   await usersData.updateUserPatch(userId, { profilePicture });
 
-        // Update the user object in the session
-        req.session.user.profilePicture = profilePicture;
+      //   // Update the user object in the session
+      //   req.session.user.profilePicture = profilePicture;
 
-        // Remove the uploaded files from the server
-        for (const file of files) {
-          await fs.unlink(file.path);
-        }
-      }}
+      //   // Remove the uploaded files from the server
+      //   for (const file of files) {
+      //     await fs.unlink(file.path);
+      //   }
+      // }
+    }
       catch(error){
 console.log(error);
       }});
