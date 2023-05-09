@@ -5,7 +5,7 @@ import { closeConnection } from './config/mongoConnection.js';
 
 const seedBookings =[
     {
-      userId:new ObjectId("644e976a0a60e9505cddcf00"),
+     userId:new ObjectId("644e976a0a60e9505cddcf00"),
      property_id:new ObjectId("6454b270f1baf13e668068ae"),
      checkInDate:new Date(),
      checkOutDate:new Date(),

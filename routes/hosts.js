@@ -141,20 +141,19 @@ router
     
     res.render('components/postProperty', { title: 'postProperty' });
   }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
+    console.log("req.body host:",req.body);
     try {
       const newProperty = await propertyData.createProperty(
-        req.session.user.id,
+        //req.session.user.id,
+        req.body.userId,
         req.body.propertyName,
         req.body.description,
         req.body.numberOfRooms,
         req.body.numberOfBathrooms,
         req.body.amenities,
         req.body.address,
-        req.body.latitude,
-        req.body.longitude,
         req.body.pricePerNight,
-        req.body.availability,
+        
         //req.file
       );
       if(newProperty)
@@ -162,8 +161,8 @@ router
         res.redirect('/thankyou')
       };
     } catch (e) {
-      console.log(e);
-      res.render('error', { error: 'Error adding property' });
+      console.log("$$$",e);
+      res.render('components/error', { error: 'Error adding property' });
     }
     //define logic to add the property
   });

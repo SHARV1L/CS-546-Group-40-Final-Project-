@@ -1,12 +1,10 @@
 async function bookNow(checkin,checkout,id,pp) {
     
-    alert('bookNow!');
-
-    console.log("$",id,checkin,checkout);
+    
     const checkInDate = new Date(checkin);
     const checkOutDate = new Date(checkout);
     const nights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / 86400000);
-    console.log("Days:",nights);
+    
     // Validate the dates
     if (!checkin || !checkout) {
         alert('Please enter check-in and checkout dates.');
@@ -23,15 +21,14 @@ async function bookNow(checkin,checkout,id,pp) {
               }); 
             const result = await response.json();   
             
-             window.location.href = result.redirectUrl;
+             window.location.href = `${result.redirectUrl}?bookingId=${result.booking}`;
         
 }
 
 function openMap(location, lat, lng) {
 
   alert('Lets open the map');
-  console.log(location );
-  console.log(lat, lng);
+  
 
   const map = L.map('map').setView([lat, lng], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -64,7 +64,7 @@ app.use('/logout', mwf.checkLogoutAccess);
 app.use('/', mwf.loggingMiddleware);
 app.use('/user-pref', mwf.checkProtectedRoute);
 app.use('/guest',mwf.checkProtectedRoute);
-app.use('/host',mwf.checkProtectedRoute);
+//app.use('/host',mwf.checkProtectedRoute);
 app.use('/search',mwf.checkProtectedRoute);
 configRoutes(app);
 
