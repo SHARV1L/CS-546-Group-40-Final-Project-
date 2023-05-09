@@ -27,9 +27,10 @@ router
       }
 
       const newReview = await reviewsData.createReview(
-        req.session.user.id,
+        //req.session.user.id,
         reviewInfo.userId,
         reviewInfo.property_id,
+        reviewInfo.bookingId,
         reviewInfo.reviewText,
         reviewInfo.ratings,
       );
@@ -37,6 +38,7 @@ router
       res.json(newReview);
 
     } catch (error) {
+      console.log(error);
       res.status(500).json({error: 'Therez a server error'});
     }
   });

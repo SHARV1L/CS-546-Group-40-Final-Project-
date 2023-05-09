@@ -3,6 +3,7 @@ const loginForm = document.getElementById('login-form');
 loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    alert("hey hey");
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
@@ -100,17 +101,18 @@ signUpForm.addEventListener('submit', async (event) => {
   }
 });
 
-async function  handleUserPref(ev) {
+async function  handleUserPref(event) {
   
-  let buttonVal=ev.target.value;
+  let buttonVal=event.target.value;
         
-  const response = await fetch('/sign-up', {
+  const response = await fetch('/user-pref', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ accountType: buttonVal})
     });
+    
   let data = await response.json();
  
     if (response.ok) {

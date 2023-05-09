@@ -19,10 +19,29 @@ async function bookNow(checkin,checkout,id,pp) {
                 headers: {
                     'Content-Type': 'application/json'
                   },
-                body: JSON.stringify({totalPrice:pp*nights,property_id:id,checkInDate:checkin,checkOutDate:checkout})
+                body: JSON.stringify({totalPrice: pp*nights, property_id:id, checkInDate:checkin, checkOutDate:checkout})
               }); 
             const result = await response.json();   
             
              window.location.href = result.redirectUrl;
         
+}
+
+function openMap(location, lat, lng) {
+
+  alert('Lets open the map');
+  console.log(location );
+  console.log(lat, lng);
+
+  const map = L.map('map').setView([lat, lng], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+  }).addTo(map);
+  L.marker([lat, lng]).addTo(map)
+    .bindPopup(location)
+    .openPopup();
+
 }

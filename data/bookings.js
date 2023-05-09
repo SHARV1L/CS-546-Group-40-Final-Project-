@@ -24,7 +24,8 @@ const exportedFunctions = {
      property_id:new ObjectId(property_id),
      checkInDate:checkInDate,
      checkOutDate:checkOutDate,
-     totalPrice:totalPrice
+     totalPrice:totalPrice,
+     status:"upcoming"
     };
 
      const bookingCollection=await booking();

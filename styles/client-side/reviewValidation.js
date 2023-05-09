@@ -6,7 +6,7 @@ submitButton.addEventListener('click', (event) => {
 
     const rating = document.getElementById('rating').value;
     const review = document.getElementById('review-text').value;
-    const propertyId = document.getElementById('property-id').value;
+    const propertyId = document.getElementById('property_id').value;
 
     const xhr = new XMLHttpRequest();
 

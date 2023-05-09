@@ -1,3 +1,9 @@
+function openMap(location, lat, lng) {
+
+    console.log(location );
+    console.log(lat, lng);
+}
+
 function initMap() {
     const apiKey = 'API Key'
     const script = document.createElement('script');
@@ -41,3 +47,4 @@ locationForm.addEventListener('submit', async (event) => {
         body: JSON.stringify({ location: location, lat: lat, lng: lng })
   });
 });
+
