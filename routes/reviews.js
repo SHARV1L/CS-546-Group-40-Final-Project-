@@ -5,6 +5,7 @@ const router = Router();
 import {usersData} from '../data/index.js';
 import { reviewsData } from '../data/index.js';
 import validation from '../validation.js';
+import { ObjectId } from 'mongodb';
 //import {exportedFunctions} from '../data/users.js';
 
 router
@@ -22,13 +23,10 @@ router
     let reviewInfo = req.body;
     console.log("Review Info", reviewInfo);
     try {
-      if (!reviewInfo || Object.keys(reviewInfo).length === 0){
-        return res.status(400).json({error: 'Review could not be added'});
-      }
-
+      if (reviewInfo || Object.keys(reviewInfo).length > 0){
       const newReview = await reviewsData.createReview(
-        //req.session.user.id,
-        reviewInfo.userId,
+        req.session.user.id,
+        //reviewInfo.userId,
         reviewInfo.property_id,
         reviewInfo.bookingId,
         reviewInfo.reviewText,
@@ -36,26 +34,47 @@ router
       );
       console.log("New Review Information", newReview);
       res.json(newReview);
-
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({error: 'Therez a server error'});
-    }
+      res.render('/components/thankyou', {title: 'Review Confirmation Page'})
+      }
+      }
+      catch {
+        res.render('./components/error', {title: error})
+      }
   });
 
 router
   .route('/:id')
   .get(async (req, res) => {
     try {
-      req.params.id = validation.checkId(req.params.id, 'ID URL Param');
+      res.render('/components/review', {title: 'Review Section'});
     } catch (e) {
-      return res.status(400).json({error: e});
+      res.render('/components/error', {error: 'This is not how we intended to search'});
     }
     try {
+      //let reviewsData = await review();
       let review = await reviewsData.getReviewById(req.params.id);
       res.json(review);
     } catch (e) {
       res.status(404).json({error: 'Review not found'});
+    }
+  })
+  .post(async (req, res) => {
+    try {
+    // Validate review data
+    const { rating, review } = req.body;
+    if (!rating || !review) {
+      throw new Error('Missing required fields: rating and/or review');
+    }
+
+    // Validate ID params
+    const id = validation.checkId(req.params.id, 'ID URL Param');
+
+    // Add review
+    const newReview = await reviewsData.addReview(id, rating, review);
+
+    res.status(200).render('/components/thankyou', {title: 'review confirmation'});
+    } catch (error) {
+      res.render('components/error', {error: e.message});
     }
   })
   .put(async (req, res) => {
@@ -77,8 +96,8 @@ router
     //   );
     // write validation functions here
     } catch (e) {
-      return res.status(400).json({error: e});
-    }
+    return res.status(400).json({error: e});
+  }
 
     try {
       const updatedReview = await reviewsData.updateReviewPut(

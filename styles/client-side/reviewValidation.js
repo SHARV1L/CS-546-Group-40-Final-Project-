@@ -10,7 +10,7 @@ submitButton.addEventListener('click', (event) => {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open('POST', '/reviews');
+    xhr.open('POST', '/review');
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     const requestbody = JSON.stringify({ rating, review, propertyId });
@@ -18,7 +18,7 @@ submitButton.addEventListener('click', (event) => {
     xhr.onload = () => {
         if(xhr.status === 200) {
             alert('Review Submitted successfully!');
-            window.location.href = '/guest/dashboard';
+            window.location.href = '/review';
         } else {
             const errorMessage = xhr.responseText;
             alert(`Error: ${errorMessage}`);
