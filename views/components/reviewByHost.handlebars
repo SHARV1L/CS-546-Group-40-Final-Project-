@@ -1,4 +1,4 @@
-
+{{!-- 
 <script id="reviews" >
   <div class="reviews">
     <p>Rating: {{rating}}</p>
@@ -28,4 +28,60 @@
 </form>
 </main>
 
-<a href="/guest/dashboard" >Go back to your homepage</a>
+<a href="/guest/dashboard" >Go back to your homepage</a> --}}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Form</title>
+  <script>
+    function validateForm() {
+      const rating = document.getElementById('rating');
+      const review = document.getElementById('review');
+
+      if (rating.value === "") {
+        alert("Please select a rating.");
+        rating.focus();
+        return false;
+      }
+
+      if (review.value.trim() === "") {
+        alert("Please write a review.");
+        review.focus();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h2>Hey, {{{user.firstName}}}, Please review the Guest. Your reviews are precious to us </h2>
+
+    <form id="reviews" method="POST" action="/reviewbyhost" onsubmit="return validateForm()">
+      <label for="rating">Rating:</label>
+      <select id="rating" name="rating" required>
+        <option value="">Select rating</option>
+        <option value="5">5 stars</option>
+        <option value="4">4 stars</option>
+        <option value="3">3 stars</option>
+        <option value="2">2 stars</option>
+        <option value="1">1 star</option>
+      </select>
+
+      <label for="review">Review:</label>
+      <textarea id="review" name="review" required></textarea>
+      <input type="hidden" id="property-id" name="property_id" value="{{property_id}}">
+      <br>
+      <br>
+      <button type="submit" id="submit-review">Submit Review</button>
+    </form>
+  </main>
+
+  <a href="/guest/dashboard">Go back to your homepage</a>
+</body>
+</html>

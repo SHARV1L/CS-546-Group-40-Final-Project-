@@ -68,21 +68,28 @@ router.get('/reviewbyhost', (req, res) => {
 
 router.post('/reviewbyhost', async(req,res)=>{
   const userId = req.session.user.id;
-  const property1 = await propertyData.getPropertyById(userId);
-  console.log(property1);
+  //const property1 = await propertyData.getPropertyById(userId);
+  //console.log(property1);
+  try{
   const review = {
     rating: req.body.rating,
     review: req.body.review,
     userId:userId
   };
 
+if(!review.rating) throw "rating not passed";
+if(!review.review) throw "review not passed";
+
   const reviewByHostCollection=await reviewByHost();
 
   const result = await reviewByHostCollection.insertOne(review);
 
-console.log(`Inserted ${result.insertedCount} review`);
 
 res.redirect('/thankyou');
+  }
+  catch(e){
+    console.log(e);
+  }
 
 
 });
@@ -240,6 +247,8 @@ router.get('/host/viewProperty', async (req, res) => {
 
     const propertyCollection = await property();
     const properties = await propertyCollection.find({ userId: userId }).toArray();
+
+    console.log(properties);
 
     // Render the properties view with the retrieved properties
     res.render('components/viewProperty', { properties });

@@ -1,94 +1,35 @@
 
-<!DOCTYPE html>
-  <html lang="en">
-    <head>
-        <title>Host Login</title>
-        <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
-    </head>
-  <body>
-    <header>
-    <h1>Hello, {{user.firstName}}? We missed you here</h1>
-    </header>
+<header>
+  <h1>Hello, {{user.firstName}}? We missed you here</h1>
+</header>
 
-    <br>
-    <br>
+<br>
+<br>
 
-    <main> 
-      <div class="user-image-container">
-      {{#if user.image}}
-        <img src="{{user.image}}" alt="User image" id="userImage" style="width: 400px;height: 400px;">
-      {{else}}
-        <input type="file" id="imageInput" accept="image/*">
-        <button onclick="uploadImage()">Upload Image</button>
-      {{/if}}
-    </div>
+<main> 
+  <div class="user-image-container">
+  {{#if user.image}}
+    <img src="{{user.image}}" alt="User image" id="userImage" style="width: 400px;height: 400px;">
+  {{else}}
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="uploadImage()">Upload Image</button>
+  {{/if}}
+</div>
 
-    <br>
-    <br>
-      {{!-- <span> <Button id="personal-details"> Personal Details</Button> <Button id="view-property"> View Property </Button> </span> --}}
-      <div class="buttons-container">
-        <button id="personal-details">Personal Details</button>
-        <button id="view-property">View Property</button>
-      </div>
- 
- 
-      <br>
-      <br>
-      <Button id="post-property"> Post Property </Button>
-    </main>
+<br>
+<br>
 
-     <a href="/logout">Logout</a>
-    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
-    
-    <script>
-    async function uploadImage() {
-      const imageInput = document.getElementById('imageInput');
-      if (imageInput.files && imageInput.files[0]) {
-        const imageFile = imageInput.files[0];
-        const base64Image = await convertImageToBase64(imageFile);
+  <div class="buttons-container">
+    <button id="personal-details">Personal Details</button>
+    <button id="view-property">View Property</button>
+  </div>
 
-        // Make an HTTP request to your server to upload the image
-        const response = await fetch('/upload-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ imageData: base64Image }),
-        });
+<br>
+<br>
 
-        // Handle the response from the server
-        if (response.ok) {
-          location.reload(); // Reload the page to show the uploaded image
-        } else {
-          alert('Failed to upload image');
-        }
-      } else {
-        alert('Please select an image');
-      }
-    }
+  <button id="post-property">Post Property</button>
+</main>
 
-    function convertImageToBase64(imageFile) {
-      return new Promise((resolve) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-        };
-        fileReader.readAsDataURL(imageFile);
-      });
-    }
+<a href="/logout">Logout</a>
 
-  const postButton = document.getElementById('post-property');
-  postButton.addEventListener('click', function() {
-    window.location.href = '/host/post_property';
-  });
-    const personalDetailsButton = document.getElementById('personal-details');
-    personalDetailsButton.addEventListener('click', function() {
-    window.location.href = '/host/personaldetails';
-  });
-    const viewPropertyButton = document.getElementById('view-property');
-    viewPropertyButton.addEventListener('click', function() {
-    window.location.href = '/host/view_property';
-  });
-  </script> 
-
-  </body>
+<script src="/styles/client-side/hostHomePage.js"></script>

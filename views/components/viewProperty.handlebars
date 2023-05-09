@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Properties</title>
-  <link rel="stylesheet" href="../../styles/components-styles/viewProperty.css">
-    <script>
-    function bookNow(listingId) {
-      window.location.href = '/reviewbyhost';
-    }
-  </script>
-</head>
-<body>
+<header>
   <h1>Properties</h1>
-  <table>
+</header>
+
+<main>
+  <table id="properties-table">
     <thead>
       <tr>
         <th>Property Name</th>
@@ -41,12 +32,13 @@
           <td>{{this.longitude}}</td>
           <td>{{this.pricePerNight}}</td>
           <td>{{this.availability}}</td>
-          <td>{{this.images}}</td>
           <td><button class="Review-button" onclick="bookNow('{{this.id}}')">Review</button></td>
         </tr>
       {{/each}}
     </tbody>
   </table>
+
   <a href="/logout">Logout</a>
-</body>
-</html>
+</main>
+
+<script src="/styles/client-side/viewProperty.js"></script>

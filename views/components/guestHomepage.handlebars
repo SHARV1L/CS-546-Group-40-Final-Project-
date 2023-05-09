@@ -1,52 +1,41 @@
-<!DOCTYPE html>
-  <html lang="en">
-    <head>
-        <title>Guest Login</title>
-        <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
-    </head>
-  <body>
-    <header>
+<header id="guest-header">
+  
+</header>
+<main id="guest-main">
+  <br>
+  <br>
+  <div class="guest-form-container">
+    <span>
       
-    </header>
-    <br>
-    <br>
-    <div>
-      <span>
-        
-        <form id="uploadForm" action="/guest/upload" method="POST">
-          <label for="image">Choose a file to upload:</label>
-          <input type="file" id="image" name="image">
-          <button type="submit">Upload</button>
-        </form>
-        {{#if profilePicture}}
-          <img src="data:{{user.profilePicture.mimetype}};base64, {{user.profilePictureBase64}}" alt="Profile Picture">
-        {{/if}}
-        {{#if errorMessage}}
-        <p class="error">{{errorMessage}}</p>
-      {{/if}}
-        <h1>{{{title}}}</h1>
-        <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
-      </span>  
-    </div>
-
-    <main> 
-      {{!-- <h3>Hi, {{{user.firstName}}}! how have you been? </h3> --}}
- 
-      <br>
-      <form id="guestHomepage" method="post" action="/guest/dashboard">
-        <div class="buttons-container"> 
-          <Button id="personal-details" type="submit" name="selected_option" value="user_personal"> Personal </Button> 
-          <Button id="bookings" type="submit" name="selected_option" value="bookings"> My Bookings </Button> 
-        </div>
-        <br>
-
-        <Button id="search-property" type="submit" name="selected_option" value="search"> Search Property </Button>
+      <form id="uploadForm" action="/guest/upload" method="POST">
+        <label for="image">Choose a file to upload:</label>
+        <input type="file" id="image" name="image">
+        <button type="submit">Upload</button>
       </form>
-    </main>
-    
-     <a href="/logout">Logout</a>
-    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
-    </main>
-    
-  </body>
-</html>
+      {{#if profilePicture}}
+        <img src="data:{{user.profilePicture.mimetype}};base64, {{user.profilePictureBase64}}" alt="Profile Picture">
+      {{/if}}
+      {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+    {{/if}}
+      <h1>{{{title}}}</h1>
+      <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
+    </span>  
+  </div>
+
+  {{!-- <h3>Hi, {{{user.firstName}}}! how have you been? </h3> --}}
+
+  <br>
+  <form id="guestHomepage" method="post" action="/guest/dashboard">
+    <div class="buttons-container"> 
+      <button id="personal-details" type="submit" name="selected_option" value="user_personal">Personal</button> 
+      <button id="bookings" type="submit" name="selected_option" value="bookings">My Bookings</button> 
+    </div>
+    <br>
+
+    <button id="search-property" type="submit" name="selected_option" value="search">Search Property</button>
+  </form>
+
+  <a href="/logout">Logout</a>
+  {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+</main>
