@@ -23,7 +23,7 @@ async function bookNow(checkin,checkout,id,pp) {
               }); 
             const result = await response.json();   
             
-             window.location.href = result.redirectUrl;
+             window.location.href = `${result.redirectUrl}?bookingId=${result.booking}`;
         
 }
 
