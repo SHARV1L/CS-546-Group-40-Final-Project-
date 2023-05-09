@@ -3,7 +3,7 @@
 
 <head>
   <title>Host Login</title>
-  <link rel="stylesheet" href="/styles/components-styles.css/UserLogin.css">
+  <link rel="stylesheet" href="/styles/components-styles/UserLogin.css">
 </head>
 
 <body>
@@ -18,13 +18,13 @@
     {{!-- <span> <Button id="personal-details"> Personal Details</Button> <Button id="view-property"> View Property
       </Button> </span> --}}
 
-    <form method="post" action="/host/dashboard/upload" enctype="multipart/form-data">
-      <input type="file" accept="image/jpg, image/jpeg, image/png" name="image">
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" accept="image/jpg, image/jpeg, image/png" name="fileInput" id="fileInput">
       <input type="submit">
     </form>
 
     <div class="buttons-container">
-      <button id="personal-details">Personal Details</button>
+      <button id="personal-details">Personal Details</button>&emsp;
       <button id="view-property">View Property</button>
     </div>
     <br>

@@ -129,7 +129,7 @@ router
       res.render('components/afterLogin', { title: 'User Preference Page' })
     } catch (error) {
       res.status(400).json({ error: "Cannot redirect to User-Preference Page" });
-    }
+    } 
   })
   .post(async (req, res) => {
     try {

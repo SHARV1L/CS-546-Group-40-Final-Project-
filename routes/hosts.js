@@ -4,8 +4,9 @@ import { hostsData } from '../data/index.js';
 import validation from '../validation.js';
 import { property } from "../config/mongoCollections.js";
 import { propertyData } from '../data/index.js';
+import userMethods from '../data/users.js';
+import multer from 'multer';
 //import {exportedFunctions} from '../data/users.js';
-import { ImageModel, imageUpload } from '../middleware.js';
 
 router
   .route('/')
@@ -101,28 +102,24 @@ router
   })
   .post(async (req, res) => {
     // Image upload 
-    let imgFile = imageUpload.single("image");
-    console.log(imgFile);
-    imgFile(req, res, (err) => {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        const newImage = new ImageSchema({
-          name: req.body.name,
-          image: {
-            data: req.file.filename,
-            contentType: "image/png"
-          }
-        })
-        newImage
-          .save()
-          .then(() => res.send("Successfully uploaded"))
-          .catch(err => console.log(err));
-      }
-    })
-    res.send("Image uploaded");
-
+    const dataURL = req.body.dataURL;
+    const userId = req.session.user.id;
+    const getUserById = await userMethods.getUserById(userId);
+    const userUpdatedInfo = {
+      firstName: getUserById.firstName,
+      lastName: getUserById.lastName,
+      emailAddress: getUserById.emailAddress,
+      password: getUserById.password,
+      phoneNumber: getUserById.phoneNumber,
+      accountType: getUserById.accountType,
+      profilePicture: Buffer.from(dataURL.split(",")[1], "base64")
+    };
+    const userCollection = await users();
+    const updatedInfo = await userCollection.findOneAndUpdate(
+      { _id: new ObjectId(userId) },
+      { $set: userUpdatedInfo },
+      { returnDocument: 'after' });
+    res.json(updatedInfo.value);
   });
 
 

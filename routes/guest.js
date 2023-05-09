@@ -7,7 +7,6 @@ import { ObjectId } from 'mongodb';
 import multer from 'multer';
 import path from 'path';
 import userMethods from '../data/users.js';
-import { ImageModel, imageUpload } from '../middleware.js';
 import { users } from '../config/mongoCollections.js';
 
 router
@@ -105,21 +104,6 @@ router
     const getUserById = await userMethods.getUserById(userId);
     let userUpdatedInfo;
 
-    imageUpload(req, res, (err) => {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        const newImage = new ImageModel({
-          name: req.body.name,
-          image: {
-            data: req.file.filename,
-            contentType: 'image/jpg'
-          }
-        })
-        newImage.save()
-      }
-    });
   });
 
 router.route('/personal').get(async (req, res) => {

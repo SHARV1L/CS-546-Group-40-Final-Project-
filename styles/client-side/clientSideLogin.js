@@ -137,6 +137,25 @@ if (reviews) {
   });
 }
 
+const fileInput = document.getElementById('fileInput');
+if (fileInput) {
+  fileInput.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    let result;
+    reader.addEventListener("load", () => {
+      result = reader.result;
+    });
+    reader.readAsDataURL(file);
+  });
+  const response = await fetch('/host/dashboard/upload', {
+    method: 'POST',
+    body: JSON.stringify({ result })
+  });
+}
+
 function initMap() {
   var myLatLng = { lat: latitude, lng: longitude };
 

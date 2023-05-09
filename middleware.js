@@ -129,30 +129,4 @@ function isAuthenticated(data) {
     return false;
 }
 
-const ImageSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  image: {
-    data: Buffer,
-    contentType: String
-  }
-});
-
-let ImageModel = mongoose.model('users', ImageSchema);
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    console.log(file);
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-})
-const imageUpload = multer({ storage: storage }).single("profilePicture");
-
 export default mwf;
-export { ImageModel, imageUpload };
