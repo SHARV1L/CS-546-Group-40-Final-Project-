@@ -14,36 +14,39 @@ const storage = multer.diskStorage({
   }
 });
 
+
 let exportedFunctions = {
 
+  
   async createUser (
     firstName,
     lastName,
+    age,
     email,
     password,
     phoneNumber,
-    accountType,
     role,
-    profilePicture,
     ) {
       // needs to be uncommented later ************** /
+    try{
+      firstName = validation.checkString(firstName,'First Name');
+      lastName = validation.checkString(lastName,'Last Name');
+      email = validation.checkValidEmail(email,'Email Address');
+      password = validation.checkValidPassword(password,'Password');
+      phoneNumber = validation.checkValidPhone(phoneNumber,'Phone Number');
+      //accountType = validation.checkString(accountType, "Account Type");
+      console.log(firstName, lastName, age, email);
 
-    // firstName = validation.checkString(firstName,'First Name');
-    // lastName = validation.checkString(lastName,'Last Name');
-    // email = validation.checkValidEmail(email,'Email Address');
-    // password = validation.checkValidPassword(password,'Password');
-    // phoneNumber = validation.checkValidPhone(phoneNumber,'Phone Number');
-    // accountType = (accountType, 'User - Preference');
-    
-    // profilePicture=validation.checkValidProfilePicture(profilePicture,Profile1);
-    // accountType = validation.checkString(accountType, "Account Type");
-    // console.log(firstName);
 
-    if (role.trim() !== 'admin' && role.trim() !== 'user') {
-      throw " Enter a valid user or admin "
-    } 
+      if (role.trim() !== 'admin' && role.trim() !== 'user') {
+        throw " Enter a valid user or admin "
+      } 
 
-    console.log("This is inside createUser data function: ", firstName, lastName, email, password, phoneNumber, accountType, role)   /// printed from here
+      if(age<13){
+        res.json({error: 'Age should be more than 13'});
+      }
+
+      console.log("This is inside createUser data function: ", firstName, lastName, email, password, phoneNumber, accountType, role)   /// printed from here
 
       const userCollection = await users();
   
@@ -63,21 +66,17 @@ let exportedFunctions = {
         email: email.trim(),
         password: hashedPassword,
         phoneNumber: phoneNumber.trim(),
-        //profilePicture:profilePicture,
-        //accountType: accountType.trim(),
         role: role.trim(),
       };
-
-      // Read the profile picture file from disk and store it in the database
-      const fileData = await fs.readFile(profilePicture.path);
-      newUser.profilePicture = fileData;
         
-        //const userCollection = await users();
         const newInsertInformation = await userCollection.insertOne(newUser);
         if(!newInsertInformation.insertedId) throw "Insertion Failed";
         return await this.getUserById(newInsertInformation.insertedId.toString());  
       }
-  },
+    } catch (error) {
+      res.status(400).json({error: 'Cannot add user'});
+  }
+},
     
   async getAllUsers() {
     const userCollection = await users();
@@ -85,7 +84,7 @@ let exportedFunctions = {
     return userList;
   },
     
-  async getUserById (id) {
+  async getUserById(id) {
     id = validation.checkId( id );
     const userCollection = await users();
     const user = await userCollection.findOne({_id : new ObjectId(id)});

@@ -21,6 +21,7 @@ const exportedMethods = {
       throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
     return strVal;
   },
+  
   checkInteger(value) {
     const numberValue = parseFloat(value);
   
@@ -107,11 +108,14 @@ const exportedMethods = {
   
     // Validate email
     checkValidEmail(email) {
+      console.log("email", email);
     if (!email) {
       errors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      console.log("Inside else if");
       errors.email = 'Invalid email format';
     }
+
   },
     // Validate phone number
     checkValidPhone(phoneNumber) {

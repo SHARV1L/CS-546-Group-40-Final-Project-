@@ -101,7 +101,7 @@ signUpForm.addEventListener('submit', async (event) => {
   }
 });
 
-async function  handleUserPref(event) {
+async function handleUserPref(event) {
   
   let buttonVal=event.target.value;
         
