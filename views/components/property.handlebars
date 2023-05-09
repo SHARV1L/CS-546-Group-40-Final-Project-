@@ -22,7 +22,7 @@
           </span>
         </div>
         <button id="book" class="button-primary" onclick="bookNow('{{checkin}}','{{checkout}}','{{propertyDetails._id}}','{{propertyDetails.pricePerNight}}')">Book Now</button>
-        <button onclick="openMap('{{propertyDetails.address}}','40.640402656712552', '-73.88853475272204')">Venue Location</button>
+        <button onclick="openMap('{{propertyDetails.address}}','{{propertyDetails.latitude}}', '{{propertyDetails.longitude}}')">View Location</button>
         <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
         <br>
         <address>

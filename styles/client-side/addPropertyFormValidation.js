@@ -5,8 +5,8 @@ function validateForm(form) {
     const numberOfBathrooms = form.numberOfBathrooms.valueAsNumber;
     const amenities=form.amenities.value.trim();
     const address = form.address.value.trim();
-    const latitude = form.latitude.value.trim();
-    const longitude = form.longitude.value.trim();
+   // const latitude = form.latitude.value.trim();
+   // const longitude = form.longitude.value.trim();
     const pricePerNight = form.pricePerNight.valueAsNumber;
   
     if (!propertyName) {
@@ -38,15 +38,7 @@ function validateForm(form) {
       return false;
     }
   
-    if (!latitude || isNaN(latitude)) {
-      alert('Latitude is required and must be a valid number.');
-      return false;
-    }
-  
-    if (!longitude || isNaN(longitude)) {
-      alert('Longitude is required and must be a valid number.');
-      return false;
-    }
+   
   
     if (isNaN(pricePerNight) || pricePerNight < 0) {
       alert('Price per Night is required and must be greater than or equal to 0.');
