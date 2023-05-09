@@ -22,6 +22,8 @@
       <br>
       <br>
       <Button id="post-property"> Post Property </Button>
+      <br>
+      <Button id="my-bookings"> My Bookings </Button>
 
       <a href="/user-pref" >Change Sign in preference</a>
     </main>
@@ -41,6 +43,10 @@
     const viewPropertyButton = document.getElementById('view-property');
     viewPropertyButton.addEventListener('click', function() {
     window.location.href = '/host/view_property';
+  });
+  const myBookingButton = document.getElementById('my-bookings');
+    myBookingButton.addEventListener('click', function() {
+    window.location.href = '/host/bookings';
   });
   </script> 
 

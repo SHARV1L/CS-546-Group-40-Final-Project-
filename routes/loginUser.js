@@ -64,7 +64,6 @@ router.get('/thankYou', (req, res) => {
 });
 
 
-
 //getting person details 
 router.get('/personaldetails', async (req, res) => {
   try {

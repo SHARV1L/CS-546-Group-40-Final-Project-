@@ -43,6 +43,7 @@ router
       }
   });
 
+  export default router;
 // router
 //   .route('/:id')
 //   .get(async (req, res) => {
@@ -164,4 +165,3 @@ router
 //     }
 //   });
 
-export default router;

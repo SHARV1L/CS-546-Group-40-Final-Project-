@@ -1,6 +1,7 @@
-import { hosts } from "../config/mongoCollections.js";
+import { hosts, booking } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import validation from '../validation.js';
+import propertyData from "./properties.js";
 
 const exportedFunctions = {
 
@@ -118,7 +119,15 @@ const exportedFunctions = {
          }
    
          return await updatedInfo.value;
-    }
+    },
+
+    async getBookingsByHostId(hostId){
+      let propertyList = await propertyData.getPropertyByHostId(hostId);
+      let bookingCollection = await booking();
+      let hostBookings = await bookingCollection.find({property_id:{$in:propertyList.map(x => x._id )}}).toArray();
+      console.log(hostBookings);
+      return hostBookings;
+    },
     
     }
     
