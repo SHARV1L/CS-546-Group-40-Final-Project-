@@ -53,14 +53,11 @@ let exportedFunctions={
             // }
         }
 
-
         const propertyCollection=await property();
         const newInsertInformation=await propertyCollection.insertOne(newProperty);
         if(!newInsertInformation.insertedId) throw "Insert Failed";
         return await this.getPropertyById(newInsertInformation.insertedId.toString());
-
-
-     
+   
     },
     
     async getAllProperty(data){

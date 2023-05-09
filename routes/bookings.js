@@ -72,8 +72,8 @@ router
       let bookingList = await bookingsData.getAllBookings();
       console.log("Booking List", bookingList);
 
-      const bookingId = req.session.booking._id;
-      console.log("Booking ID from session: ", _id);
+      const bookingId = bookingList.id;
+      console.log("Booking ID from session: ", bookingId);
 
       const targetBooking = bookingList.find(booking => booking._id.toString() === bookingId);
 

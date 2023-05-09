@@ -37,9 +37,6 @@ router
     //   userInfo.password=validation.checkValidPassword(userInfo.password,"passwd");
     //   userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
     //   userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
-
-    
-
     // } catch (e) {
     //   return res.status(400).json({error: e});
     // }
