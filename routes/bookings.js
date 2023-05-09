@@ -56,7 +56,7 @@ router
         bookingInfo.totalPrice
       );
 
-      res.json({booking:newBooking, redirectUrl:"/booking/confirmation"});
+      res.json({booking:newBooking._id, redirectUrl:"/booking/confirmation"});
     }
     } catch (e) {
       res.status(500).send("Error creating user");
@@ -69,37 +69,10 @@ router
   .get(async (req, res) => {
     //code here for GET
     try {
-      let bookingList = await bookingsData.getAllBookings();
-      console.log("Booking List", bookingList);
-
-      const bookingId = bookingList.id;
-      console.log("Booking ID from session: ", bookingId);
-
-      const targetBooking = bookingList.find(booking => booking._id.toString() === bookingId);
-
-      if (!targetBooking) {
-        throw new Error('Booking not found');
-      }
-
-      const info = bookingList.find(booking => booking.property_id === targetBooking.property_id);
-
-      let dates = await info.helpers.getDatesInRange(new Date(targetBooking.checkInDate), new Date(targetBooking.checkOutDate));
-      console.log("Dates", dates);
-
-      let price = await info.pricePerNight;
-      console.log("Price of Hotel:", price);
-
-      let fees = price * dates;
-      console.log("Total fees", fees);
-      // const info = await bookingList.findOne({property_id: bookingList.property_id})
-      // console.log("Information", info);
-      // let dates = await info.helpers.getDatesInRange(new Date(data.checkinDate),new Date(data.checkoutDate));
-      // console.log("Dates", dates);
-      // let price = await info.pricePerNight;
-      // console.log("Price of Hotel:", price);
-      // let fees = price * dates; 
-      // console.log("Total fees", fees);
-      res.render('components/confirmation', {title: 'Confirmation'});
+      console.log(req.query.bookingId);
+      let bookingId = req.query.bookingId;
+      let booking = await bookingsData.getBookingById(bookingId);
+      res.render('components/confirmation', {title: 'Confirmation',bookingInfo:booking});
     } catch (error) {
       console.log(error);
       res.status(400).render('components/error', {error: 'error booking the property'});

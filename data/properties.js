@@ -4,12 +4,13 @@ import {ObjectId} from 'mongodb';
 import validation from '../validation.js';
 import userData from "./users.js";
 import helpers from "../helper.js";
+import axios from "axios";
 //import { createUser, getAllUsers, removeUser, updateUserPatch, updateUserPut } from '../data/users.js';
 
 let exportedFunctions={
 
     async createProperty(
-        //userId,
+        
         userId,
         propertyName,
         description,
@@ -17,11 +18,8 @@ let exportedFunctions={
         numberofBathrooms,
         amenities,
         address,
-        latitude,
-        longitude,
-        pricePerNight,
-        availability,
-        review
+        pricePerNight
+        
     ){
         //userId=validation.checkId(userId);
         //const userCollection=await users();
@@ -31,34 +29,62 @@ let exportedFunctions={
         
         propertyName=validation.checkString(propertyName);
         description=validation.checkString(description);
-
+        let latitude='', longitude='';
         //have to write some other validation functions
+        //function to fetch lat long values from address
+        let gApi = "AIzaSyCNCNRdpbvG1ahzBPfxctc3EfTGFzVL5n8";
+        console.log("key",process.env.GOOGLE_API_KEY);
+        let targetUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${gApi}`
+        // request call with parameters
+ let data = await axios(targetUrl).then(async response=>{
+    
+    let geoLocation = response.data;
+    console.log(geoLocation);
+    if(geoLocation?.results?.length>0)     
+       {
+         latitude =geoLocation.results[0].geometry.location.lat;
+         longitude=geoLocation.results[0].geometry.location.lng;
+         let newProperty={
+         userId: new ObjectId(userId),  // commented out here
+         propertyName: propertyName,
+         description: description,
+         numberOfRooms: numberOfRooms,
+         numberofBathrooms: numberofBathrooms,
+         amenities: amenities,
+         address: address,
+         latitude: latitude,
+         longitude: longitude,
+         pricePerNight: pricePerNight,
+         availability:[],
+         reviews:[]
+ 
+         // image: {
+         //   data: fs.readFileSync(image.path),
+         //   contentType: image.mimetype
+         // }
+     }
+ 
+ 
+     const propertyCollection=await property();
+     const newInsertInformation=await propertyCollection.insertOne(newProperty);
+     if(!newInsertInformation.insertedId) throw "Insert Failed";
+     return await this.getPropertyById(newInsertInformation.insertedId.toString());
+      }
+       
+       else {
+         throw "Error Fetching Lat Long Values";
+       }
+    
+   }).catch(err=>{
 
-        let newProperty={
-            userId: userId,  // commented out here
-            propertyName: propertyName,
-            description: description,
-            numberOfRooms: numberOfRooms,
-            numberofBathrooms: numberofBathrooms,
-            amenities: amenities,
-            address: address,
-            latitude: latitude,
-            longitude: longitude,
-            pricePerNight: pricePerNight,
-            availability: availability,
-            review: review
-            // image: {
-            //   data: fs.readFileSync(image.path),
-            //   contentType: image.mimetype
-            // }
-        }
-
-        const propertyCollection=await property();
-        const newInsertInformation=await propertyCollection.insertOne(newProperty);
-        if(!newInsertInformation.insertedId) throw "Insert Failed";
-        return await this.getPropertyById(newInsertInformation.insertedId.toString());
+    return {error:err};
+   })
    
-    },
+   if(data.error){
+     throw data.error;
+   } 
+   else return data;
+},
     
     async getAllProperty(data){
         console.log(data);

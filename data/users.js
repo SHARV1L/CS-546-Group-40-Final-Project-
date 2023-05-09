@@ -105,14 +105,14 @@ let exportedFunctions = {
     },
 
     async updateUserProfilePicture (file, id) {
-      const user = await exportedFunctions.getUserById(id);
-      user.profilePicture = {
+      
+      let profilePicture = {
         filename: file.filename,
         mimetype: file.mimetype,
         size: file.size,
         data: fs.readFileSync(file.path)
       };
-      await updateUserPatch(id, { profilePicture: user.profilePicture });
+      await updateUserPatch(id, { profilePicture: profilePicture });
     },
     
     async updateUserPut (
@@ -156,13 +156,7 @@ let exportedFunctions = {
         const userCollection = await users();
   
         if (userInfo.profilePicture) {
-          const fileData = await fs.readFile(userInfo.profilePicture.path);
-          userInfo.profilePicture = {
-            filename: userInfo.profilePicture.filename,
-            mimetype: userInfo.profilePicture.mimetype,
-            size: userInfo.profilePicture.size,
-            data: fileData,
-          };
+          
           // Remove the uploaded file from the server
           await fs.unlink(userInfo.profilePicture.path);
         }
