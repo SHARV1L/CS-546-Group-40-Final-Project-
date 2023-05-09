@@ -1,9 +1,13 @@
 import {Router} from 'express';
 import { booking } from '../config/mongoCollections.js';
+import { property } from "../config/mongoCollections.js";
+import {ObjectId} from 'mongodb';
 import {usersData} from '../data/index.js';
 import { propertyData } from '../data/index.js';
 import { bookingsData } from '../data/index.js';
 import validation from '../validation.js';
+import helpers from "../helper.js";
+
 //import {exportedFunctions} from '../data/users.js';
 
 const router = Router();
@@ -19,25 +23,6 @@ const router = Router();
 //   }
 // });
 
-// // http://localhost:3000/booking/confirmation
-router.route('/confirmation').get(async (req, res) => {
-  //code here for GET
-  try {
-    res.render('components/confirmation', {title: 'Confirmation'});
-  } catch (error) {
-    res.status(400).json({error: e});
-  }
-});
-
-// // http://localhost:3000/booking/booking-failed
-router.route('/bookingFailed').get(async (req, res) => {
-  //code here for GET
-  try {
-    res.render('components/error', {title: 'Error Booking'});
-  } catch (error) {
-    res.status(400).json({error: e});
-  }
-});
 
 //////////////// added from here 
 router
@@ -71,10 +56,38 @@ router
         bookingInfo.totalPrice
       );
 
-      res.json({booking:newBooking,redirectUrl:"/booking/confirmation"});
+      res.json({booking:newBooking._id, redirectUrl:"/booking/confirmation"});
     }
     } catch (e) {
       res.status(500).send("Error creating user");
+    }
+  });
+
+  // http://localhost:3000/booking/confirmation
+  router
+  .route('/confirmation')
+  .get(async (req, res) => {
+    //code here for GET
+    try {
+      console.log(req.query.bookingId);
+      let bookingId = req.query.bookingId;
+      let booking = await bookingsData.getBookingById(bookingId);
+      res.render('components/confirmation', {title: 'Confirmation', bookingInfo:booking});
+    } catch (error) {
+      console.log(error);
+      res.status(400).render('components/error', {error: 'error booking the property'});
+    }
+  });
+
+  // // http://localhost:3000/booking/booking-failed
+  router
+  .route('/bookingFailed')
+  .get(async (req, res) => {
+    //code here for GET
+    try {
+      res.render('components/error', {title: 'Error Booking'});
+    } catch (error) {
+      res.status(400).json({error: 'Booking Fail Page'});
     }
   });
 

@@ -17,9 +17,9 @@ const exportedFunctions = {
      let newReview={
         userId: userId,
         property_id: property_id,
+        bookingId: bookingId, 
         reviewText: reviewText,
         ratings: ratings,
-        bookingId: bookingId 
       };
      
       const reviewCollection=await reviews();

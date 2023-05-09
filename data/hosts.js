@@ -14,7 +14,7 @@ const exportedFunctions = {
         phoneNumber,
         accountType
     ){
-        firstName=validation.checkString(firstName,'First Name');
+     firstName=validation.checkString(firstName,'First Name');
      lastName=validation.checkString(lastName,'Last Name');
      email=validation.checkValidEmail(email,'Email Name');
      password=validation.checkValidPassword(password,'password1');

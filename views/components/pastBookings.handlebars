@@ -1,10 +1,21 @@
+<head>
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="/styles/components-styles/bookingPage.css">
+  </head>
+
 {{{title}}}
-{{#each bookings}}
-<div>
-<tr>
-          <td>Total Price: {{this.totalPrice}}</td>
-          <td>CheckIn: {{this.checkInDate}}</td>
-          <td>CheckOut: {{this.checkOutDate}}</td>
-          <td>Property: {{this.property_id}}</td>
-        </tr></div>
-{{/each}}
+  {{#each bookings}}
+    <div>
+      <tr>
+        <li>
+          <span>
+            <td>Total Price: {{this.totalPrice}}</td>
+            <td>CheckIn: {{this.checkInDate}}</td>
+            <td>CheckOut: {{this.checkOutDate}}</td>
+            <td>Property: {{this.property_id}}</td>
+            <td><a href="/review?bookingId={{this._id}}">Leave a Review</a></td>
+           </span>
+        </li>
+      </tr>
+    </div>
+  {{/each}}

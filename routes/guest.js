@@ -4,7 +4,32 @@ import {usersData} from '../data/index.js';
 import validation from '../validation.js';
 import { ObjectId } from 'mongodb';
 import bookingData from '../data/bookings.js';
-//import {exportedFunctions} from '../data/users.js';
+import multer from 'multer';
+import fs from 'fs/promises';
+import path from 'path';
+import multiparty from 'multiparty';
+
+// Create a storage engine
+const storage = (userId) => {
+  const userFolder = `uploads/${userId}`;
+  // create the user folder if it doesn't exist
+  fs.mkdir(userFolder, { recursive: true }).catch((error) => {
+    console.log(error);
+  });
+
+  const writeStream = fs.createWriteStream((file) => {
+    return `${userFolder}/${file.originalFilename}`;
+  });
+
+  const partHandler = (chunk) => {
+    writeStream.write(chunk);
+  };
+
+  return { writeStream, partHandler };
+};
+
+// Initialize multer upload object with the storage engine
+const upload = multer();
 
 router
   .route('/')
@@ -63,6 +88,8 @@ router
   .get(async (req,res) => {
     try {
     // const userCollection = await guest();
+    const user = req.session.user;
+    const profilePictureBase64 = user.profilePicture ? user.profilePicture.toString('base64') : null;
     console.log("in guest dash");
     res.render('components/guestHomepage',{title: 'Guest Dashboard Page',user: req.session.user});
     } catch(error) {
@@ -72,6 +99,7 @@ router
   .post(async(req,res)=>{
     try{
       let {selected_option}=req.body;
+
        if(selected_option=="user_personal"){
          res.redirect('/guest/personal');
        }
@@ -86,26 +114,136 @@ router
       }
     }
     catch(error){
+      console.log(error);
       res.status(400).json({error: 'could not find the user, try again'})
     }
   })
 
-  router.route('/personal').get(async(req,res)=>{
+
+
+router.route('/upload').post( upload.single('image'),async (req, res) => {
+    try {
+      console.log('upload:', req.body);
+
+      // const image = fs.readFileSync(req.body.path);
+      // const base64Image = Buffer.from(image).toString('base64');
+      // const imageData = new Image({
+      //   name: req.file.originalname,
+      //   data: base64Image
+      // });
+
+      const base64Image = req.body.base64Image;
+      const originalName = req.body.originalName;
+
+      const imageData = new Image({
+      name: originalName,
+      data: base64Image
+    });
+      console.log("Image Data:", imageData);
+
+      const user = await usersData();
+      //const savedImage = await imageData.save();
+      const newData = await usersData.updateUserPatch(req.session.user.id, imageData)
+      res.status(200).json({message: 'Image uploaded successfully!', imageData: imageData});
+
+      // const files = req.files;
+      // if (files) {
+      //   const userId = req.session.user.id;
+      //           const user  = await usersData.updateUserProfilePicture();
+
+      //   const { writeStream, partHandler } = storage(user._id);
+      //   for (const file of files) {
+      //     if (
+      //       file.mimetype === 'image/jpeg' ||
+      //       file.mimetype === 'image/jpg'  ||
+      //       file.mimetype === 'image/png' ||
+      //       file.mimetype === 'image/gif'
+      //     ) {
+      //       const { filename, size } = file;
+      //       const readStream = fs.createReadStream(file.path);
+      //       readStream.pipe(partHandler(filename, size));
+      //     } else {
+      //       await fs.unlink(file.path);
+      //     }
+      //   }
+
+      //   const profilePicture = {
+      //     filename: files.filename,
+      //     mimetype: files.mimetype,
+      //     size: files.size,
+      //   };
+
+      //   await usersData.updateUserPatch(userId, { profilePicture });
+
+      //   // Update the user object in the session
+      //   req.session.user.profilePicture = profilePicture;
+
+      //   // Remove the uploaded files from the server
+      //   for (const file of files) {
+      //     await fs.unlink(file.path);
+      //   }
+      // }
+    }
+      catch(error){
+console.log(error);
+res.render('components/error', {error: 'Could not upload the image'})
+      }});
+
+  
+router
+  .route('/personal')
+  .get(async(req,res)=>{
     res.render('components/personal-details',{title:'Personal Details',user:req.session.user});
-  }).post(async(req,res)=>{
+  })
+  .post(async(req,res)=>{
     console.log("req.body:",req.body);
     //define logic to update the user details
   });
 
-  router.route('/bookings').get(async(req,res)=>{
+  router
+  .route('/bookings')
+  .get(async(req,res)=>{
     //fetch data from db for list of past bookings for current user
     let bookings = await bookingData.getBookingsByUserId(req.session.user.id);
     console.log(bookings);
-    res.render('components/pastBookings',{title:'Guest Bookings',user:req.session.user,bookings:bookings});
-  }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
+    res.render('components/pastBookings', {title:'Guest Bookings', user: req.session.user,bookings:bookings});
+  }).
+  post(async(req,res)=>{
+    console.log("req.body:", req.body);
     //define logic to update the user details
   });
+
+
+  // // Render the upload form
+  // router
+  // .get('/upload', (req, res) => {
+  //   res.render('upload', { title: 'Upload Image' });
+  // })
+  // // Handle file upload
+  // .post('/upload', upload.single('image'), async (req, res) => {
+  //   try {
+  //     const file = req.file; // retrieve the uploaded file information
+  //     const userId = req.session.user._id; // retrieve the user ID from the session
+  //     const userObj = await user.getUserById(userId); // retrieve the user document from the database
+  
+  //     // Add the file information to the user document
+  //     userObj.profilePicture = {
+  //       filename: file.filename,
+  //       mimetype: file.mimetype,
+  //       size: file.size,
+  //       data: await fs.readFile(file.path)
+  //   };
+  //   await user.updateUserPatch(userId, { profilePicture: userObj.profilePicture }); // save the updated user document to the database
+
+  //   // remove the uploaded file from the server
+  //   await fs.unlink(file.path);
+    
+  //   res.redirect('/guest/dashboard');
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(500).json({ error: 'Error uploading file' });
+  // }
+//});
   
   
 
