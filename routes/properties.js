@@ -36,7 +36,6 @@ router
         propertyInfo.amenities,
         propertyInfo.address,
         propertyInfo.pricePerNight
-        
       );
       res.json(newProperty);
     } catch (e) {

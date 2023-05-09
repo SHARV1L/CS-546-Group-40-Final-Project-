@@ -45,18 +45,18 @@ let exportedFunctions={
          latitude =geoLocation.results[0].geometry.location.lat;
          longitude=geoLocation.results[0].geometry.location.lng;
          let newProperty={
-         userId: new ObjectId(userId),  // commented out here
-         propertyName: propertyName,
-         description: description,
-         numberOfRooms: numberOfRooms,
-         numberofBathrooms: numberofBathrooms,
-         amenities: amenities,
-         address: address,
-         latitude: latitude,
-         longitude: longitude,
-         pricePerNight: pricePerNight,
-         availability:[],
-         reviews:[]
+          userId: new ObjectId(userId),  // commented out here
+          propertyName: propertyName,
+          description: description,
+          numberOfRooms: numberOfRooms,
+          numberofBathrooms: numberofBathrooms,
+          amenities: amenities,
+          address: address,
+          latitude: latitude,
+          longitude: longitude,
+          pricePerNight: pricePerNight,
+          availability:[],
+          reviews:[]
  
          // image: {
          //   data: fs.readFileSync(image.path),
@@ -201,6 +201,18 @@ let exportedFunctions={
          console.log(updatedInfo);
    
          return await updatedInfo.value;
+       },
+
+       async getPropertyByHostId(id){
+        try{
+           var propertyCollection = await property();
+           const propertyList=await propertyCollection.find({userId:new ObjectId(id)}).toArray();
+           if(!propertyList) throw "Property Not Found error";
+           return propertyList;
+         }
+         catch(e){
+           console.log(e);
+         }
        }
     }
     

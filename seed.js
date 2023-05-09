@@ -57,7 +57,8 @@ const seedProperties =[
     availability:[],
     images:"https://a0.muscache.com/pictures/30b294c9-0b0c-440f-b621-c52f772a264a.jpg",
     reviews:[{rating:4, feedback:"Good Property", guestId:new ObjectId('64556acf6d9a87cb3f50af67')}]
-  }
+  },
+  
 ]
 
 const seedDB = async() => {
