@@ -3,6 +3,7 @@ const router = Router();
 import {usersData} from '../data/index.js';
 import validation from '../validation.js';
 import { ObjectId } from 'mongodb';
+import bookingData from '../data/bookings.js';
 //import {exportedFunctions} from '../data/users.js';
 
 router
@@ -74,14 +75,11 @@ router
        if(selected_option=="user_personal"){
          res.redirect('/guest/personal');
        }
-       else if(selected_option=="past_bookings")
+       else if(selected_option=="bookings")
        {
-        res.redirect('/guest/past_bookings');
+        res.redirect('/guest/bookings');
        }
-      else if(selected_option=="upcoming_bookings")
-      {
-        res.redirect('/guest/upcoming_bookings');
-      }
+      
       else if(selected_option=="search")
       {
         res.redirect('/search');
@@ -99,21 +97,17 @@ router
     //define logic to update the user details
   });
 
-  router.route('/past_bookings').get(async(req,res)=>{
+  router.route('/bookings').get(async(req,res)=>{
     //fetch data from db for list of past bookings for current user
-    res.render('components/pastBookings',{title:'Past Bookings',user:req.session.user,bookings:[]});
+    let bookings = await bookingData.getBookingsByUserId(req.session.user.id);
+    console.log(bookings);
+    res.render('components/pastBookings',{title:'Guest Bookings',user:req.session.user,bookings:bookings});
   }).post(async(req,res)=>{
     console.log("req.body:",req.body);
     //define logic to update the user details
   });
   
-  router.route('/upcoming_bookings').get(async(req,res)=>{
-    //fetch data from db for list of past bookings for current user
-    res.render('components/upcomingBookings',{title:'Upcoming Bookings',user:req.session.user,bookings:[]});
-  }).post(async(req,res)=>{
-    console.log("req.body:",req.body);
-    //define logic to update the user details
-  });
+  
 
   
 

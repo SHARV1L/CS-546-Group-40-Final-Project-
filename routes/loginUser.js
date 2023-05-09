@@ -328,10 +328,11 @@ export default router;
 // -10 if we are able to make same account with username and email address
 // sign in as case sesnitive
 // -2 to -10 for bug and usability issues
-// -10 for not using seed task
-// -5 for not having suffieceint test data
-// +5 to +15(max) for every extra feature added
-// +15 TA has a complexity bonus
-// potential to get 130 pts in total
-// last semester average for code was 66
+// -10 for not using seed task.
+// -5 for not having suffieceint test data.
+// +5 to +15(max) for every extra feature added.
+// +15 TA has a complexity bonus.
+// potential to get 130 pts in total.
+// last semester average for code was 66.
 // one user can review only once for a particular property.
+// if age < 13 user cannot signup or login.

@@ -1,1 +1,10 @@
 {{{title}}}
+{{#each bookings}}
+<div>
+<tr>
+          <td>Total Price: {{this.totalPrice}}</td>
+          <td>CheckIn: {{this.checkInDate}}</td>
+          <td>CheckOut: {{this.checkOutDate}}</td>
+          <td>Property: {{this.property_id}}</td>
+        </tr></div>
+{{/each}}

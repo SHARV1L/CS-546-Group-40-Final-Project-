@@ -11,52 +11,35 @@ router
   .route('/')
   .get(async (req, res) => {
     try {
-      let reviewList = await reviewsData.getAllReviews();
-      res.json(reviewList);
+      // let reviewList = await reviewsData.getAllReviews();
+      // res.json(reviewList);
+      res.render('components/review', {title: 'Property Review'})
     } catch (e) {
       res.sendStatus(500);
     }
   })
   .post(async (req, res) => {
     let reviewInfo = req.body;
-    if (!reviewInfo || Object.keys(reviewInfo).length === 0) {
-      return res
-        .status(400)
-        .json({error: 'There are no fields in the request body'});
-    }
+    console.log("Review Info", reviewInfo);
+    try {
+      if (!reviewInfo || Object.keys(reviewInfo).length === 0){
+        return res.status(400).json({error: 'Review could not be added'});
+      }
 
-    // try {
-    //   userInfo.firstName = validation.checkString(
-    //     userInfo.firstName,
-    //     'First Name'
-    //   );
-    //   userInfo.lastName = validation.checkString(
-    //     userInfo.lastName,
-    //     'Last Name'
-    //   );
-    //   userInfo.email=validation.checkValidEmail(userInfo.email,"email");
-    //   userInfo.password=validation.checkValidPassword(userInfo.password,"passwd");
-    //   userInfo.phoneNumber=validation.checkValidPhone(userInfo.phoneNumber,"phone");
-    //   userInfo.accountType=validation.checkString(userInfo.accountType,"accountType");
-
-    // } catch (e) {
-    //   return res.status(400).json({error: e});
-    // }
-
-    //write validation functions here
-
-    try { 
       const newReview = await reviewsData.createReview(
+        //req.session.user.id,
         reviewInfo.userId,
-        //property_id,
-        //host_id,
+        reviewInfo.property_id,
+        reviewInfo.bookingId,
         reviewInfo.reviewText,
         reviewInfo.ratings,
       );
+      console.log("New Review Information", newReview);
       res.json(newReview);
-    } catch (e) {
-      res.status(500).send("Error creating user");
 
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({error: 'Therez a server error'});
     }
   });
 

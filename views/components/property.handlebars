@@ -3,29 +3,34 @@
   <head>
     <title>Property Details</title>
     <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   </head>
   <body>
-      <script>
-        
-      src="../styles/client-side/propertyClientSide.js"
-
-      function openMap(){
-        //pass lat long values to gmap for the selected property
-        alert('open map!');
-      }
-        
-      </script>
+      <script src="/styles/client-side/propertyClientSide.js"></script>
     <header>
       <h1>Property Details</h1>
     </header>
     <main>
       <div class="venue-details">
-        <h2>{{checkin}}{{checkout}}</h2>
+        
         <h2>{{propertyDetails.propertyName}}</h2>
+<<<<<<< HEAD
         <img alt={{propertyDetails.propertyName}} src="{{propertyDetails.images}}" style="width: 400px;height: 400px;">
         <button id="book" class="button-primary" onclick="bookNow()">Book Now</button>
         <button onclick="openMap()">Venue Location</button>
+=======
+        
+          <span style = "display: flex;">
+            <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px; margin-right: 100px">  
+            <div id="map" style="height: 400px; width: 400px"></div>
+          </span>
+        </div>
+        <button id="book" class="button-primary" onclick="bookNow('{{checkin}}','{{checkout}}','{{propertyDetails._id}}','{{propertyDetails.pricePerNight}}')">Book Now</button>
+        <button onclick="openMap('{{propertyDetails.address}}','40.640402656712552', '-73.88853475272204')">Venue Location</button>
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
         <a href={{propertyDetails.listing_url}} target="_blank">Venue Information</a>
+        <br>
         <address>
           Address:<br>
           {{propertyDetails.address}}<br>

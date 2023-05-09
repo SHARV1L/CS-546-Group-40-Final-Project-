@@ -4,21 +4,27 @@ import { ObjectId } from 'mongodb';
 import { closeConnection } from './config/mongoConnection.js';
 
 const seedBookings =[
-    {userId:new ObjectId("644e976a0a60e9505cddcf00"),
+    {
+      userId:new ObjectId("644e976a0a60e9505cddcf00"),
      property_id:new ObjectId("6454b270f1baf13e668068ae"),
      checkInDate:new Date(),
      checkOutDate:new Date(),
-     totalPrice:600},
-     {userId:new ObjectId("644e976a0a60e9505cddcf00"),
+     totalPrice:600
+    },
+     {
+     userId:new ObjectId("644e976a0a60e9505cddcf00"),
      property_id:new ObjectId("6454b270f1baf13e668068ae"),
      checkInDate:new Date("10/12/2023"),
      checkOutDate:new Date("12/12/2023"),
-     totalPrice:700},
-     {userId:new ObjectId("644e976a0a60e9505cddcf00"),
+     totalPrice:700
+    },
+     {
+     userId:new ObjectId("644e976a0a60e9505cddcf00"),
      property_id:new ObjectId("6454b270f1baf13e668068ae"),
      checkInDate:new Date("4/6/2023"),
      checkOutDate:new Date("7/6/2023"),
-     totalPrice:500},
+     totalPrice:500
+    },
 ]
 
 const seedProperties =[
@@ -54,7 +60,7 @@ const seedProperties =[
   }
 ]
 
-const seedDB=async()=>{
+const seedDB = async() => {
    let bookingCollection = await booking();
    let propertyCollection = await property();
    await bookingCollection.deleteMany({});

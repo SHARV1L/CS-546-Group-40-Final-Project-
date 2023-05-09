@@ -15,6 +15,7 @@ router.route('/').get(async (req, res) => {
 // http://localhost:3000/search/list
 router.route('/list').post(async (req, res) => {
     try {
+      console.log("req.body",req.body);
       let propertyList   = await propertyMethods.getAllProperty(req.body);
             
       //write code to fetch available properties and pass them as venues
@@ -28,6 +29,7 @@ router.route('/list').post(async (req, res) => {
 // http://localhost:3000/search/property_search_by_id
 router.route('/:listingId').get(async (req, res) => {
   try {
+<<<<<<< HEAD
     console.log(req.params);
     let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
     // propertyDetails.images = `data:image/jpeg;base64,${propertyDetails.images}`;
@@ -37,6 +39,11 @@ router.route('/:listingId').get(async (req, res) => {
     // }
     console.log(propertyDetails);
     res.render('components/property', {title: 'Your property', propertyDetails:propertyDetails})
+=======
+    
+    let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
+    res.render('components/property', {title: 'Your property', propertyDetails:propertyDetails,checkin:req.query.checkin,checkout:req.query.checkout});
+>>>>>>> 130379c146789d1c4ad21b6a6257d5ca56207973
     //res.render('components/property', {title: 'Your property',venueData:{id:"12345",name:"Test Prop",listing_url:"xyz",picture_url:"",address:"Test Address",city:"Amroha",state:"UP",amenities:"Locks on Bedroon, TV , bathTub , AC , Wifi",roomType:"private"}})
   } catch (error) {
     res.status(400).json({error: e});

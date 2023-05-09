@@ -3,11 +3,17 @@ const loginForm = document.getElementById('login-form');
 loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    alert("hey hey");
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     console.log(email, "is the email entered");
 
+    try {
+      
+    } catch (error) {
+      
+    }
     const response = await fetch('/login', {
         method: 'POST',
         body: JSON.stringify({username: email, password: password})
@@ -30,13 +36,51 @@ signUpForm.addEventListener('submit', async (event) => {
   const lastName = document.getElementById('lastName').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
+  const age = document.getElementById('age').value;
   const phoneNumber = document.getElementById('phoneNumber').value;
   const accountType = document.getElementById('accountType').value;
   const role = document.getElementById('role').value;
 
-  if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType || !role) {
-    throw 'Please fill in all required fields';
+  if (!firstName || !lastName || !email || !password || !phoneNumber || !accountType || !role, !age) {
+    throw 'Enter all the details';
   }
+
+  if (firstName.length < 2) {
+    errors.push('First name must be at least 2 characters long.');
+  }
+
+  if (lastName.length < 2) {
+    errors.push('Last name must be at least 2 characters long.');
+  }
+
+  if (!email.includes('@')) {
+    errors.push('Email must contain an "@" symbol.');
+  } 
+
+  // Check email format
+  const emailRegex = /^\S+@\S+\.\S+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address.');
+    return false;
+  }
+
+  if(age < 13)
+    alert('You cannot be under 13 to register');
+
+  // Check password strength
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    alert('Please enter a password with at least 8 characters, including at least one letter and one number.');
+    return false;
+  }
+
+  // Check phone number format
+  const phoneRegex = /^\d{10}$/;
+  if (!phoneRegex.test(phoneNumber)) {
+    alert('Please enter a valid 10-digit phone number.');
+    return false;
+  }
+
   // Send the sign up request to the server
   const response = await fetch('/sign-up', { 
     method: 'POST',
@@ -48,16 +92,18 @@ signUpForm.addEventListener('submit', async (event) => {
 
   if (response.ok) {
     // Successful sign up, redirect to the login page
+    window.location.href=data.redirectUrl;
     window.location.href = '/login';
+   
   } else {
     // Sign up failed, display the error message
     alert(response.message);
   }
 });
 
-async function  handleUserPref(ev) {
+async function  handleUserPref(event) {
   
-  let buttonVal=ev.target.value;
+  let buttonVal=event.target.value;
         
   const response = await fetch('/user-pref', {
       method: 'POST',
@@ -66,6 +112,7 @@ async function  handleUserPref(ev) {
       },
       body: JSON.stringify({ accountType: buttonVal})
     });
+    
   let data = await response.json();
  
     if (response.ok) {
