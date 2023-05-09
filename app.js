@@ -49,7 +49,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowerMethods);
 
-app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs.engine('handlebars', exphbs ));
 //app.engine('handlebars', exphbs);
 app.set('view engine', 'handlebars');
 

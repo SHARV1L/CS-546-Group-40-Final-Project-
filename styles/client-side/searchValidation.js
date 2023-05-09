@@ -24,6 +24,7 @@ function validateSearchForm(form) {
       alert('Amenities are required.');
       return false;
     }
+    
   
     return true;
   }

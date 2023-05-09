@@ -24,7 +24,8 @@ const exportedFunctions = {
      property_id:new ObjectId(property_id),
      checkInDate:checkInDate,
      checkOutDate:checkOutDate,
-     totalPrice:totalPrice
+     totalPrice:totalPrice,
+     status:"upcoming"
     };
 
      const bookingCollection=await booking();
@@ -52,7 +53,11 @@ async getAllBookings(){
     const bookingList=await bookingCollection.find({}).toArray();
     return bookingList;
 },
-
+async getBookingsByUserId(id){
+  const bookingCollection=await booking();
+  const bookingList=await bookingCollection.find({userId: new ObjectId(id)}).toArray();
+  return bookingList;
+},
 async getBookingById(id){
     id=validation.checkId(id);
     //console.log(id);
