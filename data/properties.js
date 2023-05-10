@@ -5,7 +5,7 @@ import validation from '../validation.js';
 import userData from "./users.js";
 import helpers from "../helper.js";
 import axios from "axios";
-//import { createUser, getAllUsers, removeUser, updateUserPatch, updateUserPut } from '../data/users.js';
+import reviewsData from "./reviews.js";
 
 let exportedFunctions={
 
@@ -19,7 +19,6 @@ let exportedFunctions={
         amenities,
         address,
         pricePerNight
-        
     ){
         //userId=validation.checkId(userId);
         //const userCollection=await users();
@@ -86,46 +85,44 @@ let exportedFunctions={
    else return data;
 },
     
-    async getAllProperty(data){
-        console.log(data);
-        const propertyCollection=await property();
-        let searchQuery=[];
-        if(data.location!==''){
-          searchQuery.push({address: `/.*${data.location}.*/i`});
-        }
-        if(data.price!==''){
-          searchQuery.push({pricePerNight:Number(data.price)});
-        }
-        if(data.checkinDate!==''&&data.checkoutDate!==''){
-          console.log('check')
-          let dates = await helpers.getDatesInRange(new Date(data.checkinDate),new Date(data.checkoutDate));
-          console.log("$:",dates);
-          searchQuery.push({availability:{$nin:dates}});
-        }
-        console.log(searchQuery);
-        const propertyList=await propertyCollection.find({$or:searchQuery},{_id:1,name:1}).limit(20).toArray();
-        console.log(propertyList.length);
-        return propertyList;
-    },
-    
-    async getPropertyById(id){
-        //id=validation.checkId(id);
-        //console.log(id,"teststeststestst", property);
-        try{
-        var propertyCollection = await property();
-
-        //console.log("teststeststestst")
+async getAllProperty(data){
        
-        const propertyOne=await propertyCollection.findOne({_id:new ObjectId(id)});
-        
-        //console.log(propertyOne);
-        if(!propertyOne) throw "User Not Found error";
-        return propertyOne;
-      }
-      catch(e){
-        console.log(e);
-      }
-    },
+  const propertyCollection=await property();
+  
+  let dates =[];
+  let amenities=[];
+  if(data.checkinDate!==''&&data.checkoutDate!==''){
+    dates = await helpers.getDatesInRange(new Date(data.checkinDate),new Date(data.checkoutDate));
+   }
+  if(data.amenities){
+  amenities  = data.amenities.split(',');
+   }
+  let expression = `.${data.location}.`;
+  let re = new RegExp(expression, 'gi');
+  console.log(re);
+  const propertyList = await propertyCollection.aggregate([{$match:{$and:[{"address":re},{"availability":{$nin:dates}},{"pricePerNight":{$lte:Number(data.price)}},{"amenities":{$in:amenities}}]}},{ $sort : { "pricePerNight" : -1 } },{$limit:20}]).toArray();
+  console.log("prop", propertyList);
+  return propertyList;
+},
+    
+async getPropertyById(id){
+    //id=validation.checkId(id);
+    //console.log(id,"teststeststestst", property);
+  try{
+    var propertyCollection = await property();
+    const propertyOne=await propertyCollection.findOne({_id:new ObjectId(id)});
+    let reviewList  = await reviewsData.getPropertyReviews(id);
+    
+    if(!propertyOne) throw "User Not Found error";
+    let obj = propertyOne;
+    obj.reviews = reviewList;
+    console.log(obj);
+    return obj;
+  }
+  catch(e){
+    console.log(e);
+  }
+},
     
     async removePropertyById(id){
         id=validation.checkId(id);

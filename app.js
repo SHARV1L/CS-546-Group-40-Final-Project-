@@ -64,6 +64,7 @@ app.use('/guest',mwf.checkProtectedRoute);
 app.use('/host',mwf.checkProtectedRoute);
 app.use('/search',mwf.checkProtectedRoute);
 app.use('/payment',mwf.checkProtectedRoute);
+app.use('/review', mwf.checkProtectedRoute);
 configRoutes(app);
 
 app.listen(3000, () => {

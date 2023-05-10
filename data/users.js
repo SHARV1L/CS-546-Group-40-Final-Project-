@@ -2,22 +2,9 @@ import { users } from "../config/mongoCollections.js";
 import { ObjectId } from 'mongodb';
 import validation from '../validation.js';
 import bcrypt from '../bcrypt.js';
-import multer from 'multer';
-import fs from 'fs/promises';
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'data/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
-
 
 let exportedFunctions = {
 
-  
   async createUser (
     firstName,
     lastName,
@@ -27,38 +14,41 @@ let exportedFunctions = {
     phoneNumber,
     role,
     ) {
-      // needs to be uncommented later ************** /
-    try{
       firstName = validation.checkString(firstName,'First Name');
       lastName = validation.checkString(lastName,'Last Name');
-      email = validation.checkValidEmail(email,'Email Address');
-      password = validation.checkValidPassword(password,'Password');
-      phoneNumber = validation.checkValidPhone(phoneNumber,'Phone Number');
+      //email = validation.checkValidEmail(email,'Email Address');
+      // password = validation.checkValidPassword(password,'Password');
+      // phoneNumber = validation.checkValidPhone(phoneNumber,'Phone Number');
       //accountType = validation.checkString(accountType, "Account Type");
-      console.log(firstName, lastName, age, email);
-
+      console.log(firstName, lastName, age, email, phoneNumber, password, role);
 
       if (role.trim() !== 'admin' && role.trim() !== 'user') {
-        throw " Enter a valid user or admin "
+        console.log("role", role);
+        throw "Enter a valid user or admin "
       } 
 
-      if(age<13){
+      console.log("This is inside createUser data function: ", firstName, lastName, age, email, password, phoneNumber, role)   /// printed from here
+
+      if(age < 13){
         res.json({error: 'Age should be more than 13'});
       }
 
-      console.log("This is inside createUser data function: ", firstName, lastName, email, password, phoneNumber, accountType, role)   /// printed from here
-
       const userCollection = await users();
-  
-      
       const existingUser = await userCollection.findOne({email: email.trim()});
-   
-      if (existingUser) {
-        throw 'User already exists';
+      const existing = await userCollection.findOne({phoneNumber: phoneNumber.trim()})
+
+      if (existingUser ) {
+        conmsole.log("EX US",existingUser);
+        throw 'Email already exists';
       }
-      else {
-        // Hash the password before storing it in the database
-        const hashedPassword = await bcrypt.encryption(password);
+      else if(existing){
+        conmsole.log("ES", existing);
+        throw 'Phone Number already registered';
+      }
+      else 
+      {
+      // Hash the password before storing it in the database
+      const hashedPassword = await bcrypt.encryption(password);
   
       let newUser = {
         firstName: firstName.trim(),
@@ -73,9 +63,6 @@ let exportedFunctions = {
         if(!newInsertInformation.insertedId) throw "Insertion Failed";
         return await this.getUserById(newInsertInformation.insertedId.toString());  
       }
-    } catch (error) {
-      res.status(400).json({error: 'Cannot add user'});
-  }
 },
     
   async getAllUsers() {

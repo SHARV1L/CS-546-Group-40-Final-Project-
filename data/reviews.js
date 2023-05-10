@@ -15,9 +15,9 @@ const exportedFunctions = {
      //validations here
 
      let newReview={
-        userId: userId,
-        property_id: property_id,
-        bookingId: bookingId, 
+        userId: new ObjectId(userId),
+        property_id: new ObjectId(property_id),
+        bookingId: new ObjectId(bookingId), 
         reviewText: reviewText,
         ratings: ratings,
       };
@@ -28,11 +28,11 @@ const exportedFunctions = {
       return await this.getReviewById(newInsertInformation.insertedId.toString());
     },
     
-    async getAllReviews(){
-        const reviewCollection=await reviews();
-        const reviewList=await reviewCollection.find({}).toArray();
-        return reviewList;
-    },
+    async getPropertyReviews(prop_id){
+      const reviewCollection=await reviews();
+      const reviewList=await reviewCollection.find({property_id:new ObjectId(prop_id)}).toArray();
+      return reviewList;
+  },
     
     async getReviewById(id){
         id=validation.checkId(id);

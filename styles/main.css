@@ -96,3 +96,6 @@ button[type="button"]:hover {
 	background-color: #FF6B6B;
 }
 
+title {
+	margin-top: 40px;
+}

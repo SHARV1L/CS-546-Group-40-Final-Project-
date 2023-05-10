@@ -15,8 +15,7 @@ router.route('/').get(async (req, res) => {
 // http://localhost:3000/search/list
 router.route('/list').post(async (req, res) => {
     try {
-      console.log("req.body",req.body);
-      let propertyList   = await propertyMethods.getAllProperty(req.body);
+      let propertyList  = await propertyMethods.getAllProperty(req.body);
             
       //write code to fetch available properties and pass them as venues
      
@@ -29,7 +28,6 @@ router.route('/list').post(async (req, res) => {
 // http://localhost:3000/search/property_search_by_id
 router.route('/:listingId').get(async (req, res) => {
   try {
-    console.log("$$in",req.params);
     let propertyDetails = await propertyMethods.getPropertyById(req.params.listingId);
     res.render('components/property', {title: 'Your property', propertyDetails:propertyDetails,checkin:req.query.checkin,checkout:req.query.checkout});
     

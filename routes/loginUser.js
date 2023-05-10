@@ -39,6 +39,10 @@ router
       const user = await userMethods.checkUser(username, password);
       const validationErrors = validation.login(username, password);
       
+      // so that user can enter a case sensitive username.
+      if(username.toLowerCase() !== user.email.toLowerCase()){
+        res.render('components/error', {errorMessage: error})
+      }
      
       if (!validationErrors) {
         if(!user) {

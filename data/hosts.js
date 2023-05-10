@@ -20,11 +20,7 @@ const exportedFunctions = {
      email=validation.checkValidEmail(email,'Email Name');
      password=validation.checkValidPassword(password,'password1');
      phoneNumber=validation.checkValidPhone(phoneNumber,'Phone Number');
-     //profilePicture=validation.checkValidProfilePicture(profilePicture,Profile1);
      accountType=validation.checkString(accountType,"Account Type");
-     //console.log(firstName);
-
-     
 
      let newHost={
        firstName:firstName,
@@ -36,7 +32,6 @@ const exportedFunctions = {
        accountType:accountType
      };
     
-  
      const hostCollection=await hosts();
      const newInsertInformation=await hostCollection.insertOne(newHost);
      if(!newInsertInformation.insertedId) throw "Insert Failed";

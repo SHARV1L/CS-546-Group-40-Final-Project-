@@ -75,7 +75,7 @@ const exportedMethods = {
     else return validationErrors; // if login is successful
   },
 
-  signup(firstName, lastName, email, password, phoneNumber, accountType, role) {
+  signup(firstName, lastName) {
     const errors = {};
   
     // Validate username

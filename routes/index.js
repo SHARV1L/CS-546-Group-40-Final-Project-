@@ -4,7 +4,6 @@ import bookingRoutes from './bookings.js';
 import propertyRoutes from './properties.js';
 import reviewRoutes from './reviews.js';
 import listingRoutes from './listings.js';
-//import loginRoutes from './loginUser.js';
 import userRoutes from './loginUser.js';
 import paymentRoutes from './payment.js'
 

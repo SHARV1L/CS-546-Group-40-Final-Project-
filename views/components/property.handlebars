@@ -15,10 +15,9 @@
       <div class="venue-details">
         
         <h2>{{propertyDetails.propertyName}}</h2>
-        
           <span style = "display: flex;">
             <img alt={{propertyDetails.propertyName}} src={{propertyDetails.images}} style="width: 400px;height: 400px; margin-right: 100px">  
-            <div id="map" style="height: 400px; width: 400px"></div>
+            <a id="map" style="height: 400px; width: 400px"></a>
           </span>
         </div>
         <button id="book" class="button-primary" onclick="bookNow('{{checkin}}','{{checkout}}','{{propertyDetails._id}}','{{propertyDetails.pricePerNight}}','{{propertyDetails.propertyName}}','{{propertyDetails.images}}')">Book Now</button>
@@ -32,9 +31,9 @@
         </address>
         
         <span>
-            Rooms: {{propertyDetails.noOfRooms}},
+            Rooms: {{propertyDetails.numberOfRooms}},
            
-            Beds: {{propertyDetails.beds}},
+            BathsS: {{propertyDetails.numberofBathroom}},
             
             Amenities: {{#each propertyDetails.amenities}}
             <td>{{this}}</td>{{/each}}
@@ -43,17 +42,12 @@
         <h4>Reviews</h4>
         {{#each propertyDetails.reviews}}
         <tr>
-          <td>Rating: {{reviews.ratings}}</td>
-          <td>Feedback: {{reviews.reviewText}}</td>
+          <td>Rating: {{this.ratings}}</td>
         </tr>
-        {{/each}}
-        <h4>Host Details</h4>
-        <p>Host Name: {{propertyDetails.host_name}}</p>
-        <p>Host Since: {{propertyDetails.host_since}}</p>
-        <p>Host Verified: {{propertyDetails.host_verified}}</p>
-        <p>Host Location: {{propertyDetails.host_location}}</p>
-
-        
+        <tr>
+          <td>Review: {{this.reviewText}}</td>
+        </tr>
+        {{/each}} 
       </div>
     </main>
   </body>

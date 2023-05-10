@@ -112,20 +112,20 @@ router
     }
     try {
       req.params.id = validation.checkId(req.params.id);
-    //   if (userInfo.firstName) {
-    //     userInfo.firstName = validation.checkString(
-    //       userInfo.firstName,
-    //       'First Name'
-    //     );
-    //   }
+      if (userInfo.firstName) {
+        userInfo.firstName = validation.checkString(
+          userInfo.firstName,
+          'First Name'
+        );
+      }
 
-    //   if (userInfo.lastName) {
-    //     userInfo.lastName = validation.checkString(
-    //       userInfo.lastName,
-    //       'Last Name'
-    //     );
-    //   }
-    // write validation functions here
+      if (userInfo.lastName) {
+        userInfo.lastName = validation.checkString(
+          userInfo.lastName,
+          'Last Name'
+        );
+      }
+    
     } catch (e) {
       return res.status(400).json({error: e});
     }

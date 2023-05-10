@@ -20,7 +20,8 @@ const exportedFunctions = {
       checkOutDate:checkOutDate,
       totalPrice:totalPrice,
       status:"pending",
-      payment:"pending"
+      payment:"pending",
+      reviewId: null
     };
 
       const bookingCollection=await booking();
@@ -125,7 +126,21 @@ async updateBookingPatch(id,userInfo){
      }
 
      return await updatedInfo.value;
-   }
+   },
+
+  async updateReviewOnBooking(id,review){
+    const bookingCollection=await booking();
+    const updatedInfo=await bookingCollection.findOneAndUpdate(
+      {_id:new ObjectId(id)},
+      {$set:{reviewId:review}},
+      {returnDocument:'after'}
+    );
+    if(updatedInfo.lastErrorObject.n===0){
+      throw [404,`Error: update failed could not find user with this ${id}`];
+    }
+
+    return await updatedInfo.value;
+   }   
 
 
 }

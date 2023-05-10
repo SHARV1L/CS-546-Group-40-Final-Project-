@@ -33,6 +33,7 @@ router
         reviewInfo.reviewText,
         reviewInfo.ratings,
       );
+      let updatedBooking =  await bookingData.updateReviewOnBooking(reviewInfo.bookingId,newReview._id);
       console.log("New Review Information", newReview);
      
       res.render('components/thankyou', {title: 'Review Confirmation Page', review: newReview})
@@ -74,94 +75,3 @@ router
 //       res.render('components/error', {error: e.message});
 //     }
 //   })
-//   .put(async (req, res) => {
-//     let reviewInfo = req.body;
-//     if (!reviewInfo || Object.keys(reviewInfo).length === 0) {
-//       return res
-//         .status(400)
-//         .json({error: 'There are no fields in the request body'});
-//     }
-//     try {
-//       req.params.id = validation.checkId(req.params.id);
-//     //   userInfo.firstName = validation.checkString(
-//     //     userInfo.firstName,
-//     //     'First Name'
-//     //   );
-//     //   userInfo.lastName = validation.checkString(
-//     //     userInfo.lastName,
-//     //     'Last Name'
-//     //   );
-//     // write validation functions here
-//     } catch (e) {
-//     return res.status(400).json({error: e});
-//   }
-
-//     try {
-//       const updatedReview = await reviewsData.updateReviewPut(
-//         req.params.id,
-//         reviewInfo.reviewText,
-//         reviewInfo.ratings
-//       );
-//       res.json(updatedReview);
-//     } catch (e) {
-//       let status = e[0] ? e[0] : 500;
-//       let message = e[1] ? e[1] : 'Internal Server Error';
-//       res.status(status).send({error: message});
-//     }
-//   })
-//   .patch(async (req, res) => {
-//     let reviewInfo = req.body;
-//     if (!reviewInfo || Object.keys(reviewInfo).length === 0) {
-//       return res
-//         .status(400)
-//         .json({error: 'There are no fields in the request body'});
-//     }
-//     // try {
-//     //   req.params.id = validation.checkId(req.params.id);
-//     //   if (reviewInfo.reviewText) {
-//     //     userInfo.firstName = validation.checkString(
-//     //       userInfo.firstName,
-//     //       'First Name'
-//     //     );
-//     //   }
-
-//     //   if (userInfo.lastName) {
-//     //     userInfo.lastName = validation.checkString(
-//     //       userInfo.lastName,
-//     //       'Last Name'
-//     //     );
-//     //   }
-//     // } catch (e) {
-//     //   return res.status(400).json({error: e});
-//     // }
-//     //validation functions here
-
-//     try {
-//       const updatedReview = await reviewsData.updateReviewPatch(
-//         req.params.id,
-//         reviewInfo
-//       );
-//       res.json(updatedReview);
-//     } catch (e) {
-//       let status = e[0] ? e[0] : 500;
-//       let message = e[1] ? e[1] : 'Internal Server Error';
-//       res.status(status).send({error: message});
-//     }
-//   })
-//   .delete(async (req, res) => {
-//     try {
-//       req.params.id = validation.checkId(req.params.id);
-//     } catch (e) {
-//       return res.status(400).json({error: e});
-//     }
-
-//     try {
-//       let deletedReview = await reviewsData.removeReviewById(req.params.id);
-//       res.json(deletedReview);
-//     } catch (e) {
-//       let status = e[0] ? e[0] : 500;
-//       let message = e[1] ? e[1] : 'Internal Server Error';
-//       res.status(status).send({error: message});
-//     }
-//   });
-
