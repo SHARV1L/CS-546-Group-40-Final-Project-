@@ -37,7 +37,8 @@ router
       // validating username and password
       username = validation.checkEmail(username, 'Username');
       password = validation.checkPassword(password, 'Password');
-      const user = await userMethods.checkUser(username, password);
+      var user = await userMethods.checkUser(username, password);
+      var validationErrors = validation.login(username, password);
 
       if (!validationErrors) {
         if (!user) {
