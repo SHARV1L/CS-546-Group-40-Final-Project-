@@ -1,6 +1,7 @@
 function validateSignUpForm(form) {
     const firstName = form.firstName.value.trim();
     const lastName = form.lastName.value.trim();
+    const age=form.age.value.trim();
     const email = form.email.value.trim();
     const password = form.password.value.trim();
     const phoneNumber = form.phoneNumber.value.trim();
@@ -13,6 +14,10 @@ function validateSignUpForm(form) {
   
     if (!lastName) {
       alert('Last Name is required.');
+      return false;
+    }
+    if(age<13){
+      alert('Age should be more than 13');
       return false;
     }
   
