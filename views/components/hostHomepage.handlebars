@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <title>Host Login</title>
+        <link rel="stylesheet" href="/styles/components-styles/hostPage.css">
+    </head>
+  <body>
+    <header>
+    <h1>Hello, how are you? We missed you here</h1>
+    </header>
+
+    <br>
+    <br>
+
+    <main> 
+      {{!-- <span> <Button id="personal-details"> Personal Details</Button> <Button id="view-property"> View Property </Button> </span> --}}
+      <div class="buttons-container">
+        <button id="personal-details">Personal Details</button>
+        <button id="view-property">View Property</button>
+      </div>
+      <br>
+      <br>
+      <Button id="post-property"> Post Property </Button>
+      <br>
+      <Button id="my-bookings"> My Bookings </Button>
+
+      <a href="/user-pref" >Change Sign in preference</a>
+    </main>
+
+     <a href="/logout">Logout</a>
+    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+    
+    <script>
+  const postButton = document.getElementById('post-property');
+  postButton.addEventListener('click', function() {
+    window.location.href = '/host/post_property';
+  });
+    const personalDetailsButton = document.getElementById('personal-details');
+    personalDetailsButton.addEventListener('click', function() {
+    window.location.href = '/host/personaldetails';
+  });
+    const viewPropertyButton = document.getElementById('view-property');
+    viewPropertyButton.addEventListener('click', function() {
+    window.location.href = '/host/view_property';
+  });
+  const myBookingButton = document.getElementById('my-bookings');
+    myBookingButton.addEventListener('click', function() {
+    window.location.href = '/host/bookings';
+  });
+  </script> 
+
+  </body>
+
+</html>

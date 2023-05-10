@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Add Property</title>
+  <link rel="stylesheet" href="../../styles/components-styles/postProperty.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+  <header>
+    <h1>Add Property</h1>
+  </header>
+  <main>
+    <form id="add--property" action="/host/post_property" method="post">
+      <label for="propertyName">Property Name:</label>
+      <input type="text" name="propertyName" id="propertyName" required>
+
+      <label for="description">Description:</label>
+      <textarea name="description" id="description" required></textarea>
+
+      <label for="numberOfRooms">Number of Rooms:</label>
+      <input type="number" name="numberOfRooms" id="numberOfRooms" required>
+
+      <label for="numberOfBathrooms">Number of Bathrooms:</label>
+      <input type="number" name="numberOfBathrooms" id="numberOfBathrooms" required>
+
+      <label for="amenities">Amenities:</label>
+      <input type="text" name="amenities" id="amenities" required>
+
+      <label for="address">Address:</label>
+      <input type="text" name="address" id="address" required>
+
+     
+
+      <label for="pricePerNight">Price per Night:</label>
+      <input type="number" name="pricePerNight" id="pricePerNight" required>
+
+      <label for="availability">Availability:</label>
+      <input type="text" name="availability" id="availability" required>
+
+      <label for="images">Images:</label>
+      <input type="file" name="images" id="images" multiple required accept="image/*">
+
+      <button id="add-property" type="submit">Add Property</button>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr('#availability', {
+      mode: 'range',
+      dateFormat: 'Y-m-d',
+      minDate: 'today'
+    });
+  </script>
+  <script src="../../styles/client-side/addPropertyFormValidation.js"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@ body {
 }
 
 body {
-	background: #dedede;
+	background: white;
 	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
@@ -19,6 +19,7 @@ main {
 
 header {
 	border-bottom: 1px solid #afafaf;
+
 }
 
 h1,
@@ -27,7 +28,7 @@ h3,
 h4,
 h5,
 h6 {
-	color: #222;
+	color: #FF6B6B;
 	margin-bottom: 5px;
 }
 
@@ -58,6 +59,7 @@ h6 {
 p {
 	font-size: 1rem;
 	line-height: 2;
+	color: black;
 }
 
 .post {
@@ -80,25 +82,20 @@ label {
 	font-weight: bold;
 }
 
-.error-list li {
-	color: #ff0000;
+button[type="button"] {
+	background-color: #FFD166;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
 }
 
-.author-link,
-.author-link:link {
-	color: #228b22;
+button[type="button"]:hover {
+	background-color: #FF6B6B;
 }
 
-.author-link:visited {
-	font-style: italic;
-	color: saddlebrown;
-}
-
-.author-link:hover {
-	font-style: normal;
-	font-weight: 700;
-}
-
-.author-link:active {
-	color: #ff0000;
+title {
+	margin-top: 40px;
 }

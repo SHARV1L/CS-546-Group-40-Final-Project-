@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <div class="product">
+        <h3>Make Your Booking Now</h3>
+        <h2>{{pName}}</h2>
+        <img src={{pImage}} alt="The Property" />
+        <div class="description">
+          <h3>Booking Amount</h3>
+          <h5>{{totalPrice}}</h5>
+                    <h3>Booking ID</h3>
+          <h5>{{bookingId}}</h5>
+        </div>
+      </div>
+      <form action="/payment/create-checkout-session" method="POST">
+      <input type="hidden" value="{{bookingId}}" name="bookingId">
+      <input type="hidden" value="{{totalPrice}}" name="price">
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form>
+    </section>
+  </body>
+</html>

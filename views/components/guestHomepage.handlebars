@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+        <title>Guest Login</title>
+        <link rel="stylesheet" href="/styles/components-styles/guestPage.css">
+    </head>
+  <body>
+    <br>
+    <br>
+    <div>
+      <span>        
+        <h1>{{{title}}}</h1>
+        <h2>Hello {{{user.firstName}}}! how are you? We missed you here!</h2>
+      </span>  
+    </div>
+
+    <main> 
+      {{!-- <h3>Hi, {{{user.firstName}}}! how have you been? </h3> --}}
+ 
+      <br>
+      <form id="guestHomepage" method="post" action="/guest/dashboard">
+        <div class="buttons-container"> 
+          <Button id="personal-details" type="submit" name="selected_option" value="user_personal"> Personal </Button> 
+          <Button id="bookings" type="submit" name="selected_option" value="bookings"> My Bookings </Button> 
+        </div>
+        <br>
+
+        <Button id="search-property" type="submit" name="selected_option" value="search"> Search Property </Button>
+      </form>
+      <a href="/user-pref" >Change Sign in preference</a>
+    </main>
+    
+     <a href="/logout">Logout</a>
+    {{!-- <a href="/user-pref" class="search-link">Make another search</a> --}}
+    </main>
+    
+  </body>
+</html>

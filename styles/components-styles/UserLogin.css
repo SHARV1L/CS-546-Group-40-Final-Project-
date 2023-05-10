@@ -1,0 +1,155 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	font-size: 14pt;
+}
+
+body {
+	background: white;
+	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	max-width: 75%;
+	margin: auto;
+}
+
+/* header {
+	border-bottom: 1px solid #505583;
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+} */
+
+header {
+	border-bottom: 1px solid white;
+	background-color: #FF6B6B;
+	color: #F4D35E;
+	padding: 20px;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+	color: white;
+}
+
+p {
+	font-size: 1rem;
+	line-height: 2;
+	color: #0077B5;
+}
+.form-container {
+	margin: 20px auto;
+	max-width: 400px;
+	border: 1px solid #ddd;
+	padding: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 10px;
+	color:#FF6B6B
+}
+
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="email"],
+input[type="age"] {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
+button{
+	background-color: #FFD166;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+	background-color: #FF6B6B;
+}
+
+/* .buttons-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 20px;
+	border: 20px;
+} */
+.buttons-container {
+	display: flex;
+	flex-direction: row;
+	justify-content:space-around;
+  }
+  
+
+#search-property {
+	background-color: #008CBA;
+	text-align: center;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+}
+
+#search-property:hover {
+	background-color: #0077B5;
+}
+
+#post-property {
+	background-color: #008CBA;
+	text-align: center;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+}
+
+#post-property:hover {
+	background-color: #0077B5;
+}
+
+.login-btn, .signup-btn {
+	display: inline-block;
+	padding: 8px 16px;
+	border: none;
+	border-radius: 4px;
+	background-color: #af744c;
+	color: white;
+	text-align: center;
+	font-size: 16px;
+	margin: 4px 2px;
+	transition-duration: 0.4s;
+	cursor: pointer;
+  }
+  
+  .login-btn:hover, .signup-btn:hover {
+	background-color: #8e3e87;
+  }
+
+
+  a {
+	color: #3F51B5;
+	display: block;
+	margin-top: 1rem;
+	/* text-align: center; */
+	text-decoration: none;
+  }
+  
+  a:hover {
+	text-decoration: underline;
+  }

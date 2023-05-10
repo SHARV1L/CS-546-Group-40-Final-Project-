@@ -1,0 +1,31 @@
+<head>
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="/styles/components-styles/bookingPage.css">
+  </head>
+
+<head>
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="/styles/components-styles/bookingPage.css">
+  </head>
+
+{{{title}}}
+  {{#each bookings}}
+    <div>
+      <tr>
+        <li>
+          <span>
+            <td>Total Price: {{this.totalPrice}}</td>
+            <td>CheckIn: {{this.checkInDate}}</td>
+            <td>CheckOut: {{this.checkOutDate}}</td>
+            <td>Property: {{this.property_id}}</td>
+           {{#if this.reviewId}} 
+           <td>Review Id: {{this.reviewId}}</td>
+           
+           {{else}}
+           <td><a href="/review?bookingId={{this._id}}">Leave a Review</a></td>
+           {{/if}}
+           </span>
+        </li>
+      </tr>
+    </div>
+  {{/each}}

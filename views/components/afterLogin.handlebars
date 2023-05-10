@@ -1,0 +1,34 @@
+
+  <body>
+    <script src="/styles/client-side/clientSideLogin.js"></script>
+      <link rel="stylesheet" href="../../styles/components-styles/UserLogin.css">
+
+    
+    <header>
+    <h1>User Preference</h1>
+    </header>
+    
+    <br>
+    <main> 
+      
+      <div class="user-pref" >
+        
+          <label for="user-pref" aria-placeholder="user-pref">Choose your Preference and we'll redirect you there.</label><br><br>
+            <span>
+              <p>To book or search a property, sign-in as a Guest: </p> 
+              <button id="guest" onclick="handleUserPref(event)" value="guest">Guest</button>
+            </span>
+         
+            <br>
+            <br>
+          
+            <span>
+              <p> To post a propertey, sign-in as a Host: </p> 
+              <button id="host" onclick="handleUserPref(event)" value="host">Host</button>
+            </span>
+          
+      </div>
+    </main>  
+     <a href="/logout">Logout</a>
+    </main>
+  </body>

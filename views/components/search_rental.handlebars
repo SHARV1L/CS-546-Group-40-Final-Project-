@@ -2,17 +2,33 @@
 <html lang="en">
   <head>
     <title>Vacation Rental Application</title>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components-styles/searchRentals.css">
   </head>
+
   <body>
+    
     <main>
-      <h1>Finder</h1>
-      <p>Your venue for your next event. You can find the place you lile and you can have a look at what all it provides. I'm sure you will get the right fit for you.</p>
-      <form method="post" action="/search_rentals">
-        <label for="searchRentalTerm">Search Venue:</label>
-        <input type="text" id="searhRentalTermTerm" name="searchRentalTerm">
-        <input type="submit" value="Search">
+      <h1>Search property</h1>
+      <p>Your venue for your next trip. You can find the place you like and you can have a look at what all it provides. I'm sure you will get the right fit for you.</p>
+      <form id ="search-form" method="post" action="/search/list">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="e.g. City, State, Zip Code">
+        
+        <label for="price">Charges Per Night</label>
+        <input type="text" id="price" name="price" placeholder="e.g. $100">
+
+        <label for="checkinDate">Check In Date</label>
+        <input type="date" id="checkinDate" name="checkinDate" placeholder="e.g. MM/DD/YYYY " min={new Date().toISOString().split('T')[0]}>
+
+        <label for="checkoutDate">Check Out Date</label>
+        <input type="date" id="checkoutDate" name="checkoutDate" placeholder="e.g. MM/DD/YYYY " min={new Date().toISOString().split('T')[0]}>
+
+        <label for="amenities">Amenities</label>
+        <input type="text" id="amenities" name="amenities" placeholder="e.g. Free Wi-Fi, Pool, Parking">
+
+        <button id="search-btn" type="submit">Search </button>
       </form>
     </main>
+    <script src="../../styles/client-side/searchValidation.js"></script>
   </body>
 </html>
