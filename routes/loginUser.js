@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import e, { Router } from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
 import { property } from "../config/mongoCollections.js";
@@ -89,7 +89,7 @@ router.get('/host/personaldetails', async (req, res) => {
     console.log(userId);
     let user = await usersData.getUserById(userId);
     console.log(user);
-    res.render('components/host-personalDetails', {user});
+    res.render('components/host-personalDetails', { user });
   } catch (e) {
     console.error(e);
     res.render('components/error', { error: 'Error fetching properties' });
@@ -111,7 +111,7 @@ router.post('/host/postProperty', async (req, res) => {
     pricePerNight,
     availability,
   } = req.body;
-  try{
+  try {
     if (
       !propertyName ||
       !description ||
@@ -126,20 +126,20 @@ router.post('/host/postProperty', async (req, res) => {
     ) {
       return res.status(400).send({ message: 'All fields are required.' });
     }
-  
+
     if (!validation.isValidCoordinates(latitude, longitude)) {
       return res.status(400).send({ message: 'Invalid latitude or longitude.' });
     }
-  
+
     if (isNaN(numberOfRooms) || isNaN(numberOfBathrooms) || isNaN(pricePerNight)) {
       return res.status(400).send({ message: 'Invalid number value(s).' });
     }
-  
+
     if (numberOfRooms <= 0 || numberOfBathrooms <= 0 || pricePerNight <= 0) {
       return res.status(400).send({ message: 'Number values must be greater than zero.' });
     }
   }
-  catch(e){
+  catch (e) {
     console.log(e);
   }
   try {
@@ -201,30 +201,40 @@ router.route('/sign-up')
   .post(async (req, res) => {
     //code here for GET
     try {
-      const { firstName, lastName, email, password, phoneNumber, accountType, role } = req.body;
-
-      const validationErrors = validation.signup(firstName, lastName, email, password, phoneNumber, accountType, role);
-
-      if (!validationErrors) {
-        console.log("inside if:", req.body);
-        //creating new user 
-        const user = await userMethods.createUser(
-          firstName,
-          lastName,
-          email,
-          password,
-          phoneNumber,
-          accountType,
-          role
-        );
-        if (user) {
-          res.redirect("/login");
-        }
+      var { firstName, lastName, age, email, password, phoneNumber, accountType, role } = req.body;
+      firstName = validation.checkName(firstName, 'First name');
+      lastName = validation.checkName(lastName, 'Last name');
+      age = validation.checkAge(age, 'Age');
+      email = validation.checkEmail(email, 'Email address');
+      phoneNumber = validation.checkPhoneNumber(phoneNumber, 'Phone number');
+      // accountType = validation.checkAccountType(accountType, 'Account type');
+      role = validation.checkRole(role, 'Role');
+      console.log("inside if:", req.body);
+      //creating new user 
+      const user = await userMethods.createUser(
+        firstName,
+        lastName,
+        email,
+        password,
+        phoneNumber,
+        accountType,
+        role
+      );
+      if (user) {
+        res.redirect("/login");
       }
     }
     catch (error) {
-
-      res.status(400).json(error);
+      return res.status(400).render('components/signUp', {
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+        role: role,
+        error: error
+      });
     }
   });
 
@@ -237,7 +247,7 @@ router
       res.render('components/afterLogin', { title: 'User Preference Page' })
     } catch (error) {
       res.status(400).json({ error: "Cannot redirect to User-Preference Page" });
-    } 
+    }
   })
   .post(async (req, res) => {
     try {

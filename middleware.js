@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import multer from 'multer';
 import path from 'path';
 import bodyParser from 'body-parser';
