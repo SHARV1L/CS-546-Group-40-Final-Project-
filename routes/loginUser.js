@@ -1,4 +1,4 @@
-import e, { Router } from 'express';
+import { Router } from 'express';
 import validation from '../validation.js';
 import userMethods from '../data/users.js';
 import { property } from "../config/mongoCollections.js";
@@ -33,28 +33,26 @@ router
   .post(async (req, res) => {
     //code here for GET
     try {
-      const { username, password } = req.body;
+      var { username, password } = req.body;
       // validating username and password
+      username = validation.checkEmail(username, 'Username');
+      password = validation.checkPassword(password, 'Password');
       const user = await userMethods.checkUser(username, password);
-      const validationErrors = validation.login(username, password);
-
 
       if (!validationErrors) {
         if (!user) {
           res.render('components/error', { title: 'login credentials cannot be validated, enter again' });
         }
         else {
-          req.session.user = { id: user.id, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role };
-          //// change username to firstName
+
+          req.session.user = { id: user.id, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email, accountType: user.accountType, role: user.role }; //// change username to firstName
           if (user.role === "admin") res.redirect('/admin');
           else if (user.role === "user") res.redirect('/user-pref');
           else res.redirect('/user-pref');
         }
-      } else res.render('components/login', { title: 'Login Page', errors: validationErrors });
-
+      } else res.render('components/login', { title: 'Login Page', errors: validationErrors, username: username, password: password });
     } catch (error) {
-      console.log(error);
-      res.status(400).json({ error: 'Page Not Available' });
+      return res.status(400).render('components/login', { title: 'Login page', username: username, password: password, error: error });
     }
   });
 

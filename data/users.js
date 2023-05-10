@@ -14,12 +14,12 @@ let exportedFunctions = {
     accountType,
     role,
   ) {
-    firstName = validation.checkName(firstName, 'First Name');
-    lastName = validation.checkName(lastName, 'Last Name');
-    email = validation.checkEmail(email, 'Email Address');
+    firstName = validation.checkName(firstName, 'First name');
+    lastName = validation.checkName(lastName, 'Last name');
+    email = validation.checkEmail(email, 'Email address');
     password = validation.checkPassword(password, 'Password');
-    phoneNumber = validation.checkValidPhone(phoneNumber, 'Phone Number');
-    accountType = validation.checkAccountType(accountType, 'Account type');
+    phoneNumber = validation.checkValidPhone(phoneNumber, 'Phone number');
+    // accountType = validation.checkAccountType(accountType, 'Account type');
     // profilePicture = validation.checkValidProfilePicture(profilePicture, Profile1);
     role = validation.checkRole(role, 'Role');
     console.log(firstName);
@@ -133,18 +133,17 @@ let exportedFunctions = {
     return await updatedInfo.value;
   },
 
-  async checkUser(email, password) {
+  async checkUser(email, password){
     email = validation.checkEmail(email, 'Email address');
     password = validation.checkPassword(password, 'Password');
-
     const userCollection = await users();
     // Case-insensitive email search
     const user = await userCollection.findOne({ email: email });
-
+    // const userId = userObj._id;
     if (user) {
       // Check password using bcrypt
       if (!bcrypt.comparePass(password, user.password)) {
-        throw 'Passwords do not match';
+        throw new Error('Passwords do not match');
       } else {
         console.log(`Returning user with ID: ${user._id}`); // add logging statement here
         // Return user data without password
@@ -160,7 +159,7 @@ let exportedFunctions = {
       }
     }
     else return null;
-  },
+  }   
 }
 
 //module.exports = { createUser, getAllUsers, getUserById, removeUser, updateUserPatch, updateUserPut }; 
